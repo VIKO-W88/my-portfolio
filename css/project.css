@@ -791,17 +791,13 @@
 
 .poster-shot {
   width: 100%;
-  margin: 24px 0 0;
   text-align: center;
+  line-height: 0;
 }
 
 .poster-shot img {
   display: inline-block;
-  width: auto;
+  width: 100%;
+  max-width: 1280px;
   height: auto;
-  max-width: 100%;
-  max-height: 88vh;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
 }

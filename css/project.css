@@ -778,22 +778,30 @@
   }
 }
 
-/* ---------- SOIBON poster pages: wide, near-full-bleed image gallery ---------- */
+/* ---------- SOIBON poster pages: each page scaled to fit one screen ---------- */
+/* .poster-shot is kept at a definite width:100% (not fit-content/inline-
+   block) on purpose: a shrink-to-fit wrapper makes the img's max-width:100%
+   resolve against an indefinite containing block in some browsers, which
+   lets the image fall back to its native pixel width (2339px) and blow out
+   the page horizontally. Definite width here + text-align:center is what
+   actually prevents that horizontal scroll. */
 .case-section.poster-section {
   max-width: 1600px;
 }
 
 .poster-shot {
   width: 100%;
-  margin: 24px auto 0;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
+  margin: 24px 0 0;
+  text-align: center;
 }
 
 .poster-shot img {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: 88vh;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
 }

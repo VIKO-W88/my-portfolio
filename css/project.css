@@ -777,3 +777,23 @@
     margin-bottom: 6px;
   }
 }
+
+/* ---------- SOIBON poster pages: wide, near-full-bleed image gallery ---------- */
+.case-section.poster-section {
+  max-width: 1600px;
+}
+
+.poster-shot {
+  width: 100%;
+  margin: 24px auto 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.poster-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

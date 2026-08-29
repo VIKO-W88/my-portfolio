@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FamilyFlow 可交互原型</title>
+<link rel="stylesheet" href="../css/prototype.css?v=49">
+</head>
+<body class="proto-body">
+
+<header class="proto-topbar">
+  <a href="familyflow.html" class="proto-back">← 返回项目介绍</a>
+  <div class="proto-title">FamilyFlow 可交互原型</div>
+  <label class="proto-debug-toggle">
+    <input type="checkbox" id="debugToggle">
+    显示点击热区
+  </label>
+</header>
+
+<main class="proto-stage">
+  <div class="phone-shell" id="phoneShell">
+    <div class="side-btn action-btn"></div>
+    <div class="side-btn vol-up-btn"></div>
+    <div class="side-btn vol-down-btn"></div>
+    <div class="side-btn power-btn"></div>
+    <div class="notch"></div>
+    <div class="phone-screen" id="phoneScreen">
+
+      <!-- Onboarding carousel -->
+      <div class="carousel" id="carousel">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide"><img src="../assets/familyflow/onboarding-1.png" alt="引导页 1"></div>
+          <div class="carousel-slide"><img src="../assets/familyflow/onboarding-2.png" alt="引导页 2"></div>
+          <div class="carousel-slide"><img src="../assets/familyflow/onboarding-3.png" alt="引导页 3"></div>
+        </div>
+        <div class="hotspot-layer" id="carouselHotspots"></div>
+      </div>
+
+      <!-- App page layer -->
+      <div class="app-layer hidden" id="appLayer">
+        <img id="pageImg" alt="FamilyFlow 界面截图">
+        <div class="hotspot-layer" id="pageHotspots"></div>
+      </div>
+
+      <!-- Home — entirely real HTML. Account row + the 4 stat cards stay
+           pinned (position:sticky) while Upcoming Events / Task(s) scroll
+           underneath, inside homePage's own scroll. -->
+      <div class="home-page hidden" id="homePage">
+        <div class="home-sticky" id="homeSticky"></div>
+        <div class="home-scroll" id="homeScroll"></div>
+        <div class="home-scroll-thumb" id="homeScrollThumb"></div>
+      </div>
+
+      <!-- Tasks — real HTML now (was a screenshot with only the checkboxes
+           as real overlay elements; the "Tasks" title, "Today" label and
+           the task text itself were still baked pixels, so their font-size
+           couldn't be brought in line with the design spec at all). Reuses
+           the same HOME_TASKS data + checkbox styling as Home's Task(s)
+           card — see renderTasksPage() in prototype.js. -->
+      <div class="tasks-page hidden" id="tasksPage">
+        <div class="tasks-header">
+          <button class="cal-back-btn" id="tasksBackBtn" aria-label="返回">‹</button>
+          <div class="cal-header-title">Tasks</div>
+          <span class="cal-header-spacer" aria-hidden="true"></span>
+        </div>
+        <div class="tasks-section-label">Today</div>
+        <div class="tasks-list" id="tasksList"></div>
+      </div>
+
+      <!-- Notification — real HTML now (was a full screenshot with only an
+           invisible back-arrow hotspot over it — no real button at all, part
+           of the back-button inconsistency across the app). Header reuses
+           the exact same .cal-back-btn/.cal-header-title/.cal-header-spacer
+           as Tasks/Calendar above, so every back button in the app is now
+           one shared component, not several look-alikes. -->
+      <div class="notif-page hidden" id="notifPage">
+        <div class="tasks-header">
+          <button class="cal-back-btn" id="notifBackBtn" aria-label="返回">‹</button>
+          <div class="cal-header-title">Notification</div>
+          <span class="cal-header-spacer" aria-hidden="true"></span>
+        </div>
+        <div class="notif-list" id="notifList"></div>
+      </div>
+
+      <!-- Calendar · Today — fully real HTML now, header included (back arrow /
+           title / Today-Overview-month tabs / week strip all genuine DOM, not
+           a screenshot crop — rebuilt so the tab labels can take the iOS
+           system font per the design-spec review, which a baked-in image
+           could never do). Built once by buildCalHeader() in prototype.js,
+           shared with Overview below. -->
+      <div class="cal-today-page hidden" id="calTodayPage">
+        <div class="cal-header" id="calTodayHeaderBox">
+          <div class="cal-header-top">
+            <button class="cal-back-btn" id="calTodayBackBtn" aria-label="返回">‹</button>
+            <div class="cal-header-title">Calendar</div>
+            <span class="cal-header-spacer" aria-hidden="true"></span>
+          </div>
+          <div class="cal-header-tabs">
+            <span class="cal-tab" id="calTodayTabToday">Today</span>
+            <span class="cal-tab" id="calTodayTabOverview">Overview</span>
+            <span class="cal-header-month">Dec</span>
+          </div>
+          <div class="cal-header-week" id="calTodayWeek"></div>
+          <div class="cal-drag-handle" id="calTodayDragHandle" aria-label="展开/收起月视图"></div>
+        </div>
+        <div class="cal-today-timeline" id="calTodayTimeline"></div>
+      </div>
+
+      <!-- Calendar · Overview — real HTML day-by-day agenda, per the Figma
+           reference (figma-Familyflow/Calendar over.png): a scrollable list
+           of day sections, each either showing that day's events or "Nothing
+           planned". Different layout from Today's hour grid, not the same
+           component reused — but the header above it is the exact same
+           buildCalHeader() component as Today's, just with "Overview" active. -->
+      <div class="cal-overview-page hidden" id="calOverviewPage">
+        <div class="cal-header" id="calOverviewHeaderBox">
+          <div class="cal-header-top">
+            <button class="cal-back-btn" id="calOverviewBackBtn" aria-label="返回">‹</button>
+            <div class="cal-header-title">Calendar</div>
+            <span class="cal-header-spacer" aria-hidden="true"></span>
+          </div>
+          <div class="cal-header-tabs">
+            <span class="cal-tab" id="calOverviewTabToday">Today</span>
+            <span class="cal-tab" id="calOverviewTabOverview">Overview</span>
+            <span class="cal-header-month">Dec</span>
+          </div>
+          <div class="cal-header-week" id="calOverviewWeek"></div>
+          <div class="cal-drag-handle" id="calOverviewDragHandle" aria-label="展开/收起月视图"></div>
+        </div>
+        <div class="cal-overview-list" id="calOverviewList"></div>
+      </div>
+
+      <!-- Draggable "+" FAB — a real button (not a hotspot over the screenshot),
+           since it needs to be semi-transparent and movable. Shown only on
+           pages that have it; position persists across pages/drags. -->
+      <button class="fab-add" id="fabAdd" aria-label="新建事件">
+        <svg viewBox="0 0 24 24" width="46%" height="46%" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+
+      <!-- Avatar popover (Account) — compact card near the avatar, home page
+           stays fully visible behind it (only a light dim, not a cover-up). -->
+      <div class="avatar-backdrop" id="avatarBackdrop"></div>
+      <div class="avatar-popover" id="avatarPopover">
+        <div class="avatar-popover-inner">
+          <img id="avatarPopoverImg" alt="账户浮层">
+          <div class="hotspot-layer" id="avatarPopoverHotspots"></div>
+        </div>
+      </div>
+
+      <!-- Settings popover — real HTML, sized to its own content (three rows),
+           not a full-page screenshot. Same small-popover pattern as Account. -->
+      <div class="settings-backdrop" id="settingsBackdrop"></div>
+      <div class="settings-popover" id="settingsPopover"></div>
+
+      <!-- Bottom sheet (New Event) — real HTML/CSS, not a screenshot with a
+           floating hotspot overlay. Every row below is a real DOM element with
+           its own click handler, so there is no coordinate table to drift out
+           of alignment, and the content can scroll naturally. -->
+      <div class="sheet-backdrop" id="sheetBackdrop"></div>
+      <div class="sheet" id="sheet">
+
+        <div class="ne-header">
+          <button class="ne-icon-btn" id="neClose" aria-label="关闭">✕</button>
+          <div class="ne-title" id="neTitleLabel">New Event</div>
+          <button class="ne-icon-btn ne-confirm" id="neConfirm" aria-label="保存">✓</button>
+        </div>
+
+        <div class="ne-scroll" id="neScroll">
+
+          <div class="ne-card">
+            <input class="ne-input" id="neTitleInput" placeholder="Title">
+            <div class="ne-divider"></div>
+            <input class="ne-input" id="neNotesInput" placeholder="Notes">
+            <div class="ne-divider"></div>
+            <input class="ne-input" id="neUrlInput" placeholder="URL">
+          </div>
+
+          <div class="ne-section-label">Date &amp; Time</div>
+          <div class="ne-card">
+            <div class="ne-row" id="neDateRow">
+              <span class="ne-row-icon ico-calendar"></span>
+              <span class="ne-row-label">Date</span>
+              <span class="ne-row-value" id="neDateValue">Today</span>
+              <span class="chevron-icon ne-chevron" id="neDateChevron"></span>
+            </div>
+            <div class="ne-expand" id="neDateExpand">
+              <div class="date-picker">
+                <div class="date-nav-row">
+                  <span class="date-nav-arrow" id="datePrevMonth" aria-label="上个月">‹</span>
+                  <span class="date-nav-select">Sep ˅</span>
+                  <span class="date-nav-select">2025 ˅</span>
+                  <span class="date-nav-arrow" id="dateNextMonth" aria-label="下个月">›</span>
+                </div>
+                <div class="date-weekday-row" id="dateWeekdayRow"></div>
+                <div class="date-day-grid" id="dateDayGrid"></div>
+              </div>
+            </div>
+
+            <div class="ne-divider"></div>
+
+            <div class="ne-row" id="neTimeRow">
+              <span class="ne-row-icon ico-clock"></span>
+              <span class="ne-row-label">Time</span>
+              <span class="ne-row-value" id="neTimeValue">9:00 PM</span>
+              <span class="chevron-icon ne-chevron" id="neTimeChevron"></span>
+            </div>
+            <div class="ne-expand" id="neTimeExpand">
+              <div class="wheel-wrap">
+                <div class="wheel-highlight"></div>
+                <div class="wheel-col" id="wheelHour"></div>
+                <div class="wheel-col" id="wheelMinute"></div>
+                <div class="wheel-col" id="wheelAmpm"></div>
+              </div>
+              <div class="ne-divider"></div>
+              <div class="ne-row ne-subrow" id="neTimezoneRow">
+                <span class="ne-row-icon ico-globe"></span>
+                <span class="ne-row-label">Time Zone</span>
+                <span class="ne-row-value">Sydney</span>
+                <span class="chevron-icon ne-chevron"></span>
+              </div>
+              <div class="ne-divider"></div>
+              <div class="ne-row ne-subrow" id="neRepeatRow">
+                <span class="ne-row-icon ico-repeat"></span>
+                <span class="ne-row-label">Repeat</span>
+                <span class="ne-row-value" id="neRepeatValue">Never</span>
+                <span class="chevron-icon ne-chevron"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ne-section-label">More Options</div>
+          <div class="ne-card">
+            <div class="ne-row" id="neTaskRow">
+              <span class="ne-row-icon ico-list"></span>
+              <span class="ne-row-label">Task</span>
+              <span class="chevron-icon ne-chevron"></span>
+            </div>
+            <div class="ne-divider"></div>
+            <div class="ne-row" id="neDetailsRow">
+              <span class="ne-row-icon ico-info"></span>
+              <span class="ne-row-label">Details</span>
+              <span class="chevron-icon ne-chevron"></span>
+            </div>
+            <div class="ne-divider"></div>
+            <div class="ne-row" id="neAssignRow">
+              <span class="ne-row-icon ico-people"></span>
+              <span class="ne-row-label">Assign to</span>
+              <span class="chevron-icon ne-chevron"></span>
+            </div>
+          </div>
+
+        </div>
+
+        <button class="mic-fab" id="micFab" title="语音快速创建" aria-label="语音快速创建">
+          <img src="../assets/familyflow/mic-icon.png" alt="">
+        </button>
+
+        <!-- Voice quick-create still uses the source screenshot (unchanged, not part of this round) -->
+        <div class="voice-layer" id="voiceLayer">
+          <img id="sheetImg" alt="语音快速创建">
+          <div class="hotspot-layer" id="sheetHotspots"></div>
+        </div>
+
+        <!-- Repeat dropdown: now a real scrollable text list -->
+        <div class="repeat-backdrop" id="repeatBackdrop"></div>
+        <div class="repeat-popup" id="repeatPopup">
+          <div class="repeat-scroll" id="repeatScroll"></div>
+        </div>
+
+        <!-- Popup panel backdrop — shared by all four sub-popups below
+             (Task category / Details / Time Zone / Assign To). All four are
+             now real HTML sharing one header pattern (.cal-back-btn /
+             .ne-title), not a screenshot with an invisible hotspot for the
+             back arrow — that inconsistency (page-level back buttons real,
+             New-Event-internal ones fake/baked-image) is what this rebuild
+             fixes, matching the same pattern already used for Calendar/
+             Tasks/Notification page headers. -->
+        <div class="popup-backdrop" id="popupBackdrop"></div>
+
+        <!-- Categories · Task type (Task / Event radio + Add Category) -->
+        <div class="assign-popup" id="categoryTypePopup">
+          <div class="ne-header">
+            <button class="cal-back-btn" id="categoryTypeBackBtn" aria-label="返回">‹</button>
+            <div class="ne-title">Categories</div>
+            <span class="cal-back-btn" style="visibility:hidden">‹</span>
+          </div>
+          <div class="cat-list" id="categoryTypeList"></div>
+        </div>
+
+        <!-- Categories · Details (Priority stepper display + Places toggle) -->
+        <div class="assign-popup" id="categoryDetailsPopup">
+          <div class="ne-header">
+            <button class="cal-back-btn" id="categoryDetailsBackBtn" aria-label="返回">‹</button>
+            <div class="ne-title">Categories</div>
+            <span class="cal-back-btn" style="visibility:hidden">‹</span>
+          </div>
+          <div class="cat-list">
+            <div class="cat-pill-row">
+              <span class="cat-pill-icon ico-priority"></span>
+              <span class="cat-pill-label">Priority</span>
+              <span class="cat-pill-value">None</span>
+              <span class="cat-stepper">
+                <span class="cat-stepper-up"></span>
+                <span class="cat-stepper-down"></span>
+              </span>
+            </div>
+            <div class="cat-section-label">Places</div>
+            <div class="cat-pill-row">
+              <span class="cat-pill-icon ico-place"></span>
+              <span class="cat-pill-label">Priority</span>
+              <span class="toggle-switch" id="placesToggle"><span class="toggle-knob"></span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time Zone — search input is decorative (no real filtering, same
+             tolerance already given to New Event's Notes/URL inputs) plus
+             two selectable timezone rows. -->
+        <div class="assign-popup" id="timezonePopup">
+          <div class="ne-header">
+            <button class="cal-back-btn" id="timezoneBackBtn" aria-label="返回">‹</button>
+            <div class="ne-title">Time Zone</div>
+            <span class="cal-back-btn" style="visibility:hidden">‹</span>
+          </div>
+          <div class="tz-search"><span class="tz-search-icon"></span><input class="tz-search-input" placeholder="Search" disabled></div>
+          <div class="tz-list" id="timezoneList"></div>
+        </div>
+
+        <!-- Assign To — real HTML rows, same pattern as the New Event form.
+             Back button uses .cal-back-btn (not .ne-icon-btn) so every "‹"
+             back button in the app shares one size/style — .ne-icon-btn is
+             for close ✕ / confirm ✓, a different action, not "go back". -->
+        <div class="assign-popup" id="assignPopup">
+          <div class="ne-header">
+            <button class="cal-back-btn" id="assignBackBtn" aria-label="返回">‹</button>
+            <div class="ne-title">Assign To</div>
+            <span class="cal-back-btn" style="visibility:hidden">‹</span>
+          </div>
+          <div class="assign-label">Members (3)</div>
+          <div class="assign-list" id="assignList"></div>
+          <div class="assign-invite">+ Invite new members</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="proto-controls">
+    <button id="backBtn" class="proto-btn">↩ 返回上一步</button>
+    <span id="screenLabel" class="proto-screen-label">引导页</span>
+    <button id="resetBtn" class="proto-btn">重新开始</button>
+  </div>
+
+  <p class="proto-hint">
+    引导页可左右滑动；首页头像点击弹出账户浮层；"+" 从底部弹出新建事件面板，点 Date 原地展开真实可点的日期网格，
+    点 Time 展开可滑动吸附的时间滚轮，点 Repeat 在行上方弹出选项菜单，点 Task / Details / Assign to / Time Zone
+    弹出选择卡片（分类单选、成员多选都可实际切换并保留状态）。麦克风图标进入语音快速创建。
+  </p>
+</main>
+
+<script src="../js/prototype.js?v=57"></script>
+</body>
+</html>

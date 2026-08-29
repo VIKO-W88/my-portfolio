@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 10-Day Countdown to the Gallows | 作品集 · 你的名字</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/project.css?v=16">
+</head>
+<body class="proto-fonts">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">你的名字</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="../index.html#about">关于我</a></li>
+        <li><a href="../index.html#skills">技能</a></li>
+        <li><a href="../index.html#projects">作品集</a></li>
+        <li><a href="../index.html#experience">经历</a></li>
+        <li><a href="../index.html#contact">联系方式</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深色模式">🌙</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="case-header">
+    <a href="../index.html#projects" class="back-link">← 返回作品集</a>
+  </div>
+
+  <section class="case-hero">
+    <span class="case-tag">Python 小游戏</span>
+    <h1 class="case-title">The 10-Day Countdown to the Gallows</h1>
+    <p class="case-subtitle">
+      一款用 Python 写成的文字分支叙事游戏：国王已经判你死刑，你只有十天时间在宫廷的阴谋、
+      祭司的疯狂与将军的旧怨之间周旋——积累足够的"Conquest"声望让国王投鼠忌器，
+      或是同时集齐"Army"与"Relic"来改写这场博弈的规则。每一次选择都会真实影响你的
+      声望与结局，十天之后，绞刑架前迎接你的会是自由，还是死亡。
+    </p>
+  </section>
+
+  <div class="meta-bar">
+    <div class="meta-item">
+      <h4>核心机制</h4>
+      <p>分支选择 + 声望/资源系统</p>
+    </div>
+    <div class="meta-item">
+      <h4>创作时间</h4>
+      <p>2026</p>
+    </div>
+    <div class="meta-item">
+      <h4>使用工具</h4>
+      <p>Python</p>
+    </div>
+    <div class="meta-item">
+      <h4>项目类型</h4>
+      <p>Python 文字分支叙事游戏</p>
+    </div>
+  </div>
+
+  <section class="case-section align-left sketch-section">
+    <h2>设计介绍</h2>
+
+    <h3>玩法设计</h3>
+    <p>
+      这是一个 10 天倒计时的文字分支叙事游戏：每天会遇到一段随机剧情事件，并可以在候选
+      NPC 中选择一位进行对话，通过 A/B/C 三选一的选择推进故事。每个选择都会影响
+      Conquest 声望值，部分选择还带有一定概率触发 Army（军队）或 Relic（圣物）的获取。
+      第 10 天结算时，若同时集齐 Army 与 Relic，会解锁一段额外的结局分支；否则根据
+      最终 Conquest 数值，进入三种不同结局之一。
+    </p>
+
+    <h3>代码结构</h3>
+    <p>
+      整个游戏采用数据与逻辑分离的结构：<code>npcs.py</code> 和 <code>story_events.py</code>
+      把每一位 NPC、每一段剧情都定义成结构化的字典数据（情境文本、选项文本、回复、
+      Conquest 数值、触发类型与概率），<code>main.py</code> 只负责读取这些数据并驱动状态机
+      运行。随机性方面用 <code>random.shuffle()</code> 打乱每局的剧情与对话顺序、
+      <code>random.sample()</code> 抽取每晚可探访的 NPC、<code>list.pop()</code>
+      消耗已打乱的对话队列，让每次游玩的节奏和顺序都不同，同时保证同一份数据在不同局里
+      被完整用到。
+    </p>
+  </section>
+
+  <section class="case-section sketch-section align-left">
+    <h2>试玩</h2>
+    <p>点击进入即开始游戏，选择会实时影响 Conquest 声望值与 Army / Relic 的获取概率，10 天后触发五种结局之一。</p>
+    <div class="sketch-embed game-embed">
+      <iframe
+        src="court-game/index.html"
+        title="The 10-Day Countdown to the Gallows"
+        loading="lazy"
+        allow="fullscreen"
+      ></iframe>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; <span id="year"></span> 你的名字. All rights reserved.</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

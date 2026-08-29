@@ -1,0 +1,2344 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&family=Titillium+Web:wght@400;600;700&display=swap');
+
+/* Design-spec tokens (设计规范.docx) — the single source of truth for the
+   App's own spacing/radius/font/icon scale, so a future spec change only
+   needs an edit here instead of a project-wide search-replace. Scoped to
+   the FamilyFlow app UI only — the portfolio wrapper chrome around the
+   phone mockup (.proto-topbar/.proto-stage/.proto-btn/.proto-hint/
+   .proto-controls/.proto-back/.proto-title/.proto-debug-toggle/
+   .proto-screen-label) and the device-mockup hardware (.phone-shell/
+   .phone-screen/.notch/.side-btn) are a different, unrelated design
+   language (this portfolio site's own chrome) and intentionally keep
+   their own literal values rather than reference these tokens. */
+:root {
+  /* 间距体系（2 的倍数） */
+  --spacing-24: 24px;
+  --spacing-16: 16px;
+  --spacing-12: 12px;
+  --spacing-8: 8px;
+  --spacing-4: 4px;
+
+  /* 圆角体系 */
+  --radius-16: 16px;
+  --radius-12: 12px;
+  --radius-8: 8px;
+  --radius-4: 4px;
+
+  /* 字体分级（数值为 px，App 内实际取 rem/百分比时按 16px 根字号换算后对齐到这五档） */
+  --font-size-h1: 24px;
+  --font-size-title: 18px;
+  --font-size-subtitle: 16px;
+  --font-size-body: 14px;
+  --font-size-caption: 10px;
+  /* 辅助文字 12px — 设计规范.docx 原文把"正文/辅助文字"合并写在同一档 14px 里；
+     按最新反馈把辅助文字（副标题、分组标题、行内取值、占位文案等次要信息）拆成
+     单独一档，与正文（用户主要阅读/输入的内容）区分开，正文继续用 14px。 */
+  --font-size-hint: 12px;
+
+  /* 布局尺寸 — 规范定义值，供参考；本原型是可缩放的手机模型（相对宽度/高度百分比
+     布局），没有固定像素的状态栏/导航栏/标签栏/页面指示器组件可对应，故当前代码
+     里未直接引用这五个变量，见"不一致检查"。 */
+  --layout-status-bar: 44px;
+  --layout-nav-bar: 44px;
+  --layout-page-margin: 14px;
+  --layout-tab-bar: 50px;
+  --layout-page-indicator: 44px;
+
+  /* 图标尺寸 */
+  --icon-tabbar-sm: 24px;
+  --icon-tabbar-lg: 32px;
+  --icon-function-sm: 16px;
+  --icon-function-lg: 24px;
+  --icon-action-max: 120px;
+  --icon-launch: 124px;
+
+  /* 字体族 — 规范要求 iOS 中文用苹方、英文用 SF Pro；Web 端没有 SF Pro 的免费
+     可分发版本，苹方/SF Pro 都只能通过系统字体栈引用（-apple-system /
+     BlinkMacSystemFont 在 Apple 设备上就是 San Francisco 本身，"PingFang SC"
+     补齐中文），无法像 Web Font 一样 @import。
+     Android 对应的思源黑体 + Roboto 同理走系统默认，不在 Web 原型里单独指定。 */
+  --font-family-ios: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+
+  /* 规范里"数字用 DIN"——真正的 DIN（FF DIN / DIN Next）是商用授权字体，无法
+     通过 Google Fonts 这类免费 CDN 合法引入。Titillium Web 是公开可查、明确以
+     德国工业标准 DIN 1451（Alte DIN 1451 Mittelschrift，路牌/车牌用字）为设计
+     依据的开源字体，是目前能免费嵌入网页、观感最接近 DIN 的替代方案，只用在下面
+     几处纯数字展示上（统计数字、时间、日历日期、时间滚轮），不用于普通文字。 */
+  --font-family-din: 'Titillium Web', var(--font-family-ios);
+}
+
+.proto-body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #2a2440 0%, #14121f 60%, #0b0a12 100%);
+  color: #f2f0f8;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.proto-topbar {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 28px;
+  flex-wrap: wrap;
+}
+
+.proto-back {
+  color: #cfc7e8;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.proto-back:hover {
+  color: #fff;
+}
+
+.proto-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+
+.proto-debug-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #cfc7e8;
+  cursor: pointer;
+  user-select: none;
+}
+
+.proto-stage {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px 28px;
+  box-sizing: border-box;
+}
+
+/* Brushed-silver rail. A flat fill (or a soft near-white sweep) reads as
+   painted plastic, not metal — real brushed aluminum needs a clear
+   highlight/shadow swing so the eye reads "light bouncing off a curved
+   surface" at a glance. Six stops alternate light/dark twice across the
+   135deg sweep for that catch-the-light effect, and the inset shadows
+   below simulate the frame's actual metal thickness (a bright top bevel,
+   a dark bottom one) rather than a flat painted edge. */
+.phone-shell {
+  position: relative;
+  width: min(380px, 86vw);
+  aspect-ratio: 832 / 1750;
+  background: linear-gradient(
+    135deg,
+    #4a4a4c 0%,
+    #2c2c2e 15%,
+    #1c1c1e 35%,
+    #38383a 55%,
+    #0a0a0a 75%,
+    #2e2e30 100%
+  );
+  border-radius: 54px;
+  padding: 16px;
+  box-sizing: border-box;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(120, 118, 108, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Side buttons — real HTML (not ::before/::after box-shadow hacks) so each
+   one is independently positioned by %, scaling correctly at any shell
+   width instead of the old fixed-px offsets drifting at the 86vw breakpoint.
+   Layout matches iPhone 15/16 Pro: Action Button + volume rocker (2 buttons)
+   on the left, Power button on the right. */
+.side-btn {
+  position: absolute;
+  width: 3px;
+  background: linear-gradient(90deg, #1c1c1e, #4a4a4c, #1c1c1e);
+  box-shadow: 0 0 0 1px rgba(120, 118, 108, 0.4);
+}
+
+.action-btn {
+  left: -3px;
+  top: 13.5%;
+  height: 2.6%;
+  border-radius: 2px 0 0 2px;
+}
+
+.vol-up-btn {
+  left: -3px;
+  top: 19.5%;
+  height: 4.3%;
+  border-radius: 2px 0 0 2px;
+}
+
+.vol-down-btn {
+  left: -3px;
+  top: 25.5%;
+  height: 4.3%;
+  border-radius: 2px 0 0 2px;
+}
+
+.power-btn {
+  right: -3px;
+  top: 17.5%;
+  height: 6.8%;
+  border-radius: 0 2px 2px 0;
+}
+
+.phone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 38px;
+  overflow: hidden;
+  /* Everything inside the phone mockup is FamilyFlow's own app content, not
+     this portfolio page's chrome — .proto-body above sets 'Nunito' for the
+     portfolio wrapper, which would otherwise cascade all the way down into
+     the app UI too. Setting the iOS system-font stack here, once, is what
+     the app's real text actually inherits; see --font-family-ios and the
+     explicit 'Baloo 2'/'Nunito' overrides removed from individual app rules. */
+  font-family: var(--font-family-ios);
+}
+
+/* Real iPhone 15/16 Pro Dynamic Island: ~125.5×37.5pt on a 393×852pt logical
+   screen — 32% of screen width, sitting ~1.3% below the true top edge (not
+   flush against it). Sized by width with aspect-ratio so it scales with the
+   shell instead of staying a fixed pixel size. */
+.notch {
+  position: absolute;
+  top: calc(16px + 1.3%);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32%;
+  aspect-ratio: 125.5 / 37.5;
+  background: #050505;
+  border-radius: 999px;
+  z-index: 10;
+}
+
+/* ---------- Onboarding carousel ---------- */
+
+.carousel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: pan-y;
+  z-index: 1;
+}
+
+.carousel.hidden {
+  display: none;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.carousel-track.dragging {
+  transition: none;
+}
+
+.carousel-slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+}
+
+.carousel-slide img {
+  position: absolute;
+  inset: 0;
+  top: -1.43%; /* aligns Skip's top to Home's avatar top — see PAGE_TOP_OFFSET in prototype.js */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* ---------- App page layer ---------- */
+
+.app-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.app-layer.hidden {
+  display: none;
+}
+
+.app-layer img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* ---------- Calendar · Today — real HTML timeline ---------- */
+
+.cal-today-page {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  /* Dynamic Island clearance lives here, not as `top` on .cal-header below —
+     `top` on a position:relative element shifts it visually but reserves no
+     extra space in the flex layout, so .cal-today-timeline (the next flex
+     sibling) would start right where the header's *unshifted* box would
+     have ended, overlapping the header's actual (shifted-down) bottom.
+     padding-top actually reserves space, so the timeline starts after it.
+     Was 5.3% back when .cal-header was a screenshot crop — that image had
+     ~26% of its own baked-in blank space above the back arrow, which this
+     padding only needed to *supplement* (see the header-rebuild comment on
+     .cal-header in the "real header" section below). Now .cal-header is
+     real HTML starting flush at its own top, same situation as
+     .home-sticky's first row — reusing that exact formula (not re-deriving
+     a new one) so both land at the identical on-screen clearance below the
+     island: calc(21% - 18px), width-relative like all padding-top (same
+     quirk noted on .home-sticky). */
+  padding-top: calc(21% - 18px);
+  box-sizing: border-box;
+}
+
+.cal-today-page.hidden {
+  display: none;
+}
+
+/* Real header — back arrow / title / Today-Overview-month tabs / week strip,
+   shared by both Calendar pages (buildCalHeader() in prototype.js builds the
+   same DOM into #calTodayHeaderBox and #calOverviewHeaderBox, only the
+   active tab differs). Was a screenshot crop; rebuilt to real HTML so its
+   text can take the iOS system font, which a baked-in image never could. */
+.cal-header {
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: var(--spacing-8);
+  border-bottom: 1px solid #eee;
+}
+
+.cal-header-top {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-16);
+}
+
+.cal-back-btn {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* 阴影-1（轻），见设计规范.docx */
+  color: #5b3e8e;
+  font-size: var(--font-size-subtitle);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cal-header-title {
+  flex: 1 1 auto;
+  text-align: center;
+  /* Medium 权重（设计规范.docx："标题 18px Medium"），不是加粗。
+     字号原来用的是 --font-size-h1（24px，"大标题"档），比 Tasks 页面截图里
+     "Tasks" 标题明显大一截；实测两者字高像素（同一张 430 宽截图里量的）：
+     Tasks ≈14px，Calendar(24px 档) ≈17px，24 × (14/17) ≈ 19.8px，比 24px 更
+     接近 18px（"标题"档，模块/页面级标题），改用这一档而不是直接写死一个
+     不在五档刻度里的数值。 */
+  font-weight: 500;
+  font-size: var(--font-size-title);
+  color: #000;
+}
+
+.cal-header-spacer {
+  width: 34px;
+  flex-shrink: 0;
+}
+
+/* position:relative + the month label pulled out via position:absolute so it
+   doesn't count toward the flex row's content width — with it as a normal
+   flex sibling, its `margin-left:auto` ate the row's leftover space, which
+   shifted the centered Today/Overview pair left instead of leaving them at
+   the row's true center (the reported "Today/Overview 应该居中" bug). */
+.cal-header-tabs {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-24);
+  margin-top: var(--spacing-8);
+  padding: 0 var(--spacing-16);
+}
+
+.cal-tab {
+  font-size: var(--font-size-subtitle);
+  color: #aaa;
+  cursor: pointer;
+}
+
+.cal-tab.active {
+  color: #1a1a1a;
+  font-weight: 700;
+  cursor: default;
+}
+
+.cal-header-month {
+  position: absolute;
+  right: var(--spacing-16);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--font-size-subtitle);
+  color: #5b3e8e;
+  font-weight: 600;
+  font-family: var(--font-family-din); /* 月份缩写含义上更接近标签，但沿用数字同一档观感一致，见 :root 说明 */
+}
+
+.cal-header-week {
+  padding: var(--spacing-8) var(--spacing-16) 0;
+}
+
+/* Reuses .date-weekday-row / .date-day-grid / .day-cell — the same real
+   inline date-picker component from the New Event form (see below), so this
+   week strip / expanded month grid isn't a second hand-built implementation
+   of the same "grid of day numbers" idea. */
+.cal-header-week .date-day-grid .day-cell span {
+  width: 68%;
+}
+
+.cal-drag-handle {
+  width: 36px;
+  height: 5px;
+  margin: var(--spacing-8) auto 0;
+  border-radius: 999px;
+  background: #ddd;
+  cursor: pointer;
+}
+
+.cal-today-timeline {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+  padding: 0 4%;
+  box-sizing: border-box;
+}
+
+.cal-today-allday {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.cal-today-allday-label {
+  width: 17%;
+  flex-shrink: 0;
+  font-size: var(--font-size-caption);
+  color: #3a3a3a;
+  text-align: center;
+}
+
+.cal-today-allday-banner {
+  flex: 1;
+  height: 34px;
+  border-radius: var(--radius-8);
+  background: #5b3e8e;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.cal-today-allday-banner .bar {
+  width: 3px;
+  align-self: stretch;
+  margin: var(--spacing-4) 0;
+  border-radius: var(--radius-4);
+  background: #fff;
+}
+
+.cal-today-allday-banner .txt {
+  color: #ece9f5;
+  font-size: var(--font-size-body);
+}
+
+.cal-today-grid {
+  position: relative;
+}
+
+/* The empty 12am–8am stretch, compacted into one band (see CAL_COLLAPSED_H
+   in prototype.js) instead of 8 full-height hour rows. */
+.cal-today-collapsed {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #ddd;
+}
+
+.cal-today-collapsed-label {
+  font-size: var(--font-size-caption);
+  letter-spacing: 0.03em;
+  color: #aaa;
+  font-family: var(--font-family-din); /* 数字用 DIN 替代字体，见 :root 说明 */
+}
+
+.cal-today-hour-row {
+  position: relative;
+  height: 56px;
+  border-top: 1px solid #ddd;
+}
+
+.cal-today-hour-row .hour-label {
+  position: absolute;
+  left: 0;
+  top: -7px;
+  width: 17%;
+  text-align: center;
+  font-size: var(--font-size-caption);
+  color: #3a3a3a;
+  background: #fff;
+  font-family: var(--font-family-din); /* 数字用 DIN 替代字体，见 :root 说明 */
+}
+
+.cal-today-event {
+  position: absolute;
+  left: 17%;
+  right: 4%;
+  border-radius: var(--radius-8);
+  box-sizing: border-box;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.cal-today-event .bar {
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: var(--radius-4);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.cal-today-event .title {
+  margin-left: 8px;
+  font-size: var(--font-size-body);
+  color: #2a2a2a;
+  font-weight: 600;
+}
+
+.cal-today-event .time {
+  margin-left: 8px;
+  margin-top: var(--spacing-4);
+  font-size: var(--font-size-caption);
+  color: #555;
+  font-family: var(--font-family-din); /* 数字用 DIN 替代字体，见 :root 说明 */
+}
+
+.cal-today-event .who {
+  margin-left: 8px;
+  margin-top: var(--spacing-8);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  font-size: var(--font-size-caption);
+  color: #333;
+}
+
+.cal-today-event .who img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: block;
+}
+
+/* ---------- Calendar · Overview — real HTML agenda list ---------- */
+
+.cal-overview-page {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  /* See .cal-today-page above — Dynamic Island clearance lives here as
+     padding-top on the page, not as a top offset on .cal-header, so it
+     actually reserves flex space instead of the header visually overlapping
+     .cal-overview-list. Matches .cal-today-page's padding-top — see that
+     comment. */
+  padding-top: calc(21% - 18px);
+  box-sizing: border-box;
+}
+
+.cal-overview-page.hidden {
+  display: none;
+}
+
+.cal-overview-list {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+  color: #222;
+}
+
+.cal-overview-day-header {
+  background: #ededed;
+  padding: 12px 7%;
+  font-size: var(--font-size-hint);
+  color: #333;
+  font-family: var(--font-family-din); /* 含日期数字，数字用 DIN 替代字体，见 :root 说明 */
+}
+
+.cal-overview-empty {
+  text-align: center;
+  padding: 16px 0;
+  color: #999;
+  font-size: var(--font-size-hint);
+}
+
+.cal-overview-event-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 8px 7%;
+}
+
+.cal-overview-event-time {
+  width: 17%;
+  flex-shrink: 0;
+  font-size: var(--font-size-caption);
+  line-height: 1.35;
+  color: #333;
+  font-family: var(--font-family-din); /* 数字用 DIN 替代字体，见 :root 说明 */
+}
+
+.cal-overview-event-time .end {
+  color: #999;
+  display: block;
+}
+
+.cal-overview-event-bar {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  border-radius: var(--radius-8);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.cal-overview-event-bar .bar {
+  width: 3px;
+  align-self: stretch;
+  margin: var(--spacing-8) 0;
+  border-radius: var(--radius-4);
+  background: rgba(255, 255, 255, 0.85);
+  flex-shrink: 0;
+}
+
+.cal-overview-event-bar .title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cal-overview-event-bar img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ---------- Tasks — real HTML (was a screenshot) ---------- */
+
+.tasks-page {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: calc(21% - 18px) var(--spacing-16) 0; /* same Dynamic Island clearance formula as .home-sticky/.cal-header */
+  background: #fff;
+  color: #222;
+}
+
+.tasks-page.hidden {
+  display: none;
+}
+
+.tasks-header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.tasks-section-label {
+  flex-shrink: 0;
+  margin-top: var(--spacing-16);
+  font-size: var(--font-size-subtitle); /* "Today" 作为小标题，16px */
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.tasks-list {
+  flex-shrink: 0;
+  margin-top: var(--spacing-12); /* Today 与第一个勾选框之间的间距 */
+}
+
+.tasks-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-8) 0;
+}
+
+.tasks-row-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--font-size-body); /* 正文 14px */
+  color: #222;
+  line-height: 1.35;
+}
+
+/* ---------- Notification — real HTML (was a screenshot) ---------- */
+
+.notif-page {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  padding: calc(21% - 18px) var(--spacing-16) var(--spacing-16); /* same Dynamic Island clearance formula as .home-sticky/.cal-header/.tasks-page */
+  background: #fff;
+  color: #222;
+}
+
+.notif-page.hidden {
+  display: none;
+}
+
+/* .tasks-header (back button row) is reused as-is — see familyflow-prototype.html. */
+
+.notif-list {
+  margin-top: var(--spacing-16);
+}
+
+.notif-row {
+  display: flex;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) 0;
+  border-bottom: 1px solid #eee;
+}
+
+.notif-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.notif-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.notif-top-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-8);
+}
+
+.notif-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--font-size-body); /* 正文 14px */
+  color: #1a1a1a;
+  line-height: 1.35;
+}
+
+.notif-date {
+  flex-shrink: 0;
+  font-size: var(--font-size-hint); /* 辅助文字 12px */
+  color: #8a8a95;
+  font-family: var(--font-family-din); /* 含日期数字，见 :root 说明 */
+}
+
+/* Comment/reaction rows: secondary text + date right-aligned below it.
+   Invite rows: no secondary text (date sits in .notif-top-row instead),
+   an event chip below instead — see renderNotifPage() in prototype.js. */
+.notif-secondary {
+  margin-top: 2px;
+  font-size: var(--font-size-hint); /* 辅助文字 12px */
+  color: #8a8a95;
+}
+
+.notif-secondary-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.notif-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  margin-top: var(--spacing-8);
+  padding: var(--spacing-8) var(--spacing-12);
+  border: 1px solid #5b3e8e;
+  border-radius: var(--radius-8);
+}
+
+.notif-chip-icon {
+  width: var(--icon-function-sm);
+  height: var(--icon-function-sm);
+  flex-shrink: 0;
+  background-color: #5b3e8e;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/><path d='M15 2v5h5' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/><path d='M15 2v5h5' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+}
+
+.notif-chip-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--font-size-body); /* 正文 14px */
+  color: #1a1a1a;
+}
+
+/* ---------- Home — real HTML top section ---------- */
+
+.home-page {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.home-page.hidden {
+  display: none;
+}
+
+/* Account row + the gap below it — a plain (non-scrolling) flex child that
+   sits above .home-scroll, not sticky-inside-it. Previously this used
+   position:sticky within a scrolling .home-page, which pinned it visually
+   but left it inside the same overflow container — so the native scrollbar
+   track still spanned the header's height too, letting the thumb slide up
+   behind it. Splitting the scroll onto .home-scroll alone (below) keeps the
+   header truly outside the scrollable region, so its scrollbar track can't
+   cross into the fixed top area.
+   Just a plain hairline marks that boundary — an earlier soft shadow
+   gradient here read as an extra layer stacked on top, not a natural edge.
+   Top padding: padding-top % resolves against the containing block's WIDTH
+   (a CSS quirk — true for every direction, not just left/right), not its
+   height — 21% here ≈ 10% of screen height once converted, landing
+   avatar-top a real ~4% below the island's own ~6.1%-of-height bottom edge.
+   Design-spec review (spacing scale 24/16/12/8/4): the "-18px" here is left
+   off-scale on purpose — it's a corrective pixel nudge inside a % calc(),
+   tuned against the Dynamic Island's measured position, not a general-
+   purpose gap between elements. Snapping it to 16px would shift the avatar
+   row and re-break the exact clearance this was tuned for. */
+.home-sticky {
+  flex-shrink: 0;
+  padding: calc(21% - 18px) 5% 3.5%;
+  box-sizing: border-box;
+  background: #fff;
+  color: #222;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* The only scrolling region on Home — sized to the space left over below
+   .home-sticky (flex: 1 1 auto), so its native scrollbar is confined to
+   exactly this area instead of running the full page height. */
+.home-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 5% 15%;
+  box-sizing: border-box;
+  background: #fff;
+  color: #222;
+}
+
+.home-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-avatar {
+  width: 13.6%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
+}
+
+.home-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.home-invite {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #8f80b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.home-invite svg {
+  width: 60%;
+  height: 60%;
+}
+
+.home-menu-dots {
+  font-size: var(--font-size-title);
+  line-height: 1;
+  letter-spacing: 2px;
+  color: #222;
+  cursor: pointer;
+  padding: 8px 4px;
+}
+
+.home-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 3.5%;
+  /* TEMP: bumped to 12px for visual verification, see chat — dial back to
+     the real target once confirmed. This margin is deliberately here
+     (in-flow, scrolls with the cards) rather than on .home-sticky's
+     padding-bottom — that padding is part of the fixed/sticky block, so
+     anything added there stays pinned too instead of scrolling away with
+     the cards. */
+  margin-top: var(--spacing-12);
+}
+
+.home-card {
+  min-width: 0;
+  background: #5b3e8e;
+  border-radius: var(--radius-16);
+  padding: 12% 10%;
+  box-sizing: border-box;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 340 / 172;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+}
+
+.home-card .row1 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.home-card .row1 svg {
+  width: var(--icon-function-lg);
+  height: var(--icon-function-lg);
+}
+
+.home-card .num {
+  font-size: var(--font-size-h1);
+  font-weight: 800;
+  font-family: var(--font-family-din); /* 数字用 DIN 替代字体，见 :root 说明 */
+}
+
+.home-card .label {
+  font-size: var(--font-size-subtitle);
+  font-weight: 600;
+}
+
+.home-upcoming-label {
+  font-family: var(--font-family-ios);
+  font-size: var(--font-size-title);
+  font-weight: 800;
+  /* Back to a normal margin-top — the 4 cards now scroll with this label
+     (only the account row above them is pinned), so this gap is regular
+     in-flow content spacing again, not owned by .home-sticky.
+     Design-spec review: the "+2px" is a small measured nudge inside a %
+     calc(), not a standalone gap — left off the 24/16/12/8/4 scale on
+     purpose, same reasoning as .home-sticky's "-18px" above. */
+  margin-top: calc(7% + 2px);
+  margin-bottom: 3%;
+}
+
+.home-event-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  border: 1.5px solid #5b3e8e;
+  border-radius: var(--radius-12);
+  padding: 8px 12px;
+  margin-bottom: var(--spacing-8);
+}
+
+.home-event-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+.home-event-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-event-name {
+  font-weight: 800;
+  font-size: var(--font-size-subtitle);
+}
+
+.home-event-title {
+  color: #666;
+  font-size: var(--font-size-hint);
+  margin-top: var(--spacing-4);
+}
+
+.home-event-time {
+  font-size: var(--font-size-caption);
+  color: #666;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Task(s) card — real HTML rows (was a cropped screenshot; the fixed-height
+   baked rows couldn't grow for a wrapped last line, so its text ran past
+   the card's own bottom border). Same margin-top rhythm as
+   .home-upcoming-label above so every module on Home is evenly spaced. */
+.home-tasks-label {
+  font-family: var(--font-family-ios);
+  font-size: var(--font-size-title);
+  font-weight: 800;
+  margin-top: 7%;
+  margin-bottom: 3%;
+}
+
+.home-tasks-card {
+  border: 1.5px solid #5b3e8e;
+  border-radius: var(--radius-12);
+  padding: 0 4%;
+  box-sizing: border-box;
+  /* Frozen at its previous natural height (measured before this row-spacing
+     reduction) so the box itself stays the same size — the now-shorter
+     row stack is centered inside it instead of just sitting flush at top
+     with the box shrinking to match. */
+  height: 219px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.home-task-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: 8px 4px;
+}
+
+.home-task-checkbox {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 22%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.home-task-checkbox.unchecked {
+  background: #fff;
+  border: 2px solid #3a3a3a;
+}
+
+.home-task-checkbox.checked {
+  background-color: #5b3e8e;
+  border: 2px solid #5b3e8e;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5 13l4 4L19 7' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 65% 65%;
+}
+
+.home-task-text {
+  flex: 1;
+  min-width: 0;
+  /* Was --font-size-subtitle (16px) — a task list row is 正文, not a
+     subtitle, and it made Home's Task(s) card visibly bigger than the
+     standalone Tasks page's identical list (.tasks-row-text, 14px) even
+     though they're meant to look the same. */
+  font-size: var(--font-size-body);
+  color: #222;
+  line-height: 1.35;
+}
+
+.home-task-divider {
+  height: 1px;
+  background: #e5e5e5;
+  margin: 0 var(--spacing-4);
+}
+
+.fab-icon-mask {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.fab-add {
+  position: absolute;
+  width: 13.6%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: none;
+  background: rgba(91, 62, 142, 0.8);
+  box-shadow: 0 8px 20px rgba(91, 62, 142, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+  z-index: 4;
+}
+
+.fab-add.visible {
+  display: flex;
+}
+
+.fab-add.dragging {
+  cursor: grabbing;
+}
+
+/* ---------- Hotspots & checkboxes (shared) ---------- */
+
+.hotspot-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.hotspot {
+  position: absolute;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  border-radius: var(--radius-8);
+  transition: background 0.15s ease, outline 0.15s ease;
+}
+
+.hotspot:active {
+  background: rgba(91, 62, 142, 0.18);
+}
+
+.debug-on .hotspot {
+  background: rgba(109, 133, 255, 0.22);
+  outline: 1.5px dashed #6d85ff;
+}
+
+.proto-checkbox {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 22%;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.proto-checkbox.unchecked {
+  background: #fff;
+  border: 2px solid #3a3a3a;
+}
+
+.proto-checkbox.checked {
+  background-color: #5b3e8e;
+  border: 2px solid #5b3e8e;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5 13l4 4L19 7' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 65% 65%;
+}
+
+.debug-on .proto-checkbox {
+  outline: 1.5px dashed #ff9d6d;
+  outline-offset: 2px;
+}
+
+/* ---------- Avatar popover (Account) ---------- */
+
+.avatar-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 6, 16, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 6;
+}
+
+.avatar-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* A compact floating card near the avatar — NOT full screen. The home page stays
+   fully visible behind it (light dim only). Sized to just the card's own content
+   (avatar/name/email/buttons/account list): width 84%, height 42% of the phone,
+   which — because object-fit:cover only crops vertically when width already
+   matches — shows exactly the top ~50% of the source image (the white card),
+   never reaching the raw home-page pixels baked in further down that image. */
+/* account-popover.png is cropped to EXACTLY the card's own content bounds
+   (576×760, ratio 0.758) — nothing beyond "Add account" exists in the image,
+   so there is no home-page bleed-through to accidentally show, and the
+   container's aspect-ratio matches the asset exactly: no cropping/scaling
+   math needed, width alone determines height, sized to content not the screen. */
+.avatar-popover {
+  position: absolute;
+  left: 0;
+  top: 4%;
+  width: 78%;
+  background: #fff;
+  border-radius: 0 var(--radius-16) var(--radius-16) 0;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  /* asymmetric: small at top (content was reading "top-heavy"), larger on the
+     right (content was reading "flush/clipped" against that edge) */
+  padding: 8px 16px 12px 8px;
+  box-sizing: border-box;
+  transform: translateX(-105%);
+  transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+  z-index: 7;
+}
+
+.avatar-popover.open {
+  transform: translateX(0);
+}
+
+.avatar-popover-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 576 / 760;
+}
+
+.avatar-popover-inner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---------- Settings popover — real HTML, sized to its content ---------- */
+
+.settings-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 6, 16, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 6;
+}
+
+.settings-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Anchored under the "···" button, opening down-left from it (see
+   figma-Familyflow/home-menu.png) — not a full-height drawer off the
+   screen's own left edge. */
+.settings-popover {
+  position: absolute;
+  right: 9%;
+  top: 12%;
+  width: 58%;
+  background: #fff;
+  border-radius: var(--radius-16);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  padding: 8px 16px;
+  box-sizing: border-box;
+  color: #222;
+  transform: scale(0.85);
+  opacity: 0;
+  transform-origin: top right;
+  transition:
+    transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.18s ease;
+  z-index: 7;
+}
+
+.settings-popover.open {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: 8px 4px;
+  cursor: pointer;
+}
+
+.settings-row .icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1.5px solid #5b3e8e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-row .icon svg {
+  width: var(--icon-function-sm);
+  height: var(--icon-function-sm);
+}
+
+.settings-row span.label {
+  font-size: var(--font-size-body);
+  font-weight: 600;
+}
+
+/* ---------- Bottom sheet (New Event) ---------- */
+
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 6, 16, 0.72);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 6;
+}
+
+.sheet-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Was 93% (felt too tall), then 78% (felt too short), then 86% (still
+     wanted taller). 91% now — note the gap above the mic FAB doesn't shrink
+     as this grows (content height is fixed, gap = sheet height minus that,
+     so it's mathematically a hair bigger each time), but the sheet itself
+     fills more of the lower screen, which is the requested outcome.
+     Keep in sync with SHEET_SCALE in prototype.js — the Categories/
+     Time-zone/Assign-to popups and the voice layer size off that fraction. */
+  height: 91%;
+  background: #fff;
+  border-radius: var(--radius-16) var(--radius-16) 0 0;
+  box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(105%);
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  overflow: hidden;
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+}
+
+.sheet.open {
+  transform: translateY(0);
+}
+
+/* ---------- New Event: real header + scrollable body ----------
+   Every row from here down is an actual DOM element with its own click
+   handler — not a screenshot with a separately-measured hotspot overlay —
+   so the clickable area and the visible row are permanently the same thing. */
+
+.ne-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Bottom padding was 8px — paired with each panel's own ~0-4px top
+     spacing that gave a cramped ~8-12px gap to the first content row.
+     .ne-header is shared by the New Event form itself and all four
+     sub-popups (Categories ×2 / Time Zone / Assign To), so bumping it here
+     fixes the gap everywhere at once: 16px header bottom + each panel's own
+     8px top spacing = 24px, the spec's page/module-separation tier. */
+  padding: 16px 16px var(--spacing-16);
+}
+
+.ne-title {
+  font-family: var(--font-family-ios);
+  font-weight: 700;
+  font-size: var(--font-size-title);
+  color: #1a1a1a;
+}
+
+.ne-icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: #f1eef7;
+  color: #5b3e8e;
+  font-size: var(--font-size-subtitle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ne-icon-btn.ne-confirm {
+  background: #5b3e8e;
+  color: #fff;
+}
+
+.ne-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* bottom: 90px — sized to clear the floating mic-FAB's own footprint
+     (see .mic-fab below), not a decorative gap, so it's left off the
+     24/16/12/8/4 spacing scale on purpose; snapping it to 24px would let
+     the last form row sit behind the mic button. Top: 4px→8px, pairs with
+     .ne-header's 16px bottom padding for a 24px header-to-content gap. */
+  padding: var(--spacing-8) 16px 90px;
+}
+
+.ne-card {
+  background: #faf9fc;
+  border: 1px solid #ece8f3;
+  border-radius: var(--radius-16);
+  margin-bottom: var(--spacing-16);
+  overflow: hidden;
+}
+
+.ne-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  padding: 12px;
+  font-family: var(--font-family-ios);
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+}
+
+.ne-input::placeholder {
+  color: #5b3e8e;
+  opacity: 0.75;
+}
+
+.ne-input:focus {
+  outline: none;
+  background: #f1eef7;
+}
+
+.ne-divider {
+  height: 1px;
+  background: #ece8f3;
+  margin: 0 var(--spacing-12);
+}
+
+.ne-section-label {
+  font-family: var(--font-family-ios);
+  font-weight: 700;
+  font-size: var(--font-size-hint);
+  color: #6b6b76;
+  margin: 4px 4px 8px;
+}
+
+.ne-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 12px;
+  cursor: pointer;
+}
+
+.ne-row:active {
+  background: #f1eef7;
+}
+
+.ne-row-icon {
+  width: var(--icon-function-sm);
+  height: var(--icon-function-sm);
+  flex-shrink: 0;
+  background-color: #5b3e8e;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.ico-calendar { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='3' y='5' width='18' height='16' rx='2' fill='none' stroke='black' stroke-width='2'/><path d='M3 10h18M8 3v4M16 3v4' stroke='black' stroke-width='2' stroke-linecap='round' fill='none'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='3' y='5' width='18' height='16' rx='2' fill='none' stroke='black' stroke-width='2'/><path d='M3 10h18M8 3v4M16 3v4' stroke='black' stroke-width='2' stroke-linecap='round' fill='none'/></svg>"); }
+.ico-clock { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/><path d='M12 7v5l3 3' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/><path d='M12 7v5l3 3' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>"); }
+.ico-globe { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/><path d='M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18' fill='none' stroke='black' stroke-width='1.6'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/><path d='M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18' fill='none' stroke='black' stroke-width='1.6'/></svg>"); }
+.ico-repeat { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>"); }
+.ico-list { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><line x1='8' y1='6' x2='21' y2='6' stroke='black' stroke-width='2'/><line x1='8' y1='12' x2='21' y2='12' stroke='black' stroke-width='2'/><line x1='8' y1='18' x2='21' y2='18' stroke='black' stroke-width='2'/><circle cx='3.5' cy='6' r='1.4' fill='black'/><circle cx='3.5' cy='12' r='1.4' fill='black'/><circle cx='3.5' cy='18' r='1.4' fill='black'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><line x1='8' y1='6' x2='21' y2='6' stroke='black' stroke-width='2'/><line x1='8' y1='12' x2='21' y2='12' stroke='black' stroke-width='2'/><line x1='8' y1='18' x2='21' y2='18' stroke='black' stroke-width='2'/><circle cx='3.5' cy='6' r='1.4' fill='black'/><circle cx='3.5' cy='12' r='1.4' fill='black'/><circle cx='3.5' cy='18' r='1.4' fill='black'/></svg>"); }
+.ico-info { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/><line x1='12' y1='11' x2='12' y2='16' stroke='black' stroke-width='2' stroke-linecap='round'/><circle cx='12' cy='7.5' r='1.3' fill='black'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='2'/><line x1='12' y1='11' x2='12' y2='16' stroke='black' stroke-width='2' stroke-linecap='round'/><circle cx='12' cy='7.5' r='1.3' fill='black'/></svg>"); }
+.ico-people { -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='9' cy='8' r='3' fill='none' stroke='black' stroke-width='2'/><path d='M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/><circle cx='17' cy='9' r='2.3' fill='none' stroke='black' stroke-width='1.6'/><path d='M15.6 13.2c2.5.5 4.4 2.5 4.4 5.3' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'/></svg>"); mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='9' cy='8' r='3' fill='none' stroke='black' stroke-width='2'/><path d='M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/><circle cx='17' cy='9' r='2.3' fill='none' stroke='black' stroke-width='1.6'/><path d='M15.6 13.2c2.5.5 4.4 2.5 4.4 5.3' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'/></svg>"); }
+
+.ne-row-label {
+  flex: 1 1 auto;
+  font-family: var(--font-family-ios);
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+}
+
+.ne-row-value {
+  font-size: var(--font-size-hint);
+  color: #8a8a95;
+  margin-right: var(--spacing-4);
+}
+
+.ne-subrow {
+  padding-left: var(--spacing-12);
+}
+
+/* Same chevron element used both collapsed (›) and expanded (⌄) — one shape,
+   one size, only the mask-image swaps, so it can never look "resized". */
+.chevron-icon {
+  background-color: #5b3e8e;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 6l6 6-6 6' stroke='black' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 6l6 6-6 6' stroke='black' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 70% 70%;
+  mask-size: 70% 70%;
+}
+
+.chevron-icon.down {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6' stroke='black' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6' stroke='black' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+}
+
+.ne-chevron {
+  position: static;
+  width: var(--icon-function-sm);
+  height: var(--icon-function-sm);
+  flex-shrink: 0;
+}
+
+.ne-expand {
+  display: none;
+  padding: 0 4px 8px;
+}
+
+.ne-expand.open {
+  display: block;
+}
+
+/* ---------- Inline date picker (real content, no overlay) ---------- */
+
+.date-picker {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 8px 4px;
+}
+
+.date-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  padding: 4px 0 8px;
+}
+
+.date-nav-arrow {
+  color: #1a1a1a;
+  font-size: var(--font-size-subtitle);
+  font-weight: 700;
+  padding: 4px;
+  cursor: default;
+}
+
+.date-nav-select {
+  font-size: var(--font-size-hint);
+  color: #5b3e8e;
+  font-weight: 600;
+  border: 1px solid #ded6f0;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.date-weekday-row,
+.date-day-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.date-weekday-row span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5b3e8e;
+  font-weight: 700;
+  font-size: var(--font-size-caption);
+  padding-bottom: 4px;
+}
+
+.date-day-grid .day-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.date-day-grid .day-cell span {
+  width: 74%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30%;
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+  font-family: var(--font-family-din); /* 数字用 DIN 替代字体，见 :root 说明 */
+}
+
+.date-day-grid .day-cell.other-month span {
+  color: #c9c5d6;
+  cursor: default;
+}
+
+.date-day-grid .day-cell.selected span {
+  background: #5b3e8e;
+  color: #fff;
+}
+
+/* ---------- Repeat dropdown ---------- */
+
+.repeat-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 6, 16, 0.72);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 8;
+}
+
+.repeat-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.repeat-popup {
+  position: absolute;
+  left: 18%;
+  width: 64%;
+  bottom: 16%;
+  height: 48%;
+  background: #fff;
+  border-radius: var(--radius-16);
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: bottom;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 9;
+}
+
+.repeat-popup.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.repeat-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  cursor: pointer;
+}
+
+.repeat-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 12px 16px;
+  font-family: var(--font-family-ios);
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+  border-bottom: 1px solid #f0eef5;
+}
+
+.repeat-item .repeat-check {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  background-color: #5b3e8e;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5 13l4 4L19 7' stroke='black' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5 13l4 4L19 7' stroke='black' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  visibility: hidden;
+}
+
+.repeat-item.selected .repeat-check {
+  visibility: visible;
+}
+
+/* ---------- Voice quick-create (still the source screenshot) ---------- */
+
+.voice-layer {
+  position: absolute;
+  inset: 0;
+  display: none;
+  z-index: 4;
+  background: #fff;
+}
+
+.voice-layer.active {
+  display: block;
+}
+
+.voice-layer #sheetImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* ---------- Time scroll-wheel (real inline content now, not an overlay) ---------- */
+
+/* Uses mic-icon.png — cropped directly from the source screenshot's own voice
+   button — so this is pixel-identical to the icon on the Quick Create Events
+   screen, not a hand-drawn approximation of it. */
+.mic-fab {
+  position: absolute;
+  right: 6%;
+  bottom: 3.5%;
+  width: 15%;
+  aspect-ratio: 1;
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: none;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.mic-fab.active {
+  display: block;
+}
+
+.mic-fab img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.wheel-wrap {
+  position: relative;
+  display: flex;
+  height: 140px;
+  margin: var(--spacing-4) 0;
+}
+
+.wheel-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 33.333%;
+  height: 33.333%;
+  background: #ded6f5;
+  border-radius: var(--radius-8);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wheel-col {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: none;
+  cursor: grab;
+  z-index: 2;
+}
+
+.wheel-col::-webkit-scrollbar {
+  display: none;
+}
+
+/* Overlay-style scrollbar — matches native macOS/iOS behavior: the thumb
+   sits almost invisible at rest and only fades up to a visible shade while
+   actively scrolling (".is-scrolling", toggled by the scroll-driven timer
+   in prototype.js — see setupOverlayScrollbars()), fading back out ~1s
+   after scrolling stops. Thumb length itself is untouched — it's the
+   browser's native, mathematically-accurate scrollHeight/clientHeight
+   ratio; only the resting/active shade and width changed here.
+   .home-scroll is deliberately NOT included here — it uses a custom thumb
+   (.home-scroll-thumb below) instead, since its native ratio needs to be
+   shortened, which a real scrollbar's thumb size can't be overridden to do.
+   .wheel-col (the time-picker wheel) is deliberately NOT included here —
+   it's a spin-selector control, not a scrollable list, and real iOS wheel
+   pickers never show a scrollbar on it either. */
+.cal-today-timeline,
+.cal-overview-list,
+.ne-scroll,
+.repeat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
+.cal-today-timeline.is-scrolling,
+.cal-overview-list.is-scrolling,
+.ne-scroll.is-scrolling,
+.repeat-scroll.is-scrolling {
+  scrollbar-color: rgba(0, 0, 0, 0.38) transparent;
+}
+
+.cal-today-timeline::-webkit-scrollbar,
+.cal-overview-list::-webkit-scrollbar,
+.ne-scroll::-webkit-scrollbar,
+.repeat-scroll::-webkit-scrollbar {
+  width: 2px;
+}
+
+.cal-today-timeline::-webkit-scrollbar-track,
+.cal-overview-list::-webkit-scrollbar-track,
+.ne-scroll::-webkit-scrollbar-track,
+.repeat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cal-today-timeline::-webkit-scrollbar-thumb,
+.cal-overview-list::-webkit-scrollbar-thumb,
+.ne-scroll::-webkit-scrollbar-thumb,
+.repeat-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+}
+
+.cal-today-timeline.is-scrolling::-webkit-scrollbar-thumb,
+.cal-overview-list.is-scrolling::-webkit-scrollbar-thumb,
+.ne-scroll.is-scrolling::-webkit-scrollbar-thumb,
+.repeat-scroll.is-scrolling::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.38);
+}
+
+/* Home's custom scroll thumb — a plain absolutely-positioned bar, not the
+   real scrollbar. Its native thumb length is the true (0-829/929: ~88%)
+   content/viewport ratio; per an explicit request to make it visually
+   shorter, height/position are computed in JS (updateHomeScrollThumb() in
+   prototype.js) as half that ratio, since a real scrollbar's thumb size
+   can't be overridden independent of actual content length — this fakes
+   the same fade/track/color behavior as the native ones above without
+   being tied to the literal ratio. */
+.home-scroll {
+  scrollbar-width: none;
+}
+
+.home-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.home-scroll-thumb {
+  position: absolute;
+  right: 2px;
+  width: 3px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.1);
+  transition: background-color 0.25s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.home-scroll-thumb.is-scrolling {
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.wheel-item {
+  scroll-snap-align: center;
+  height: 33.333%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-din); /* 数字用 DIN 替代字体，见 :root 说明 */
+  font-size: var(--font-size-caption);
+  color: #2a2a2a;
+}
+
+.wheel-spacer {
+  height: 33.333%;
+}
+
+/* ---------- Popup panel ---------- */
+
+.popup-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 6, 16, 0.72);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 8;
+}
+
+.popup-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* .popup/.popup img (screenshot + hotspot overlay) removed — Categories
+   (Task type + Details) and Time Zone are real HTML now, same
+   .assign-popup panel pattern as Assign To. See the .cat- and .tz- rules
+   further below. */
+
+/* ---------- Assign To — real DOM rows (not a screenshot overlay) ---------- */
+
+.assign-popup {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 9;
+}
+
+.assign-popup.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.assign-label {
+  font-family: var(--font-family-ios);
+  font-weight: 700;
+  font-size: var(--font-size-hint);
+  color: #1a1a1a;
+  /* top: 4px→8px, pairs with .ne-header's 16px bottom padding for 24px total */
+  padding: var(--spacing-8) 16px 8px;
+}
+
+.assign-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+.assign-row:active {
+  background: #f1eef7;
+}
+
+.assign-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #8a6fb0;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--font-size-hint);
+  flex-shrink: 0;
+}
+
+.assign-info {
+  flex: 1 1 auto;
+}
+
+.assign-name {
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+}
+
+.assign-role {
+  font-size: var(--font-size-hint);
+  color: #8a8a95;
+}
+
+.assign-check {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  background-color: #5b3e8e;
+  visibility: hidden;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5 13l4 4L19 7' stroke='black' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5 13l4 4L19 7' stroke='black' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+}
+
+.assign-row.selected .assign-check {
+  visibility: visible;
+}
+
+.assign-invite {
+  padding: 12px 16px;
+  color: #8a8a95;
+  font-size: var(--font-size-hint);
+  cursor: default;
+}
+
+/* Fixed-size inline component now (was position:absolute, driven by %
+   coords from the old screenshot-hotspot popup system) — the Places toggle
+   in #categoryDetailsPopup is its only user now, sitting in normal flex
+   flow like every other real-HTML control. */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background: #c9c5d6;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.toggle-switch.on {
+  background: #5b3e8e;
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 10%;
+  left: 7%;
+  width: 45%;
+  height: 80%;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: left 0.2s ease;
+  pointer-events: none;
+}
+
+.toggle-switch.on .toggle-knob {
+  left: 48%;
+}
+
+/* ---------- Categories (Task type / Details) — real HTML ---------- */
+
+.cat-list {
+  /* top: pairs with .ne-header's 16px bottom padding for a 24px gap */
+  padding: var(--spacing-8) var(--spacing-16) 0;
+}
+
+.cat-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-4);
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.cat-row-icon {
+  width: var(--icon-function-lg);
+  height: var(--icon-function-lg);
+  flex-shrink: 0;
+  background-color: #5b3e8e;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.cat-row-icon.ico-add {
+  background-color: #8a8a95;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><line x1='12' y1='5' x2='12' y2='19' stroke='black' stroke-width='2' stroke-linecap='round'/><line x1='5' y1='12' x2='19' y2='12' stroke='black' stroke-width='2' stroke-linecap='round'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><line x1='12' y1='5' x2='12' y2='19' stroke='black' stroke-width='2' stroke-linecap='round'/><line x1='5' y1='12' x2='19' y2='12' stroke='black' stroke-width='2' stroke-linecap='round'/></svg>");
+}
+
+.cat-row-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+}
+
+.cat-row-check {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  background-color: #5b3e8e;
+  visibility: hidden;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5 13l4 4L19 7' stroke='black' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M5 13l4 4L19 7' stroke='black' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat;
+}
+
+.cat-row.selected .cat-row-check {
+  visibility: visible;
+}
+
+.cat-section-label {
+  margin-top: var(--spacing-16);
+  margin-bottom: var(--spacing-8);
+  font-size: var(--font-size-hint);
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.cat-pill-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-16);
+  border: 1px solid #ece8f3;
+  border-radius: 999px;
+}
+
+.cat-pill-icon {
+  width: var(--icon-function-sm);
+  height: var(--icon-function-sm);
+  flex-shrink: 0;
+  background-color: #5b3e8e;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.ico-priority {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><line x1='6' y1='4' x2='6' y2='14' stroke='black' stroke-width='2' stroke-linecap='round'/><line x1='12' y1='4' x2='12' y2='14' stroke='black' stroke-width='2' stroke-linecap='round'/><line x1='18' y1='4' x2='18' y2='14' stroke='black' stroke-width='2' stroke-linecap='round'/><circle cx='6' cy='19' r='1.3' fill='black'/><circle cx='12' cy='19' r='1.3' fill='black'/><circle cx='18' cy='19' r='1.3' fill='black'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><line x1='6' y1='4' x2='6' y2='14' stroke='black' stroke-width='2' stroke-linecap='round'/><line x1='12' y1='4' x2='12' y2='14' stroke='black' stroke-width='2' stroke-linecap='round'/><line x1='18' y1='4' x2='18' y2='14' stroke='black' stroke-width='2' stroke-linecap='round'/><circle cx='6' cy='19' r='1.3' fill='black'/><circle cx='12' cy='19' r='1.3' fill='black'/><circle cx='18' cy='19' r='1.3' fill='black'/></svg>");
+}
+
+.ico-place {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 11l18-8-8 18-2-8-8-2z' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3 11l18-8-8 18-2-8-8-2z' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/></svg>");
+}
+
+.cat-pill-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+}
+
+.cat-pill-value {
+  flex-shrink: 0;
+  font-size: var(--font-size-hint);
+  color: #8a8a95;
+}
+
+.cat-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.cat-stepper-up,
+.cat-stepper-down {
+  width: 10px;
+  height: 6px;
+  background-color: #5b3e8e;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 15l6-6 6 6' stroke='black' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 15l6-6 6 6' stroke='black' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+}
+
+.cat-stepper-down {
+  transform: rotate(180deg);
+}
+
+/* ---------- Time Zone — real HTML ---------- */
+
+.tz-search {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  /* top: 16px→8px — .ne-header's own bottom padding (16px) already covers
+     part of the gap now, so this was double-counting to 32px total. */
+  margin: var(--spacing-8) var(--spacing-16) 0;
+  padding: var(--spacing-8) var(--spacing-12);
+  background: #f1eef7;
+  border-radius: 999px;
+}
+
+.tz-search-icon {
+  width: var(--icon-function-sm);
+  height: var(--icon-function-sm);
+  flex-shrink: 0;
+  background-color: #8a8a95;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='11' cy='11' r='7' fill='none' stroke='black' stroke-width='2'/><line x1='21' y1='21' x2='16.5' y2='16.5' stroke='black' stroke-width='2' stroke-linecap='round'/></svg>") center / contain no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='11' cy='11' r='7' fill='none' stroke='black' stroke-width='2'/><line x1='21' y1='21' x2='16.5' y2='16.5' stroke='black' stroke-width='2' stroke-linecap='round'/></svg>") center / contain no-repeat;
+}
+
+.tz-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-ios);
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+}
+
+.tz-search-input::placeholder {
+  color: #8a8a95;
+}
+
+.tz-list {
+  margin-top: var(--spacing-8);
+  padding: 0 var(--spacing-16);
+}
+
+.tz-row {
+  padding: var(--spacing-12) 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.tz-row-name {
+  font-size: var(--font-size-body);
+  color: #1a1a1a;
+}
+
+.tz-row-offset {
+  margin-top: 2px;
+  font-size: var(--font-size-hint);
+  color: #8a8a95;
+}
+
+/* ---------- Controls below phone ---------- */
+
+.proto-controls {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.proto-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f2f0f8;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.proto-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.proto-screen-label {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #cfc7e8;
+  min-width: 120px;
+  text-align: center;
+}
+
+.proto-hint {
+  margin: 14px 0 0;
+  max-width: 440px;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #9b93b8;
+}
+
+@media (max-width: 480px) {
+  .proto-topbar {
+    justify-content: center;
+    text-align: center;
+  }
+}

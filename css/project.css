@@ -1,0 +1,779 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap');
+
+.proto-fonts h1, .proto-fonts h2, .proto-fonts h3 { font-family: 'Baloo 2', sans-serif; }
+
+.case-header {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 32px 24px 0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  color: var(--accent);
+}
+
+.case-hero {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 48px 24px 0;
+  text-align: center;
+}
+
+.case-tag {
+  display: inline-block;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.case-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+
+.case-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 900px;
+  margin: 0 auto 40px;
+  text-align: left;
+}
+
+.case-hero-image {
+  width: 220px;
+  margin: 0 auto;
+  aspect-ratio: 832 / 1750;
+  background: linear-gradient(160deg, #232323, #050505);
+  border-radius: 30px;
+  padding: 9px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.22);
+}
+
+.case-hero-image .screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.case-hero-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* .watch-hero modifier — evacumate.html's hero screenshot is a ~624×744
+   watch face, not a phone; same dark-mockup treatment, different ratio. */
+.case-hero-image.watch-hero {
+  width: 200px;
+  aspect-ratio: 624 / 744;
+  border-radius: 46px;
+}
+
+.case-hero-image.watch-hero .screen {
+  border-radius: 36px;
+}
+
+.meta-bar {
+  max-width: var(--max-width);
+  margin: 56px auto 0;
+  padding: 28px 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.meta-item h4 {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.meta-item p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.case-section {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 72px 24px;
+}
+
+.case-section.wide {
+  max-width: var(--max-width);
+}
+
+/* Deliberately wider than .wide's var(--max-width) (1080px) — a generative-
+   art canvas reads as more "immersive/full-bleed" when it's allowed to
+   break past the site's normal text-column width, unlike the surrounding
+   paragraph sections which stay narrow for readability. Also applied to the
+   "设计介绍" section right above the embed (not just "互动预览" itself) so
+   both share the exact same width/left edge instead of drifting apart at
+   two different max-widths (.wide's 1080px vs this 1400px). */
+.case-section.sketch-section {
+  /* Was 1400px — at that width the 4:3 box (see .sketch-embed) came out
+     taller than a typical viewport, so the whole scene needed scrolling to
+     see end to end. 1200px keeps it clearly wider than the normal .wide
+     content column (1080px) without the resulting height blowing past one
+     screen — paired with .sketch-embed's own max-height below. */
+  max-width: 1200px;
+}
+
+.case-section h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin: 0 0 18px;
+}
+
+/* Sub-heading within a .case-section (e.g. "设计理念"/"技术实现" under
+   "设计介绍") — clearly smaller/lighter than h2 so the hierarchy reads at a
+   glance, sized to match the site's other "小标题" usages (.feature-text h3
+   /.pain-card h3, ~1-1.2rem Baloo 2) rather than falling back to the
+   browser's bold-serif default. */
+.case-section h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 24px 0 10px;
+}
+
+/* Explicit left alignment, shared by "设计介绍" and "互动预览" — .case-section
+   itself is centered as a block (margin:0 auto) but was already left-aligned
+   text by default (unlike .case-hero, which explicitly centers); stated here
+   directly so the intent doesn't depend on inheriting a browser default. */
+.case-section.align-left {
+  text-align: left;
+}
+
+.case-section p {
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  margin: 0 0 16px;
+}
+
+.case-section ul {
+  margin: 0 0 16px;
+  padding-left: 1.3em;
+  color: var(--text-muted);
+  font-size: 1.02rem;
+}
+
+.case-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.placeholder-note {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  padding: 2px 10px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+
+.shot-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.shot-frame {
+  width: 200px;
+  margin: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 6px solid #111;
+  box-shadow: var(--shadow);
+  flex-shrink: 0;
+}
+
+.shot-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.shot-frame figcaption {
+  display: none;
+}
+
+.feature-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.feature-row {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.feature-row:last-child {
+  border-bottom: none;
+}
+
+.feature-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.feature-shot {
+  flex: 0 0 auto;
+  width: 130px;
+  aspect-ratio: 832 / 1750;
+  background: linear-gradient(160deg, #232323, #050505);
+  border-radius: 20px;
+  padding: 6px;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.16);
+}
+
+.feature-shot .screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.feature-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* .watch-shot modifier — evacumate.html's screenshots are ~624×744 (a
+   modern Apple Watch's rounded-rectangle face, ratio ≈0.84), nowhere close
+   to .feature-shot's default 832/1750 phone ratio. Overriding aspect-ratio
+   alone (keeping the same dark-frame/padding/shadow treatment) reads as
+   "the same mockup language, a different device" rather than a new
+   component. */
+.feature-shot.watch-shot {
+  width: 108px;
+  aspect-ratio: 624 / 744;
+  border-radius: 28px;
+}
+
+.feature-shot.watch-shot .screen {
+  border-radius: 22px;
+}
+
+.feature-text h3 {
+  margin: 0 0 10px;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.2rem;
+}
+
+.feature-text p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.pain-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.pain-card .pain-icon {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.pain-card h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.pain-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.compare-table-wrap {
+  margin-top: 32px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 480px;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-table th {
+  background: var(--bg-alt);
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.compare-table tr:last-child td {
+  border-bottom: none;
+}
+
+.compare-table td:first-child {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.compare-table .col-us {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.palette-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.swatch {
+  width: 88px;
+}
+
+.swatch-color {
+  height: 64px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.swatch span {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  text-align: center;
+}
+
+.cta-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 60px 24px 100px;
+  text-align: center;
+}
+
+.cta-box {
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, #8a5cf6));
+  border-radius: 28px;
+  padding: 56px 32px;
+  color: #fff;
+}
+
+.cta-box h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.8rem;
+  margin: 0 0 12px;
+}
+
+.cta-box p {
+  opacity: 0.9;
+  margin: 0 0 28px;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--accent);
+  font-weight: 700;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Embedded interactive work (e.g. a p5.js sketch) inside a case-study page.
+   The sketch itself reads its OWN iframe's windowWidth/windowHeight and
+   calls resizeCanvas() on windowResized() — see p5-sketch/sketch.js — so it
+   doesn't need a fixed pixel size from us, just a responsive box: fixed
+   aspect-ratio keeps the canvas from ever going to 0 height (an iframe
+   with no explicit height collapses to nothing), and it scales down
+   cleanly at any viewport width instead of overflowing on mobile. */
+.sketch-embed {
+  /* width:100% of its .sketch-section parent (now 1400px max, see above) —
+     not a fixed px cap, so it actually reaches "however wide the layout
+     allows" at any viewport instead of going stale if the section's own
+     max-width changes again later. aspect-ratio (not a fixed height) is
+     what keeps the box from stretching/squashing as width changes — the
+     canvas itself doesn't need letterboxing to match: sketch.js's draw()
+     already scales its 1200×1000 design uniformly (s = min(width/1200,
+     height/1000)) and centers it via offsetX/offsetY for whatever the
+     actual canvas size ends up being, so no mushroom distortion at any box
+     ratio — only the background triangle mesh extends to fill the extra
+     space, which is intentional (see the "always cover the full screen"
+     comment in drawBackgroundElectric's caller).
+     max-height: 70vh — so the whole box always fits within one screen's
+     height (the actual ask: "完整出现在同一个页面中"), even on a very wide
+     window where 100% width × 4:3 would otherwise make it taller than the
+     viewport. When this clamp is what's actually limiting the box (wide
+     window), width no longer matches height at a literal 4:3 ratio — that's
+     fine, not a stretch/distortion bug, because the canvas inside doesn't
+     have a fixed native ratio to preserve: sketch.js recenters and
+     uniformly rescales its own composition to whatever box it's given
+     (see the comment above), same reasoning as the mobile breakpoint below. */
+  width: 100%;
+  margin: 0 auto;
+  aspect-ratio: 4 / 3;
+  max-height: 70vh;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #000;
+}
+
+.sketch-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* .game-embed modifier — for court-game (a scrolling text/choice UI, not a
+   landscape canvas), a taller ratio and higher max-height fit the content
+   far better than .sketch-embed's 4:3/70vh defaults, tuned for a p5.js
+   canvas. */
+.game-embed {
+  aspect-ratio: 3 / 4;
+  max-height: 88vh;
+}
+
+/* ---------- Flow steps (e.g. matlab-audio's 6-stage DSP chain) ----------
+   Spacing/radius follow 设计规范.docx's scale: 8px gaps between same-type
+   items, 8px "中圆角" for card-like elements, 12px number badge. */
+.flow-steps {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 32px 0 0;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow);
+}
+
+.flow-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.flow-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.flow-arrow {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  padding: 0 2px;
+}
+
+/* ---------- Code block (matlab-audio's algorithm listings) ---------- */
+
+.code-block {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin: 0 0 24px;
+  overflow-x: auto;
+}
+
+.code-block code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: pre;
+}
+
+/* ---------- Full, uncropped app screenshot (matlab-audio) ---------- */
+
+.app-shot {
+  width: 100%;
+  max-width: 900px;
+  margin: 32px auto 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.app-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- Before/after audio pair, inside a .compare-table cell ---------- */
+
+.audio-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.audio-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.audio-label {
+  flex-shrink: 0;
+  width: 52px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.audio-item audio {
+  width: 220px;
+  max-width: 100%;
+  min-width: 0;
+  height: 32px;
+  flex: 1 1 auto;
+}
+
+/* ---------- Iteration cards (evacumate.html's "改之前 → 改之后 → 为什么改") ---------- */
+
+.iteration-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.iteration-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.iteration-card h3 {
+  margin: 0;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1rem;
+}
+
+.iteration-label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 9px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+
+.iteration-label.before {
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.12);
+}
+
+.iteration-label.after {
+  color: #1f8a53;
+  background: rgba(31, 138, 83, 0.12);
+}
+
+.iteration-block p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.iteration-why {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: auto;
+}
+
+.iteration-why p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  font-weight: 600;
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .iteration-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meta-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sketch-embed {
+    aspect-ratio: 3 / 4;
+    border-radius: 10px;
+  }
+
+  .game-embed {
+    aspect-ratio: 9 / 16;
+    max-height: 82vh;
+  }
+
+  .flow-steps {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .flow-step {
+    width: 100%;
+  }
+
+  .flow-arrow {
+    align-self: center;
+    transform: rotate(90deg);
+  }
+
+  .audio-item audio {
+    width: 100%;
+  }
+
+  /* .audio-compare-wrap modifier only — scoped so familyflow.html's plain
+     .compare-table (which has no data-label attributes) keeps its normal
+     horizontal-scroll behavior instead of losing its column headers. */
+  .audio-compare-wrap {
+    overflow-x: visible;
+    border: none;
+  }
+
+  .audio-compare-wrap .compare-table,
+  .audio-compare-wrap .compare-table thead,
+  .audio-compare-wrap .compare-table tbody,
+  .audio-compare-wrap .compare-table tr,
+  .audio-compare-wrap .compare-table th,
+  .audio-compare-wrap .compare-table td {
+    display: block;
+    width: 100%;
+    min-width: 0; /* overrides .compare-table's own 480px desktop min-width */
+  }
+
+  .audio-compare-wrap .compare-table thead {
+    display: none;
+  }
+
+  .audio-compare-wrap .compare-table tr {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    padding: 4px 0;
+  }
+
+  .audio-compare-wrap .compare-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .audio-compare-wrap .compare-table td {
+    border-bottom: none;
+    padding: 10px 18px;
+  }
+
+  .audio-compare-wrap .compare-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+}

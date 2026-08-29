@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Effect Audio Processor | 作品集 · 你的名字</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/project.css?v=16">
+</head>
+<body class="proto-fonts">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">你的名字</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="../index.html#about">关于我</a></li>
+        <li><a href="../index.html#skills">技能</a></li>
+        <li><a href="../index.html#projects">作品集</a></li>
+        <li><a href="../index.html#experience">经历</a></li>
+        <li><a href="../index.html#contact">联系方式</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深色模式">🌙</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="case-header">
+    <a href="../index.html#projects" class="back-link">← 返回作品集</a>
+  </div>
+
+  <section class="case-hero">
+    <span class="case-tag">MATLAB · 数字信号处理</span>
+    <h1 class="case-title">Multi-Effect Audio Processor</h1>
+    <p class="case-subtitle">
+      一个用 MATLAB 实现的多效果音频处理系统：低通/高通滤波、反馈延迟、卷积混响与湿/干混合，
+      串联成完整的数字信号处理链路，并用 App Designer 封装成带界面的桌面应用。
+    </p>
+  </section>
+
+  <div class="meta-bar">
+    <div class="meta-item">
+      <h4>核心机制</h4>
+      <p>六级串联 DSP 信号链</p>
+    </div>
+    <div class="meta-item">
+      <h4>创作时间</h4>
+      <p>2026</p>
+    </div>
+    <div class="meta-item">
+      <h4>使用工具</h4>
+      <p>MATLAB</p>
+    </div>
+    <div class="meta-item">
+      <h4>项目类型</h4>
+      <p>数字音频信号处理系统</p>
+    </div>
+  </div>
+
+  <section class="case-section wide align-left">
+    <h2>系统设计</h2>
+    <p>
+      输入音频依次经过六个处理阶段：预处理归一化，将信号幅度缩放到 ±1.0；FIR 滤波/EQ，
+      用 512 阶 fir1 设计低通或高通滤波器；反馈延迟，把延迟时间换算成采样点数
+      （delaySamples = round(delayTime × fs)）后写入未来的采样位置；卷积混响，用白噪声
+      乘以指数衰减曲线生成一段"人工冲激响应"，再与原始信号做卷积；湿/干混合，按
+      output = (1 − mix) × dry + mix × wet 线性叠加处理前后的信号；最后再做一次归一化，
+      避免削波。
+    </p>
+
+    <div class="flow-steps">
+      <div class="flow-step"><span class="flow-num">1</span><span class="flow-label">预处理归一化</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><span class="flow-num">2</span><span class="flow-label">FIR 滤波/EQ</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><span class="flow-num">3</span><span class="flow-label">反馈延迟</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><span class="flow-num">4</span><span class="flow-label">卷积混响</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><span class="flow-num">5</span><span class="flow-label">湿/干混合</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><span class="flow-num">6</span><span class="flow-label">后处理归一化</span></div>
+    </div>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>核心算法</h2>
+
+    <h3>滤波</h3>
+    <p>
+      滤波阶段用户可选低通或高通，截止频率先归一化到奈奎斯特频率（fs/2），
+      再用 512 阶 <code>fir1</code> 设计对应的 FIR 滤波器：
+    </p>
+    <pre class="code-block"><code>norm_cutoff_freq = cutoff_freq / (fs / 2);
+b = fir1(512, norm_cutoff_freq, 'low');  % 或 'high'
+y = filter(b, 1, x);</code></pre>
+
+    <h3>混响</h3>
+    <p>
+      混响不是调用现成的库函数，而是自己实现的简化卷积混响：用白噪声乘以一条
+      指数衰减曲线，模拟出一段"人工冲激响应"，再把它和输入信号做卷积，得到
+      拖尾的混响尾音：
+    </p>
+    <pre class="code-block"><code>decay_curve = factor_value .^ (-t / samples);   % 指数衰减曲线
+decaying_noise = white_noise .* decay_curve;    % 人工冲激响应
+outsig = conv(insig, decaying_noise);           % 卷积</code></pre>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>应用界面</h2>
+    <p>
+      用 MATLAB App Designer 搭建了图形界面：可以选择内置 demo 音频或加载自己的
+      WAV 文件，实时调节滤波截止频率、混响时长/衰减/噪声电平、延迟时间/反馈量、
+      湿干比等参数，处理完成后可以直接对比处理前后的波形并播放/导出。
+    </p>
+    <div class="app-shot">
+      <img src="../assets/matlab-audio/app-screenshot.png" alt="Multi-Effect Audio Processor App Designer 界面截图">
+    </div>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>效果对比</h2>
+    <div class="compare-table-wrap audio-compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>场景</th>
+            <th>关键参数</th>
+            <th>音频对比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="场景">鼓点 Drum</td>
+            <td data-label="关键参数">Delay Time = 0.35s<br>Feedback = 0.60</td>
+            <td data-label="音频对比">
+              <div class="audio-pair">
+                <div class="audio-item">
+                  <span class="audio-label">处理前</span>
+                  <audio controls src="../assets/matlab-audio/drum-before.mp3"></audio>
+                </div>
+                <div class="audio-item">
+                  <span class="audio-label">处理后</span>
+                  <audio controls src="../assets/matlab-audio/drum-after.mp3"></audio>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td data-label="场景">钢琴 Piano</td>
+            <td data-label="关键参数">Reverb Duration = 1.5s<br>Decay = 55</td>
+            <td data-label="音频对比">
+              <div class="audio-pair">
+                <div class="audio-item">
+                  <span class="audio-label">处理前</span>
+                  <audio controls src="../assets/matlab-audio/piano-before.mp3"></audio>
+                </div>
+                <div class="audio-item">
+                  <span class="audio-label">处理后</span>
+                  <audio controls src="../assets/matlab-audio/piano-after.mp3"></audio>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td data-label="场景">背景音乐 BGM</td>
+            <td data-label="关键参数">低通 5000Hz + Delay + Reverb 完整链路</td>
+            <td data-label="音频对比">
+              <div class="audio-pair">
+                <div class="audio-item">
+                  <span class="audio-label">处理前</span>
+                  <audio controls src="../assets/matlab-audio/bgm-before.mp3"></audio>
+                </div>
+                <div class="audio-item">
+                  <span class="audio-label">处理后</span>
+                  <audio controls src="../assets/matlab-audio/bgm-after.mp3"></audio>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; <span id="year"></span> 你的名字. All rights reserved.</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

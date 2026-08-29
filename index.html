@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你的名字 | 个人主页</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="logo">你的名字</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#about">关于我</a></li>
+        <li><a href="#skills">技能</a></li>
+        <li><a href="#projects">作品集</a></li>
+        <li><a href="#experience">经历</a></li>
+        <li><a href="#contact">联系方式</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深色模式">🌙</button>
+  </div>
+</header>
+
+<main>
+
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">你好，我是</p>
+      <h1 class="hero-title">你的名字</h1>
+      <p class="hero-subtitle">一句话描述你是做什么的，例如：前端开发工程师 / 产品设计师 / UI 设计师</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">查看作品</a>
+        <a href="#contact" class="btn btn-outline">联系我</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <h2 class="section-title">关于我</h2>
+    <div class="about-content">
+      <div class="about-avatar" aria-hidden="true"></div>
+      <p class="about-text">
+        在这里写一段自我介绍。介绍你的背景、擅长的领域、工作经历和目标方向，
+        让访客快速了解你是谁、做什么、擅长什么。建议控制在 3-5 句话，简洁有重点。
+      </p>
+    </div>
+  </section>
+
+  <section id="skills" class="section section-alt">
+    <h2 class="section-title">技能</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>技能一</h3>
+        <p>简单描述这项技能的熟练程度和相关经验。</p>
+      </div>
+      <div class="skill-card">
+        <h3>技能二</h3>
+        <p>简单描述这项技能的熟练程度和相关经验。</p>
+      </div>
+      <div class="skill-card">
+        <h3>技能三</h3>
+        <p>简单描述这项技能的熟练程度和相关经验。</p>
+      </div>
+      <div class="skill-card">
+        <h3>技能四</h3>
+        <p>简单描述这项技能的熟练程度和相关经验。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <h2 class="section-title">作品集</h2>
+    <div class="projects-grid">
+      <article class="project-card">
+        <div class="project-thumb" style="background-image:url('assets/familyflow/onboarding-3.png');background-size:cover;background-position:center 25%;" aria-hidden="true"></div>
+        <div class="project-body">
+          <h3>FamilyFlow</h3>
+          <p>家庭日程管理 App，UI/UX 设计、产品设计。</p>
+          <a href="projects/familyflow.html" class="project-link">查看详情 →</a>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-thumb" style="background-image:url('assets/evacumate/context-mockup.jpg');background-size:cover;background-position:center 55%;" aria-hidden="true"></div>
+        <div class="project-body">
+          <span class="project-tag">智能手表 · UI/UX 设计</span>
+          <h3>EvacuMate</h3>
+          <p>洪灾来临时，手机不一定来得及看。EvacuMate 把逃生指引、避难所导航和宠物安全清单压缩进一块手表屏幕——按一下就能求救，抬一下手腕就能看到下一步该做什么。</p>
+          <a href="projects/evacumate.html" class="project-link">查看详情 →</a>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-thumb" aria-hidden="true"></div>
+        <div class="project-body">
+          <h3>项目名称二</h3>
+          <p>一句话介绍项目内容、你负责的部分以及使用的技术栈。</p>
+          <a href="#" class="project-link">查看详情 →</a>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-thumb" style="background-image:url('assets/p5-sketch-thumb.png');background-size:cover;background-position:center;" aria-hidden="true"></div>
+        <div class="project-body">
+          <h3>JavaScript 创意编程</h3>
+          <p>JavaScript（p5.js）实现的生成式动画，用 Perlin 噪声与三角函数驱动画面随时间持续变化。</p>
+          <a href="projects/p5-sketch.html" class="project-link">查看详情 →</a>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-thumb" style="background-image:url('assets/court-game-thumb.png');background-size:cover;background-position:center;" aria-hidden="true"></div>
+        <div class="project-body">
+          <h3>Python 编程</h3>
+          <p>一个用 Python 实现的文字分支叙事游戏：数据驱动的对话与剧情系统、随机事件概率触发、多结局状态机判定。</p>
+          <a href="projects/court-game.html" class="project-link">查看详情 →</a>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-thumb" style="background-image:url('assets/matlab-audio/app-screenshot.png');background-size:cover;background-position:center 27%;" aria-hidden="true"></div>
+        <div class="project-body">
+          <h3>MATLAB · 数字信号处理</h3>
+          <p>用 MATLAB 实现的多效果音频处理器：滤波、延迟、混响的完整 DSP 信号链，并封装成带交互界面的桌面应用。</p>
+          <a href="projects/matlab-audio.html" class="project-link">查看详情 →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="experience" class="section section-alt">
+    <h2 class="section-title">经历</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2023 - 至今</div>
+        <div class="timeline-content">
+          <h3>职位名称 · 公司名称</h3>
+          <p>简述你在这段经历中的职责和成果。</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2021 - 2023</div>
+        <div class="timeline-content">
+          <h3>职位名称 · 公司名称</h3>
+          <p>简述你在这段经历中的职责和成果。</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2017 - 2021</div>
+        <div class="timeline-content">
+          <h3>学校名称 · 专业</h3>
+          <p>简述学习经历和主要成果。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact">
+    <h2 class="section-title">联系方式</h2>
+    <p class="contact-text">欢迎通过以下方式联系我</p>
+    <div class="contact-links">
+      <a href="mailto:you@example.com" class="contact-link">📧 you@example.com</a>
+      <a href="#" class="contact-link">💼 LinkedIn</a>
+      <a href="#" class="contact-link">🐙 GitHub</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; <span id="year"></span> 你的名字. All rights reserved.</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

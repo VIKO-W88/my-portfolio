@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time-Based Mushroom Scene | 作品集 · 你的名字</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/project.css?v=16">
+</head>
+<body class="proto-fonts">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">你的名字</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="../index.html#about">关于我</a></li>
+        <li><a href="../index.html#skills">技能</a></li>
+        <li><a href="../index.html#projects">作品集</a></li>
+        <li><a href="../index.html#experience">经历</a></li>
+        <li><a href="../index.html#contact">联系方式</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深色模式">🌙</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="case-header">
+    <a href="../index.html#projects" class="back-link">← 返回作品集</a>
+  </div>
+
+  <section class="case-hero">
+    <span class="case-tag">创意编程 · p5.js</span>
+    <h1 class="case-title">Time-Based Mushroom Scene</h1>
+    <p class="case-subtitle">
+      这件作品是我以编程方式对草间弥生《毒蘑菇》系列的一次临摹与再演绎——
+      用 p5.js 将她标志性的圆点美学，转译成一段纯时间驱动的生成式动画。
+      背景是一张不断有光脉冲游走的三角形网络，由 Perlin 噪声与时间共同
+      决定每条边何时"通电"，营造出电流在网络中蔓延的效果；中央的大蘑菇
+      随时间缓缓摆动、"呼吸"，周围的小蘑菇则各自带着不同的相位漂浮，
+      伞面与茎干上的圆点随时间轻微明暗闪烁，让整幅画面始终保持生长与
+      发光的动态感。整个过程完全由 <code>globalTime</code> 与三角函数驱动，
+      是一次把经典视觉语言转化为可运行代码的实践。
+    </p>
+  </section>
+
+  <div class="meta-bar">
+    <div class="meta-item">
+      <h4>概念与实现</h4>
+      <p>用编程的方式临摹《毒蘑菇》</p>
+    </div>
+    <div class="meta-item">
+      <h4>创作时间</h4>
+      <p>2025</p>
+    </div>
+    <div class="meta-item">
+      <h4>使用工具</h4>
+      <p>p5.js / JavaScript</p>
+    </div>
+    <div class="meta-item">
+      <h4>项目类型</h4>
+      <p>创意编程 · 生成艺术</p>
+    </div>
+  </div>
+
+  <section class="case-section align-left sketch-section">
+    <h2>设计介绍</h2>
+    <h3>设计理念</h3>
+    <p>草间弥生的《毒蘑菇》系列最打动我的，是那种近乎偏执的圆点重复与高饱和撞色所营造出的、介于绚烂与不安之间的迷幻感——蘑菇的形态本身就带着生长、繁殖的意味。我想做的不是简单复刻这幅画，而是把这种"生长感"从静态的笔触里释放出来，交给时间去完成：让圆点真的随时间明暗流转，让蘑菇真的随时间起伏摆动，用代码延续她画面里那股持续生长、永不停歇的生命力。</p>
+
+    <h3>技术实现</h3>
+    <p>整个场景由两套独立又同步的时间驱动系统组成。背景的三角网络基于 Voronoi/Delaunay 剖分生成，每条边是否"通电"由 Perlin 噪声在时间轴上采样决定，噪声值越过阈值就点亮一段短促的光脉冲，边与边之间因此呈现出电流游走般的随机感，而不是整齐划一的闪烁。前景的每一株蘑菇——无论主体还是散布周围的小蘑菇——都被赋予了各自独立的相位偏移量，按各自的正弦曲线独立摆动、伸缩，避免了"步调一致"带来的机械感，让画面更接近有机生物群落的动态。伞面、茎干与底座上的圆点同样挂载在这条时间轴上，明暗与色相随之缓慢流转，把草间弥生画面里原本静止的圆点，变成了真正会"呼吸"的图案。</p>
+  </section>
+
+  <section class="case-section sketch-section align-left">
+    <h2>互动预览</h2>
+    <p>窗口大小会自动适配，无需任何操作，等待片刻即可看到动画自动播放。</p>
+    <div class="sketch-embed">
+      <iframe
+        src="p5-sketch/index.html"
+        title="Time-Based Mushroom Scene 互动预览"
+        loading="lazy"
+        allow="fullscreen"
+      ></iframe>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; <span id="year"></span> 你的名字. All rights reserved.</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

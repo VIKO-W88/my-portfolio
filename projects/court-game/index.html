@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 10-Day Countdown to the Gallows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hall-bg" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="statbar" id="statusBar">
+  <div class="statbar-group hidden" id="statGameGroup">
+    <div class="stat stat-day">
+      <span class="stat-label" id="dayLabel">Day</span>
+      <span class="stat-day-value"><span id="dayNow">1</span> / <span id="dayTotal">10</span></span>
+    </div>
+
+    <div class="stat stat-conquest">
+      <span class="stat-label" id="conquestLabel">Conquest</span>
+      <div class="conquest-track">
+        <div class="conquest-fill" id="conquestBarFill"></div>
+      </div>
+      <span class="stat-conquest-value" id="conquestVal">0</span>
+    </div>
+
+    <div class="stat stat-tokens">
+      <span class="token-icon" id="armyIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z"/></svg>
+        <span id="armyLabel">Army</span>
+      </span>
+      <span class="token-icon" id="relicIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2 4h4l-3 3 1 5-4-2.5L8 14l1-5-3-3h4z"/><path d="M7 21h10M12 14v7"/></svg>
+        <span id="relicLabel">Relic</span>
+      </span>
+    </div>
+
+    <button class="abandon-btn" id="abandonBtn">Abandon</button>
+  </div>
+
+  <button class="lang-toggle" id="langToggle" type="button">中文</button>
+</header>
+
+<main class="game-wrap">
+  <div id="stage" class="stage"></div>
+</main>
+
+<div id="modalRoot" class="modal-root hidden"></div>
+
+<script src="game-data.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

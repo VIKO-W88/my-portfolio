@@ -139,56 +139,6 @@
     </div>
   </section>
 
-  <section class="case-section wide align-left">
-    <h2>迭代设计</h2>
-
-    <h3>① 首页按钮布局</h3>
-    <div class="app-shot">
-      <img src="../assets/evacumate/iteration-home-buttons.png" alt="首页按钮布局迭代：圆形按钮 → 圆角矩形按钮 → 列表式布局">
-    </div>
-    <p>
-      最初尝试过圆形按钮、再到圆角矩形按钮，但在紧急情况下，圆形/卡片式布局容易
-      造成误触和视觉噪音。最终选择了最简单直接的列表式布局——在慌乱状态下，用户
-      不需要"识别图标"，只需要"读一行字"。
-    </p>
-
-    <h3>② SOS 的可见性</h3>
-    <div class="app-shot">
-      <img src="../assets/evacumate/iteration-sos.png" alt="SOS 迭代：嵌套在 Health 页面内部 → SOS 确认页 → 首页右上角红色 SOS 按钮">
-    </div>
-    <p>
-      早期版本里，SOS 被藏在"Health"页面内部，需要两步才能触发，紧急情况下这是
-      致命的延迟。经过启发式评估（可发现性差、层级混乱、反馈弱），我把 SOS 独立成
-      一个红色按钮，固定在主界面右上角，按住表冠即可触发——从"两步可达"变成
-      "任意界面一步可达"。
-    </p>
-
-    <h3>③ 地图与避难所列表</h3>
-    <div class="app-shot">
-      <img src="../assets/evacumate/iteration-map.png" alt="地图迭代：仿 Google Maps 图钉搜索 → 带设置项的候选列表 → 按距离排序的宠物友好避难所列表">
-    </div>
-    <p>
-      最早的地图直接照搬了 Google Maps 式的图钉+搜索交互，信息层级混乱，和宠物
-      防灾场景几乎没有区分度。重新设计后，地图被简化成一份按距离排序的避难所
-      列表，用色块直接标出"是否宠物友好"——为了在压力下做更快的决策，去掉了
-      不必要的导航步骤。
-    </p>
-
-    <h3>④ 清单交互</h3>
-    <p>
-      最初完成清单项目时会弹出确认对话框，但这个二次确认在高频操作下反而增加了
-      负担。改成在清单底部放一个"Done"按钮，去掉强制确认——用户可以随时标记
-      完成，不被打断。
-    </p>
-
-    <h3>与 Google Maps 的差异化</h3>
-    <ul>
-      <li>地图只保留洪灾相关信息，只聚焦宠物友好避难所</li>
-      <li>直接显示距离、容量、可达性，而不是通用地图信息</li>
-      <li>不止是"到达"——到达后还会引导用户提交安全报告、给出关怀反馈</li>
-    </ul>
-  </section>
-
   <section class="case-section align-left">
     <h2>反思与收获</h2>
     <p>

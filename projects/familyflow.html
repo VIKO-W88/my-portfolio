@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FamilyFlow | 作品集 · 你的名字</title>
-<link rel="stylesheet" href="../css/style.css?v=5">
-<link rel="stylesheet" href="../css/project.css?v=17">
+<title>FamilyFlow | 作品集 · 韦旻昕</title>
+<link rel="stylesheet" href="../css/style.css?v=44">
+<link rel="stylesheet" href="../css/project.css?v=35">
 </head>
 <body class="proto-fonts">
 
 <header class="nav">
   <div class="nav-inner">
-    <a href="../index.html" class="logo">你的名字</a>
+    <a href="../index.html" class="logo">韦旻昕</a>
     <nav>
       <ul class="nav-links">
         <li><a href="../index.html#about">关于我</a></li>
@@ -36,11 +36,38 @@
       一个帮助家庭成员共享日程、任务与提醒的协作类 App。
       在这里写一句更具体的项目一句话简介，例如解决了什么问题、面向什么用户。
     </p>
-    <div class="case-hero-image">
-      <div class="screen">
-        <img src="../assets/familyflow/home.png" alt="FamilyFlow 首页界面">
+    <div class="marquee-hero">
+      <div class="marquee-window">
+        <video
+          class="marquee-video"
+          src="../assets/familyflow/marquee-03.mp4?v=2"
+          poster="../assets/familyflow/marquee-03-poster.jpg?v=2"
+          autoplay
+          muted
+          loop
+          playsinline
+          aria-hidden="true"
+        ></video>
       </div>
     </div>
+    <script>
+      // Respect the visitor's reduced-motion setting -- the autoplay/loop
+      // attributes above can't be made conditional in HTML, so undo them
+      // here before the video has a chance to start, leaving just the
+      // static poster frame in place.
+      var marqueeVideo = document.querySelector(".marquee-video");
+      if (marqueeVideo) {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          marqueeVideo.removeAttribute("autoplay");
+          marqueeVideo.pause();
+        } else {
+          // Source clip felt too fast at native (1x) speed -- first cut to
+          // half speed, then halved again per feedback -- quarter speed
+          // reads more like a calm showcase than a sped-up demo reel.
+          marqueeVideo.playbackRate = 0.25;
+        }
+      }
+    </script>
   </section>
 
   <div class="meta-bar">
@@ -242,9 +269,9 @@
 </main>
 
 <footer class="footer">
-  <p>&copy; <span id="year"></span> 你的名字. All rights reserved.</p>
+  <p>&copy; <span id="year"></span> 韦旻昕. All rights reserved.</p>
 </footer>
 
-<script src="../js/main.js?v=2"></script>
+<script src="../js/main.js?v=5"></script>
 </body>
 </html>

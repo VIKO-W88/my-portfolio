@@ -3,14 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>你的名字 | 个人主页</title>
-<link rel="stylesheet" href="css/style.css?v=5">
+<title>韦旻昕 | 个人主页</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Long+Cang&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=45">
 </head>
 <body>
 
+<div class="intro-overlay" id="introOverlay" aria-hidden="true">
+  <span class="intro-name">韦旻昕</span>
+</div>
+
+<!-- Splash reveal (added): background + character dissolve intro. Plays
+     on first opening the site this session and on an actual page refresh
+     (not on every navigation back to the homepage), after the name-intro
+     overlay above finishes. See js/splash-reveal.js -- purely additive,
+     does not alter anything else on this page. Each layer's --enter-delay
+     matches its counterpart in .hero-scene-inner below, so the "world
+     waking up" pop-in here (play #1) uses the same per-character rhythm
+     as the real hero's own entrance (play #2, retriggered once the
+     background finishes dissolving -- see js/splash-reveal.js). -->
+<div class="splash-reveal" id="splashReveal" aria-hidden="true">
+  <canvas id="splashBgCanvas"></canvas>
+  <canvas id="splashParticleCanvas"></canvas>
+  <div class="splash-scene">
+    <div class="splash-scene-inner">
+      <div class="splash-layer-wrap splash-wrap-portal" style="left:31%;top:25%;width:40%;--enter-delay:.3s;">
+        <img src="assets/hero/02-portal.webp" class="splash-layer" alt="" />
+      </div>
+      <div class="splash-layer-wrap splash-wrap-char" style="left:2%;top:38%;width:27%;--enter-delay:.4s;">
+        <img src="assets/hero/03-character-design.webp?v=5" class="splash-layer" alt="" />
+      </div>
+      <div class="splash-layer-wrap splash-wrap-char" style="left:20%;top:36%;width:28%;--enter-delay:.52s;">
+        <img src="assets/hero/05-character-media.webp" class="splash-layer" alt="" />
+      </div>
+      <div class="splash-layer-wrap splash-wrap-char" style="left:48%;top:44%;width:27%;--enter-delay:.65s;">
+        <img src="assets/hero/06-character-explore.webp" class="splash-layer" alt="" />
+      </div>
+      <div class="splash-layer-wrap splash-wrap-char" style="left:63%;top:42%;width:29%;--enter-delay:.78s;">
+        <img src="assets/hero/04-character-code.webp?v=6" class="splash-layer" alt="" />
+      </div>
+      <div class="splash-layer-wrap splash-wrap-char" style="left:45%;top:70%;width:10%;--enter-delay:1s;">
+        <img src="assets/hero/09-lantern.webp" class="splash-layer" alt="" />
+      </div>
+      <div class="splash-layer-wrap splash-wrap-char" style="left:15%;top:4%;width:14%;--enter-delay:.95s;">
+        <img src="assets/hero/07-bird.webp" class="splash-layer" alt="" />
+      </div>
+      <div class="splash-layer-wrap splash-wrap-char" style="left:81%;top:4%;width:16%;--enter-delay:1.1s;">
+        <img src="assets/hero/08-robot.webp" class="splash-layer" alt="" />
+      </div>
+      <div class="splash-layer-wrap splash-wrap-fg" style="left:-6%;top:61%;width:34%;--enter-delay:.35s;">
+        <img src="assets/hero/10-foreground.webp" class="splash-layer" alt="" />
+      </div>
+    </div>
+  </div>
+</div>
+
 <header class="nav">
   <div class="nav-inner">
-    <a href="#home" class="logo">你的名字</a>
+    <a href="#home" class="logo">韦旻昕</a>
     <nav>
       <ul class="nav-links">
         <li><a href="#about">关于我</a></li>
@@ -24,21 +76,79 @@
 
 <main>
 
-  <section id="home" class="hero">
-    <div class="hero-inner">
-      <p class="hero-eyebrow">你好，我是</p>
-      <h1 class="hero-title">你的名字</h1>
-      <p class="hero-subtitle">一句话描述你是做什么的，例如：前端开发工程师 / 产品设计师 / UI 设计师</p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">查看作品</a>
-        <a href="#contact" class="btn btn-outline">联系我</a>
+  <section id="home" class="hero hero-aurora">
+    <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+
+    <div class="hero-inner hero-split">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Hello, I'm</p>
+        <h1 class="hero-title">VIKO</h1>
+        <a href="#projects" class="hero-link magnetic">查看作品 →</a>
+      </div>
+
+      <div class="hero-scene" aria-hidden="true">
+        <!-- Fixed composition group: every child below is positioned as a
+             percentage of THIS group only, reconstructing the reference
+             illustration's own internal layout 1:1. The group is then
+             scaled/translated as a single unit (via .hero-scene's
+             width/aspect-ratio) to fit next to the text -- individual
+             children are never repositioned to make room for the copy. -->
+        <div class="hero-scene-inner">
+          <div class="hero-enter hero-enter-portal" style="left:31%;top:25%;width:40%;--enter-delay:.3s;">
+            <div class="ground-shadow" style="--shadow-bottom:10.3%;"></div>
+            <img src="assets/hero/02-portal.webp" class="hero-layer hero-portal" data-depth="0.08" alt="" />
+          </div>
+
+          <div class="hero-enter hero-enter-fg" style="left:-6%;top:61%;width:34%;--enter-delay:.35s;">
+            <img src="assets/hero/10-foreground.webp" class="hero-layer hero-foreground hero-foreground-sway" data-depth="0.22" alt="" />
+          </div>
+
+          <div class="hero-enter hero-enter-char" style="left:2%;top:38%;width:27%;--enter-delay:.4s;">
+            <div class="ground-shadow" style="--shadow-bottom:3.6%;"></div>
+            <img src="assets/hero/03-character-design.webp?v=5" class="hero-layer hero-char hero-char-design" data-depth="0.13" data-role="Design" alt="" />
+          </div>
+
+          <div class="hero-enter hero-enter-char" style="left:20%;top:36%;width:28%;--enter-delay:.52s;">
+            <div class="ground-shadow" style="--shadow-bottom:3.7%;"></div>
+            <img src="assets/hero/05-character-media.webp" class="hero-layer hero-char hero-char-media" data-depth="0.13" data-role="Media" alt="" />
+          </div>
+
+          <div class="hero-enter hero-enter-char" style="left:48%;top:44%;width:27%;--enter-delay:.65s;">
+            <div class="ground-shadow" style="--shadow-bottom:11.1%;"></div>
+            <div class="leg-kick leg-kick-explore">
+              <img src="assets/hero/06-character-explore.webp" class="hero-layer hero-char hero-char-explore" data-depth="0.13" data-role="Explore" alt="" />
+            </div>
+          </div>
+
+          <div class="hero-enter hero-enter-char" style="left:63%;top:42%;width:29%;--enter-delay:.78s;">
+            <div class="ground-shadow" style="--shadow-bottom:13.0%;"></div>
+            <div class="leg-kick leg-kick-code">
+              <img src="assets/hero/04-character-code.webp?v=6" class="hero-layer hero-char hero-char-code" data-depth="0.13" data-role="Code" alt="" />
+            </div>
+          </div>
+
+          <div class="hero-enter hero-enter-char" style="left:45%;top:70%;width:10%;--enter-delay:1s;">
+            <div class="ground-shadow" style="--shadow-bottom:6.0%;"></div>
+            <img src="assets/hero/09-lantern.webp" class="hero-layer hero-char hero-char-lantern" data-depth="0.13" alt="" />
+          </div>
+
+          <div class="hero-enter hero-enter-char" style="left:15%;top:4%;width:14%;--enter-delay:.95s;">
+            <div class="bird-flap">
+              <img src="assets/hero/07-bird.webp" class="hero-layer hero-char hero-char-bird" data-depth="0.15" alt="" />
+            </div>
+          </div>
+
+          <div class="hero-enter hero-enter-char" style="left:81%;top:4%;width:16%;--enter-delay:1.1s;">
+            <img src="assets/hero/08-robot.webp" class="hero-layer hero-char hero-char-robot" data-depth="0.15" alt="" />
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="about" class="section">
-    <h2 class="section-title">关于我</h2>
-    <div class="about-content">
+    <h2 class="section-title reveal">关于我</h2>
+    <div class="about-content reveal">
       <div class="about-avatar" aria-hidden="true"></div>
       <p class="about-text">
         在这里写一段自我介绍。介绍你的背景、擅长的领域、工作经历和目标方向，
@@ -48,10 +158,12 @@
   </section>
 
   <section id="projects" class="section">
-    <h2 class="section-title">作品集</h2>
+    <h2 class="section-title reveal">作品集</h2>
     <div class="projects-grid">
       <article class="project-card">
-        <div class="project-thumb" style="background-image:url('assets/familyflow/onboarding-3.png');background-size:cover;background-position:center 25%;" aria-hidden="true"></div>
+        <div class="project-thumb project-thumb-mockup" aria-hidden="true">
+          <div class="mockup-frame" style="background-image:url('assets/familyflow/onboarding-3.png');"></div>
+        </div>
         <div class="project-body">
           <span class="project-tag">手机 App · UX/UI 设计</span>
           <h3>FamilyFlow</h3>
@@ -108,21 +220,22 @@
   </section>
 
   <section id="contact" class="section contact">
-    <h2 class="section-title">联系方式</h2>
-    <p class="contact-text">欢迎通过以下方式联系我</p>
-    <div class="contact-links">
-      <a href="mailto:you@example.com" class="contact-link">📧 you@example.com</a>
-      <a href="#" class="contact-link">💼 LinkedIn</a>
-      <a href="#" class="contact-link">🐙 GitHub</a>
+    <h2 class="section-title reveal">联系方式</h2>
+    <p class="contact-text reveal">欢迎通过以下方式联系我</p>
+    <div class="contact-links reveal">
+      <a href="mailto:you@example.com" class="contact-link magnetic">📧 you@example.com</a>
+      <a href="#" class="contact-link magnetic">💼 LinkedIn</a>
+      <a href="#" class="contact-link magnetic">🐙 GitHub</a>
     </div>
   </section>
 
 </main>
 
 <footer class="footer">
-  <p>&copy; <span id="year"></span> 你的名字. All rights reserved.</p>
+  <p>&copy; <span id="year"></span> 韦旻昕. All rights reserved.</p>
 </footer>
 
-<script src="js/main.js?v=2"></script>
+<script src="js/main.js?v=8"></script>
+<script src="js/splash-reveal.js?v=2"></script>
 </body>
 </html>

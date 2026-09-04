@@ -5,7 +5,14 @@
 .case-header {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 32px 24px 0;
+  /* Was 32px -- too little clearance under the site's fixed nav (.nav,
+     position:fixed, transparent background at rest), so the back-link
+     rendered underneath/overlapping the nav's own content instead of
+     below it. Got much more visible once the nav logo switched to the
+     brush display font (var(--title-font)), which renders taller than
+     the plain sans it replaced. Bumped to 100px, comfortably clearing
+     the nav (measured ~69px tall) with margin to spare. */
+  padding: 100px 24px 0;
 }
 
 .back-link {
@@ -15,6 +22,28 @@
   color: var(--text-muted);
   font-size: 0.9rem;
   font-weight: 600;
+  /* Nudged further left than the standard content column (.case-header's
+     own 24px padding edge) -- a negative margin so the back arrow reads
+     as its own outdented nav affordance instead of lining up flush with
+     the title/body text under it. -24px exactly cancels the header's
+     24px padding, landing the arrow at .case-header's own outer box
+     edge -- the same edge the nav logo (.logo in style.css) is now
+     nudged to match, so the two pieces of "chrome" align with each
+     other, one full padding-step left of the body text. (Was -12px,
+     which wasn't enough of an offset to read as intentional.) Then a
+     further -50px on top of that as a trial per feedback ("先移50px看
+     看"), matching the same extra offset just added to .logo in
+     style.css so the two stay aligned with each other. Scaled back
+     below 600px, same as .logo, so it doesn't end up flush against the
+     literal screen edge on phones -- left as-is since the extra -50px
+     was only asked for on desktop. */
+  margin-left: -74px;
+}
+
+@media (max-width: 600px) {
+  .back-link {
+    margin-left: -8px;
+  }
 }
 
 .back-link:hover {
@@ -25,7 +54,11 @@
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 48px 24px 0;
-  text-align: center;
+  /* Left-aligned (was center) so the tag/title/subtitle/hero-image column
+     shares the same left edge as .case-header's back-link and the nav
+     logo above it -- these all sit inside the same max-width/padding
+     box, so aligning text here is what actually lines them up. */
+  text-align: left;
 }
 
 .case-tag {
@@ -52,13 +85,21 @@
   color: var(--text-muted);
   font-size: 1.1rem;
   max-width: 900px;
-  margin: 0 auto 40px;
+  /* Was "0 auto 40px" -- centered this narrower box inside the (already
+     centered) .case-hero column, which is what pulled the subtitle's own
+     left edge ~66px to the right of the back-link/nav logo above it even
+     though its own text-align was already left. Flush left instead, so
+     it starts at the same edge as everything else in the hero column. */
+  margin: 0 0 40px;
   text-align: left;
 }
 
 .case-hero-image {
   width: 220px;
-  margin: 0 auto;
+  /* Was "0 auto" (centered on the page) -- flush left instead, to match
+     the now left-aligned tag/title/subtitle above it rather than sitting
+     off-center under a left-aligned text column. */
+  margin: 0;
   aspect-ratio: 832 / 1750;
   background: linear-gradient(160deg, #232323, #050505);
   border-radius: 30px;
@@ -94,6 +135,114 @@
   border-radius: 36px;
 }
 
+/* .floating-hero modifier -- the same slow up/down drift used on the
+   FamilyFlow project card's thumbnail mockup on the homepage (see
+   .mockup-frame / @keyframes mockupFloat in style.css), scaled up for
+   this much bigger hero mockup so the motion still reads at this size.
+   Opt-in per page via this class (only familyflow.html uses it for
+   now) rather than added to .case-hero-image itself, so the other
+   project pages' hero mockups stay static. */
+.case-hero-image.floating-hero {
+  animation: heroFloat 3.6s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Tilted video-marquee hero (FamilyFlow page only) -- the user's own
+   screen-recording loop (a horizontally-scrolling row of onboarding
+   cards), on a white, full-bleed band. Full-bleed via the standard
+   break-out-of-container trick (100vw + negative margins, capped at
+   max-width so it doesn't overshoot on very wide screens) since every
+   other section on this page sits inside the site's normal ~1080px
+   content column.
+
+   Two nested pieces, per feedback that the ROTATION belongs to the
+   video content, not to its frame: .marquee-window is a plain,
+   upright rectangle (straight edges, this is the "frame" -- never
+   rotated) that clips its contents; .marquee-video inside it is
+   oversized and rotated, like a tilted photo showing through a
+   straight window mat. The oversize percentage (see .marquee-video) is
+   deliberately kept below what would be needed to fully cover the
+   window's corners, so the rows of cards above and below the visible
+   one peek in at the top/bottom edges instead of being cropped out. */
+.marquee-hero {
+  width: 100vw;
+  max-width: 1920px;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
+  /* Side margin matches the exact box model every other section on the
+     page uses to center itself: max-width: var(--max-width) + margin:
+     0 auto (which centers a box no wider than that, shrinking to fill
+     the viewport below it) + an inner 24px padding on TOP of that
+     centering, not instead of it (see .case-header/.case-hero: padding
+     is 24px while the box itself is already margin:auto-centered).
+     So the real left offset those elements end up at is
+     max(0px, (100vw - var(--max-width)) / 2) + 24px -- e.g. at 1920px,
+     (1920-1080)/2 + 24 = 444px, not 420px. An earlier version of this
+     formula (max(24px, calc((100vw - var(--max-width)) / 2)), and
+     before that a clamp() tuned to only two widths) both dropped that
+     extra +24px, so this band's edge sat a flat 24px inboard of the
+     text's actual edge at every viewport above ~1100px wide. */
+  padding: 90px calc(max(0px, (100vw - var(--max-width)) / 2) + 24px);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.marquee-window {
+  position: relative;
+  width: 100%;
+  /* Reworked once the source was actually inspected frame-by-frame: it's
+     not a single scrolling row, it's an untilted, tiled GRID of cards
+     (multiple rows stacked). A taller window (e.g. 1.7:1) shows more of
+     the rows above/below, but changes the frame's own footprint on the
+     page -- the frame's overall size/aspect is meant to stay fixed, so
+     back to 2:1. Within a fixed 2:1 frame, the peek of neighboring rows
+     is maximized by pushing the video's tilt and oversize (see
+     .marquee-video) as low as the rotation-coverage math allows,
+     without dropping below the safe minimum that would let the
+     rotation gap slice into a card's own "Sign in" line. */
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.35);
+  /* White, not the dark #111 used at the steeper 18deg tilt -- at this
+     shallower angle and reduced oversize (see .marquee-video) the
+     rotated video deliberately doesn't fully cover the window's
+     corners, so what shows through in the gaps should read as part of
+     the surrounding white card, not a dark artifact. */
+  background: #fff;
+}
+
+.marquee-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  object-fit: cover;
+  /* With the frame locked back to 2:1, the only lever left for showing
+     more of the rows above/below is pushing tilt and oversize as low
+     as the rotation-coverage math safely allows -- both feed the same
+     safe-minimum formula (see .marquee-window's comment), and lower
+     tilt lowers that minimum, which is what actually buys back the
+     peek. 2deg needs a safe minimum of only ~107%; 108% is right at
+     that minimum, about as far as this can be pushed in a 2:1 frame
+     without the rotation gap slicing into a card's own "Sign in"
+     line. The tilt reads much more subtly at this angle than the
+     7deg/18deg tried earlier. */
+  width: 108%;
+  height: 108%;
+  transform: translate(-50%, -50%) rotate(-2deg);
+}
+
 .meta-bar {
   max-width: var(--max-width);
   margin: 56px auto 0;
@@ -120,30 +269,32 @@
   font-size: 0.95rem;
 }
 
+/* Every .case-section variant (plain, .wide, .sketch-section,
+   .poster-section) now shares this one max-width -- they used to be 760px
+   / 1080px / 1200px / 1600px respectively, each centered independently, so
+   their left/right edges drifted apart section to section down the same
+   page instead of lining up into one consistent column. .wide,
+   .sketch-section and .poster-section are kept as classes (still present
+   in the markup) but no longer change the width -- see each below. */
 .case-section {
-  max-width: 760px;
+  max-width: var(--max-width);
   margin: 0 auto;
   padding: 72px 24px;
 }
 
 .case-section.wide {
+  /* No longer widens anything (see .case-section's comment) -- was 1080px
+     when the plain default was still 760px. */
   max-width: var(--max-width);
 }
 
-/* Deliberately wider than .wide's var(--max-width) (1080px) — a generative-
-   art canvas reads as more "immersive/full-bleed" when it's allowed to
-   break past the site's normal text-column width, unlike the surrounding
-   paragraph sections which stay narrow for readability. Also applied to the
-   "设计介绍" section right above the embed (not just "互动预览" itself) so
-   both share the exact same width/left edge instead of drifting apart at
-   two different max-widths (.wide's 1080px vs this 1400px). */
 .case-section.sketch-section {
-  /* Was 1400px — at that width the 4:3 box (see .sketch-embed) came out
-     taller than a typical viewport, so the whole scene needed scrolling to
-     see end to end. 1200px keeps it clearly wider than the normal .wide
-     content column (1080px) without the resulting height blowing past one
-     screen — paired with .sketch-embed's own max-height below. */
-  max-width: 1200px;
+  /* No longer widens anything (see .case-section's comment) -- was 1200px.
+     .sketch-embed (below) sizes itself as width:100% of whatever this
+     section's column ends up being and rescales its own canvas content
+     with no distortion at any box ratio, so narrowing this from 1200px to
+     the standard column is a plain resize, not a layout break. */
+  max-width: var(--max-width);
 }
 
 .case-section h2 {
@@ -786,7 +937,11 @@
    the page horizontally. Definite width here + text-align:center is what
    actually prevents that horizontal scroll. */
 .case-section.poster-section {
-  max-width: 1600px;
+  /* No longer widens anything (see .case-section's comment) -- was 1600px,
+     which let .poster-shot img (below, itself capped at 1280px) display
+     noticeably larger than on any other page. At the standard column width
+     the poster now maxes out around ~1032px instead. */
+  max-width: var(--max-width);
 }
 
 .poster-shot {

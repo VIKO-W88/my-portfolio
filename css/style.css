@@ -3,13 +3,33 @@
   --bg-alt: #f7f7f9;
   --text: #1a1a1a;
   --text-muted: #6b6b76;
-  --accent: #3b5bfd;
+  --accent: #5369f8;
   --accent-contrast: #ffffff;
+  /* Quiet rule/underline color -- a soft, low-opacity tint of --accent used
+     for secondary lines (the hero link's underline) so they read as a
+     restrained detail rather than another bright blue element competing
+     with the eyebrow/link text itself. */
+  --line: rgba(83, 105, 248, 0.28);
   --border: #e6e6ea;
   --card-bg: #ffffff;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   --radius: 14px;
   --max-width: 1080px;
+  /* Brush display face for the hero headline, section titles, eyebrow,
+     link, nav logo and intro name. Permanent Marker leads the stack for
+     Latin text (per feedback); Long Cang is the fallback that kicks in
+     for any Chinese character Permanent Marker has no glyph for (Google
+     Fonts stacks fall back per-character, not per-element, so "VIKO"
+     renders in Permanent Marker and "关于我" etc. renders in Long Cang
+     from the same declaration). Both loaded from Google Fonts (see the
+     <link> in index.html) so they render identically on every
+     device/OS; falls back to a system script font, then plain sans, if
+     the page is ever opened offline. */
+  --title-font: "Permanent Marker", "Long Cang", "Yuanti SC", "STXingkai", "Microsoft YaHei", "PingFang SC", cursive;
+  /* Deep indigo ink for the headline -- echoes the portal/purple-character
+     palette. Overridden to a lighter tint in dark mode below so it stays
+     readable against the near-black background instead of going muddy. */
+  --title-color: #273173;
 }
 
 [data-theme="dark"] {
@@ -22,6 +42,7 @@
   --border: #26272c;
   --card-bg: #17181c;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --title-color: #b6c2ff;
 }
 
 * {
@@ -55,13 +76,54 @@ ul {
 }
 
 /* Nav */
+/* Transparent overlay nav -- sits on top of the full-bleed hero artwork
+   with light text (the illustration is always dark/colorful regardless of
+   site theme). Once scrolled past the hero it gains a solid, theme-aware
+   background (.is-solid, toggled in main.js) so it stays legible over the
+   plain-background sections further down the page. */
 .nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.nav .logo {
+  color: var(--text);
+}
+
+.nav .nav-links a {
+  color: var(--text-muted);
+}
+
+.nav .nav-links a:hover {
+  color: var(--text);
+  opacity: 0.75;
+}
+
+.nav.is-solid {
   background: color-mix(in srgb, var(--bg) 85%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
+}
+
+.nav.is-solid .logo {
+  color: var(--text);
+  text-shadow: none;
+}
+
+.nav.is-solid .nav-links a {
+  color: var(--text-muted);
+  text-shadow: none;
+}
+
+.nav.is-solid .nav-links a:hover {
+  color: var(--text);
+  opacity: 1;
 }
 
 .nav-inner {
@@ -75,8 +137,34 @@ ul {
 }
 
 .logo {
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-family: var(--title-font);
+  /* 400 instead of 700 -- Permanent Marker is a single-weight display
+     face, so a heavier weight here would just trigger the browser's
+     synthetic/faux bold instead of an actual bolder cut. Sized up a bit
+     from the old 1.1rem since brush-marker letterforms read smaller than
+     a plain sans at the same font-size. */
+  font-weight: 400;
+  font-size: 1.4rem;
+  /* Nudged left of .nav-inner's own 24px padding edge, same amount and
+     same reasoning as .back-link in project.css: the nav/back chrome
+     should read as outdented from the body-text column, not flush with
+     it. -24px exactly cancels the 24px padding, landing the logo at
+     .nav-inner's own outer box edge (the same edge the marquee full-
+     bleed band and the standard column's centering math both use) --
+     then a further -50px on top of that as a trial per feedback ("先移
+     50px看看"), so it currently sits 50px outside that box edge. Below
+     600px the box itself has no auto-centering margin left to borrow
+     from, so this full offset would push the logo off the literal edge
+     of the screen -- scaled back to -8px there instead (see media query
+     below), left as-is since the extra -50px was only asked for on
+     desktop. */
+  margin-left: -74px;
+}
+
+@media (max-width: 600px) {
+  .logo {
+    margin-left: -8px;
+  }
 }
 
 .nav-links {
@@ -85,13 +173,54 @@ ul {
 }
 
 .nav-links a {
-  font-size: 0.95rem;
+  position: relative;
+  /* Slightly larger than before (was 0.95rem) -- still a quiet nav label,
+     just a touch more present. */
+  font-size: 1.05rem;
   color: var(--text-muted);
   transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
   color: var(--text);
+}
+
+/* Hand-drawn underline that draws in on hover: a straight brush stroke --
+   thin at the start, swelling to its full width in the middle, tapering
+   back down with a rough/frayed tail at the end (like a dry brush lifting
+   off the page) -- rather than a ruler-straight bar or a wavy line. Built
+   as a CSS mask (a filled SVG silhouette of the stroke, not just an outline)
+   filled with var(--accent) -- using a mask instead of a plain
+   background-image keeps the color theme-aware (it follows --accent into
+   dark mode) without needing two separate hardcoded SVGs. Stretches to each
+   link's own width via mask-size:100% 100% + preserveAspectRatio="none" on
+   the SVG, so "关于我" / "作品集" / "联系方式" each get a proportionate
+   stroke instead of a fixed-width one. Hidden at rest (opacity/scale 0)
+   and scales in from the left on hover. */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -7px;
+  height: 9px;
+  background: var(--accent);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpath d='M100,6 C90,5.5 80,3 60,2.3 C40,1.6 30,1.8 18,2.6 L13,1.8 L10,3.2 L7,2.2 L4,3.8 L0,3 L0,9 L4,8.2 L7,9.6 L10,8.4 L13,9.6 L18,9.4 C30,10.2 40,10.4 60,9.7 C80,9 90,6.5 100,6 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpath d='M100,6 C90,5.5 80,3 60,2.3 C40,1.6 30,1.8 18,2.6 L13,1.8 L10,3.2 L7,2.2 L4,3.8 L0,3 L0,9 L4,8.2 L7,9.6 L10,8.4 L13,9.6 L18,9.4 C30,10.2 40,10.4 60,9.7 C80,9 90,6.5 100,6 Z'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0;
+  transform: scaleX(0.8) translateY(2px);
+  transform-origin: left center;
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.22, 0.7, 0.3, 1);
+  pointer-events: none;
+}
+
+.nav-links a:hover::after {
+  opacity: 1;
+  transform: scaleX(1) translateY(0);
 }
 
 .theme-toggle {
@@ -112,42 +241,467 @@ ul {
   transform: scale(1.08);
 }
 
-/* Hero */
+/* Hero — full-bleed illustration landing: the artwork fills the entire
+   viewport and the nav floats transparently on top of it. Text is a small
+   overlay, not a layout column competing with the illustration for space. */
 .hero {
-  padding: 120px 24px 100px;
-  text-align: center;
+  position: relative;
+  height: 100svh;
+  min-height: 640px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bg);
 }
 
-.hero-inner {
-  max-width: 640px;
-  margin: 0 auto;
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+  pointer-events: none;
+}
+
+.hero-inner,
+.hero-split {
+  position: absolute;
+  inset: 0;
+}
+
+/* Text overlay -- small, quiet, sitting directly on the plain background.
+   No scrim needed: the hero background is now a flat, theme-aware color
+   (var(--bg)) rather than a busy illustration, so plain theme text colors
+   already have all the contrast they need. */
+.hero-text {
+  position: absolute;
+  left: 7%;
+  top: 38%;
+  transform: translateY(-50%);
+  max-width: 560px;
+  z-index: 5;
+  text-align: left;
+}
+
+/* Left-to-right fade-in for the text block, one line at a time -- each
+   line starts shifted left and transparent, then slides in to its resting
+   position with a small stagger so the eyebrow leads, then the title, then
+   the link. Triggered by the same .hero.is-loaded class the illustration's
+   entrance already uses, so both reveals stay in sync.
+   Compound selectors (.hero-text .hero-eyebrow etc.) are used instead of
+   ".hero-text > *" specifically so this rule outranks .hero-link's own
+   standalone transition rule below -- both have equal specificity, and
+   .hero-link comes later in the file, so with equal-specificity selectors
+   .hero-link would otherwise win the cascade for the transition shorthand
+   entirely and make the link snap in on its fast 0.2s hover-transition
+   instead of fading in on this slower entrance timing. .hero-link's own
+   gap hover transition (the underline itself no longer changes on hover)
+   is folded into its entrance rule below so nothing is lost. */
+.hero-text .hero-eyebrow,
+.hero-text .hero-title {
+  opacity: 0;
+  transform: translateX(-28px);
+  transition: opacity 1.4s ease, transform 1.4s cubic-bezier(0.22, 0.7, 0.3, 1);
+}
+
+.hero-text .hero-link {
+  opacity: 0;
+  transform: translateX(-28px);
+  transition: opacity 1.4s ease, transform 1.4s cubic-bezier(0.22, 0.7, 0.3, 1),
+    gap 0.2s ease;
+}
+
+.hero-text .hero-eyebrow { transition-delay: 0.15s; }
+.hero-text .hero-title { transition-delay: 0.55s; }
+/* Delay list matches the transition-property order above (opacity, transform,
+   gap) position-by-position: the entrance fade gets the 0.95s stagger, but
+   gap -- the hover interaction, which fires long after the entrance is
+   done -- keeps a 0s delay so hovering the link always responds instantly
+   instead of inheriting the entrance's startup delay. */
+.hero-text .hero-link { transition-delay: 0.95s, 0.95s, 0s; }
+
+.hero.is-loaded .hero-text .hero-eyebrow,
+.hero.is-loaded .hero-text .hero-title,
+.hero.is-loaded .hero-text .hero-link {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: var(--accent);
-  font-weight: 600;
-  margin: 0 0 8px;
-  letter-spacing: 0.03em;
+  font-family: var(--title-font);
+  /* 400 instead of 700 -- Permanent Marker is a single-weight display
+     face, so a heavier weight here would just trigger the browser's
+     synthetic/faux bold instead of an actual bolder cut. */
+  font-weight: 400;
+  margin: 0 0 30px;
+  letter-spacing: 0.06em;
+  font-size: 1.1rem;
+}
+
+.hero-eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 6vw, 3.6rem);
-  margin: 0 0 16px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-family: var(--title-font);
+  /* 150px is the intended size on a wide desktop viewport -- clamped so
+     it scales down gracefully on narrower screens instead of overflowing
+     the text column (see the widened .hero-text max-width below). Tight
+     0.82 line-height keeps the wordmark from growing taller as it grows
+     wider -- it reads as a horizontal logotype, not a headline. */
+  font-size: clamp(92px, 9vw, 150px);
+  line-height: 0.82;
+  margin: 0 0 20px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--title-color);
 }
 
-.hero-subtitle {
-  font-size: 1.15rem;
-  color: var(--text-muted);
-  margin: 0 0 36px;
+.hero-tagline {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 26px;
+  line-height: 1.5;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--title-font);
+  /* 400 instead of 600 -- Permanent Marker is a single-weight display
+     face, so a heavier weight here would just trigger the browser's
+     synthetic/faux bold instead of an actual bolder cut. */
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--accent);
+  position: relative;
+  border-bottom: none;
+  padding-bottom: 4px;
+  /* gap transition now declared on .hero-text .hero-link above, folded in
+     alongside the entrance transition so nothing is lost. */
+}
+
+/* Underline as its own layer instead of a border-bottom: a border sits
+   flush with the text's own width, but the brief called for a line that
+   runs slightly past the label on both sides -- easiest done by offsetting
+   an absolutely-positioned strip beyond the link's own box. Thin (1px) and
+   low-opacity (var(--line)) so it reads as a quiet detail under the CTA,
+   not another bright accent element. Left flush with the text (0), right
+   extended past the arrow so the "longer than the text" length reads on
+   the side that has visual room. */
+.hero-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: -10px;
+  bottom: 0;
+  height: 1px;
+  background: var(--line);
+}
+
+/* Hover moves only the arrow (via gap, +5px) -- the underline's color/
+   weight stays exactly as at rest instead of the whole control lighting
+   up, per the "not a button" direction. */
+.hero-link:hover {
+  gap: 11px;
+}
+
+/* Illustration fills the entire hero -- the main visual, not a column
+   sharing space with the copy. Self-contained composition group keeps a
+   fixed aspect ratio (626 : 494) matching the reference illustration;
+   every character/prop inside is positioned as a percentage of THIS box
+   so the whole scene keeps its internal spatial relationships no matter
+   how large the box itself is rendered. Resizing this one element (via
+   the vw-based width below) is the ONLY thing that scales the group --
+   children are never nudged individually to make room for the text. */
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-scene-inner {
+  position: absolute;
+  right: -1%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 97%;
+  width: auto;
+  aspect-ratio: 626 / 494;
+  max-width: 1700px;
+  max-height: 1000px;
+}
+
+/* Below ~900px there is not enough side-by-side room -- the illustration
+   moves to a centered upper band and the text becomes a bottom overlay
+   band instead of a left column, but it is still the same full-bleed
+   overlay model (never a stacked, boxed layout). */
+@media (max-width: 900px) {
+  .hero-text {
+    left: 6%;
+    right: 6%;
+    top: auto;
+    bottom: 6%;
+    transform: none;
+    max-width: none;
+  }
+
+  .hero-scene-inner {
+    left: 50%;
+    right: auto;
+    top: 40%;
+    width: 92vw;
+    height: auto;
+    max-height: none;
+    min-width: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.hero-layer {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+  transform-origin: bottom center;
+  will-change: transform;
+  overflow: visible;
+}
+
+/* Entrance wrapper -- handles position (left/top/width, set inline per
+   element to match the reconstructed composition) and the one-time
+   "illustration world waking up" reveal. Idle motion below lives on the
+   <img> itself, so the two never fight over the transform property. */
+.hero-enter {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(20px) scale(0.94);
+  transition: opacity 0.6s ease, transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: var(--enter-delay, 0s);
+}
+
+.hero.is-loaded .hero-enter {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.hero-enter-portal { z-index: 1; }
+.hero-enter-char { z-index: 2; }
+.hero-enter-fg { z-index: 3; }
+
+/* Ground contact shadow -- a soft blurred ellipse anchored at each
+   character/prop's own visual bottom (--shadow-bottom is how far that
+   content sits above the wrapper's canvas edge, measured per-asset), so
+   floating PNGs read as standing/resting on the same shared ground plane
+   instead of pasted-on stickers. Sits behind the artwork (painted first). */
+.ground-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: var(--shadow-bottom, 0%);
+  transform: translate(-50%, 50%);
+  width: 62%;
+  height: 16%;
+  background: radial-gradient(ellipse at center, rgba(35, 25, 70, 0.32) 0%, rgba(35, 25, 70, 0) 72%);
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Portal stays almost stationary (per design note: never let the whole
+   arch bounce) -- only its own glow/brightness breathes, and it still
+   drifts a couple of px with the mouse like everything else. */
+.hero-portal {
+  transform: translate(var(--px, 0px), var(--py, 0px));
+  transition: transform 0.2s ease-out;
+  animation: portalGlow 6.8s ease-in-out infinite;
+}
+
+@keyframes portalGlow {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 18px rgba(255, 205, 240, 0.35)); }
+  50% { filter: brightness(1.05) drop-shadow(0 0 34px rgba(255, 205, 240, 0.6)); }
+}
+
+/* Character-driven micro animation -- every character gets its own
+   idle behaviour, duration and delay so nothing moves in lockstep.
+   Each keyframe folds in squash-and-stretch (paired scaleX/scaleY)
+   rather than a plain translateY, and always composes with the live
+   mouse-parallax offset carried in --px/--py. */
+
+/* Design and Media are the two standing, on-their-feet characters, so they
+   get a "marching in place" idle -- a snappier, rhythmic weight-shift bounce
+   (lift + lean alternating left/right on each beat) rather than the slower
+   gentle sway used for everything else. Both are single flattened sprites
+   (no separate leg layer), so this is a whole-body bounce standing in for
+   real alternating footsteps -- not literal leg articulation.
+   Design additionally hops sideways a little on each beat (a small extra
+   +/-9px translateX baked into the same translate() as the --px/--dx
+   parallax/dodge offset), landing in the same direction it's already
+   leaning, so it reads as a side-to-side hop rather than just an in-place
+   weight shift. */
+.hero-char-design {
+  animation: marchDesign 1.7s ease-in-out 0s infinite;
+}
+@keyframes marchDesign {
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px) + 0px), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg) scale(1, 1); }
+  25% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px) + -9px), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-5px) rotate(-3deg) scale(1.02, 0.97); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px) + 0px), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg) scale(1, 1); }
+  75% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px) + 9px), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-5px) rotate(3deg) scale(1.02, 0.97); }
+}
+
+.hero-char-media {
+  animation: marchMedia 1.5s ease-in-out 0.15s infinite,
+    mediaFlash 7.4s ease-in-out 2.2s infinite;
+}
+@keyframes marchMedia {
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg) scale(1, 1); }
+  25% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-6px) rotate(3deg) scale(1.02, 0.97); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg) scale(1, 1); }
+  75% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-6px) rotate(-3deg) scale(1.02, 0.97); }
+}
+@keyframes mediaFlash {
+  0%, 91%, 100% { filter: brightness(1); }
+  93% { filter: brightness(1.4); }
+  96% { filter: brightness(1.05); }
+}
+
+.hero-char-explore {
+  animation: charExplore 5.4s ease-in-out 1.1s infinite;
+}
+@keyframes charExplore {
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) rotate(0deg) translateY(0) scale(1, 1); }
+  35% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) rotate(-1.2deg) translateY(-3px) scale(1.01, 0.99); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) rotate(-1.2deg) translateY(-3px) scale(0.985, 1.03); }
+  70% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) rotate(1.4deg) translateY(-2px) scale(1.01, 0.99); }
+}
+
+.hero-char-code {
+  animation: charCode 4.2s ease-in-out 0.3s infinite;
+}
+@keyframes charCode {
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg) scale(1, 1); }
+  45% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-4px) rotate(-1deg) scale(1.008, 0.992); }
+  70% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(1px) rotate(1deg) scale(0.992, 1.008); }
+}
+
+/* Dangling-leg kick for the two seated characters -- a second, independent
+   animation nested one level inside each character's own idle sway (same
+   composition trick as the bird's wing flap). The wrapper's transform-origin
+   is pinned near where the body meets the rock (not the image center), so a
+   small rotation swings the dangling legs at the bottom noticeably more than
+   the torso above the pivot -- reads as an occasional slow kick rather than
+   the whole character tipping over. Single flattened sprite, no separate
+   leg layer, so it's a whole-body rotation around a hip-height pivot
+   standing in for real independent legs. Slow, with a hold between kicks
+   ("one kick at a time"), not a continuous swing. */
+.leg-kick {
+  display: block;
+  width: 100%;
+}
+
+.leg-kick-explore {
+  transform-origin: 50% 63%;
+  animation: legKickExplore 3.6s ease-in-out 0.4s infinite;
+}
+@keyframes legKickExplore {
+  0%, 55%, 100% { transform: rotate(0deg); }
+  70% { transform: rotate(-7deg); }
+  82% { transform: rotate(3deg); }
+}
+
+.leg-kick-code {
+  transform-origin: 50% 57%;
+  animation: legKickCode 3.9s ease-in-out 1.4s infinite;
+}
+@keyframes legKickCode {
+  0%, 55%, 100% { transform: rotate(0deg); }
+  70% { transform: rotate(7deg); }
+  82% { transform: rotate(-3deg); }
+}
+
+.hero-char-bird {
+  animation: charBird 7.5s ease-in-out 0.2s infinite;
+}
+@keyframes charBird {
+  0% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translate(0, 0) rotate(-4deg); }
+  25% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translate(8px, -10px) rotate(2deg); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translate(16px, -2px) rotate(-2deg); }
+  75% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translate(8px, -14px) rotate(3deg); }
+  100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translate(0, 0) rotate(-4deg); }
+}
+
+/* Wing flap -- a second, independent animation nested one level inside the
+   bird's own drift/rotate motion. Two separate elements each get their own
+   transform animation (parent = slow flight drift, child = fast wing beat)
+   so the two compose without fighting over the same CSS property. This is
+   a whole-sprite squash/stretch standing in for a real per-part wing (we
+   don't have the bird split into body+wing layers), tuned fast enough to
+   read as continuous flapping rather than the slow body sway used
+   elsewhere. */
+.bird-flap {
+  display: block;
+  width: 100%;
+  animation: birdFlap 0.85s ease-in-out infinite;
+}
+@keyframes birdFlap {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  25% { transform: scaleX(0.82) scaleY(1.06); }
+  50% { transform: scaleX(1.1) scaleY(0.95); }
+  75% { transform: scaleX(0.85) scaleY(1.05); }
+}
+
+.hero-char-robot {
+  animation: robotHover 4.6s ease-in-out 0.9s infinite, robotGlow 6.2s ease-in-out 1.6s infinite;
+}
+@keyframes robotHover {
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-9px) rotate(2deg); }
+}
+@keyframes robotGlow {
+  0%, 100% { filter: drop-shadow(0 4px 6px rgba(120, 180, 255, 0.25)); }
+  50% { filter: drop-shadow(0 8px 12px rgba(120, 180, 255, 0.5)); }
+}
+
+.hero-char-lantern {
+  animation: lanternFlicker 5s ease-in-out 0.4s infinite;
+}
+@keyframes lanternFlicker {
+  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(0); filter: brightness(1); }
+  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(-3px); filter: brightness(1.12); }
+}
+
+.hero-foreground {
+  pointer-events: none;
+}
+
+.hero-foreground-sway {
+  animation: plantSway 5.9s ease-in-out 0s infinite;
+}
+@keyframes plantSway {
+  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) rotate(0deg); }
+  50% { transform: translate(var(--px, 0px), var(--py, 0px)) rotate(1.2deg); }
+}
+
+.hero-char {
+  transition: filter 0.2s ease;
+}
+
+.hero-char[data-role] {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.hero-char[data-role]:hover {
+  filter: brightness(1.06) drop-shadow(0 6px 14px rgba(36, 26, 69, 0.25));
 }
 
 .btn {
@@ -156,28 +710,200 @@ ul {
   font-weight: 600;
   font-size: 0.95rem;
   border: 1px solid transparent;
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease, opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
   display: inline-block;
+  will-change: transform;
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background: linear-gradient(135deg, #6d85ff, #8f6dff);
+  color: #fff;
+  box-shadow: 0 10px 30px -8px rgba(109, 133, 255, 0.6);
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  opacity: 0.92;
+  box-shadow: 0 14px 36px -8px rgba(109, 133, 255, 0.75);
 }
 
 .btn-outline {
-  border-color: var(--border);
-  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #fff;
 }
 
 .btn-outline:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: #9db2ff;
+  color: #9db2ff;
+}
+
+/* Scroll-reveal (see main.js IntersectionObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Section titles get an extra blur-to-focus "翻页" style reveal */
+.section-title.reveal {
+  filter: blur(14px);
+  transform: translateY(36px) scale(0.96);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.9s ease;
+}
+
+.section-title.reveal.in-view {
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+}
+
+/* Intro splash (index.html only) — plays once per browser session */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #08080d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.intro-overlay.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-name {
+  font-family: var(--title-font);
+  font-size: clamp(1.6rem, 5vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: introNameIn 0.7s ease 0.2s forwards;
+}
+
+@keyframes introNameIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom cursor — a lagging ring + a tight dot, mouse/trackpad only.
+   Was a flat black-on-white blob (mix-blend-mode: difference against a
+   white/light page always resolves to near-black, no matter the accent
+   color underneath) -- replaced with the site's actual --accent color plus
+   a soft white halo, so it reads as a colored, on-brand cursor and still
+   stays visible over the hero illustration's busy pastel palette. */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.55);
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--accent);
+  opacity: 0.6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease,
+    opacity 0.25s ease, background 0.25s ease;
+}
+
+/* Hover no longer grows the ring or fills it with a color wash -- the ring
+   now stays exactly the same size/appearance whether or not the cursor is
+   over a link, per feedback that the grow+fill hover state looked off. The
+   is-hovering class is still added/removed by main.js but no rule reacts
+   to it, so it's a harmless no-op left in place rather than touching the
+   JS as well. */
+
+body.has-custom-cursor,
+body.has-custom-cursor a,
+body.has-custom-cursor button {
+  cursor: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: auto;
+  }
+}
+
+/* Project thumbnails — subtle parallax shift on hover (see main.js) */
+.project-thumb {
+  transition: transform 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg,
+  .hero-portal,
+  .hero-char-design,
+  .hero-char-media,
+  .hero-char-explore,
+  .hero-char-code,
+  .hero-char-bird,
+  .bird-flap,
+  .leg-kick-explore,
+  .leg-kick-code,
+  .hero-char-robot,
+  .hero-char-lantern,
+  .hero-foreground-sway {
+    animation: none !important;
+  }
+  .hero-enter,
+  .hero-text .hero-eyebrow,
+  .hero-text .hero-title,
+  .hero-text .hero-link {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .section-title.reveal {
+    filter: none;
+  }
+  .intro-overlay {
+    display: none;
+  }
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+  .mockup-frame,
+  .floating-hero {
+    animation: none !important;
+  }
 }
 
 /* Sections */
@@ -185,6 +911,7 @@ ul {
   padding: 90px 24px;
   max-width: var(--max-width);
   margin: 0 auto;
+  scroll-margin-top: 84px;
 }
 
 .section-alt {
@@ -199,11 +926,18 @@ ul {
 }
 
 .section-title {
-  font-size: 2rem;
-  font-weight: 800;
+  font-family: var(--title-font);
+  font-size: 2.3rem;
+  /* 400 instead of the old 800 -- the brush font has no real bold face of
+     its own, so a heavy weight here would just trigger the browser's
+     synthetic/faux bold (mechanically thickened strokes), which looks
+     blocky and ruins the hand-lettered feel. Matches the hero title's own
+     font-weight for the same reason. */
+  font-weight: 400;
   margin: 0 0 40px;
   text-align: center;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em;
+  color: var(--title-color);
 }
 
 /* About */
@@ -317,6 +1051,50 @@ ul {
   height: 150px;
   flex-shrink: 0;
   background: linear-gradient(135deg, var(--bg-alt), var(--border));
+}
+
+/* Floating phone-mockup thumbnail -- used on the FamilyFlow card only
+   (see index.html). A small CSS device frame sits centered on the
+   thumb's existing gradient backdrop, holding the real onboarding
+   screenshot, and drifts gently up/down at rest so the card reads as a
+   live product shot instead of a static cropped screenshot. Kept as its
+   own class rather than changing .project-thumb itself so every other
+   project card keeps its plain flat thumbnail unchanged. */
+.project-thumb-mockup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mockup-frame {
+  position: relative;
+  width: 64px;
+  height: 128px;
+  border-radius: 14px;
+  border: 3px solid #1f2430;
+  background-color: #fff;
+  background-size: cover;
+  background-position: center 10%;
+  box-shadow: 0 14px 26px -8px rgba(0, 0, 0, 0.35);
+  animation: mockupFloat 3.6s ease-in-out infinite;
+}
+
+.mockup-frame::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes mockupFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 .project-body {
@@ -450,6 +1228,110 @@ ul {
 
 @media (max-width: 640px) {
   .nav-links {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Splash reveal: background + character dissolve intro (added)
+   ------------------------------------------------------------
+   Plays on first opening the site this session and on an actual
+   page refresh (not on every navigation back to the homepage),
+   right after the name-intro overlay above finishes -- see
+   js/splash-reveal.js. Purely additive: nothing above this
+   comment is touched, and none of the site's existing positions,
+   sizes, entrance animations or interactions change because of
+   this -- it only adds a temporary full-screen layer that sits on
+   top of the real page while it plays, then fades itself out and
+   removes itself, revealing the real page exactly as it was
+   already rendering underneath. Skipped entirely under
+   prefers-reduced-motion.
+   ============================================================ */
+.splash-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 9000; /* below the custom cursor (9999) and the name-intro
+                     overlay (10000), above all hero content */
+  background: var(--bg);
+  transition: opacity 900ms ease;
+}
+
+.splash-reveal.splash-reveal-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-reveal canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.splash-reveal .splash-scene {
+  position: absolute;
+  inset: 0;
+}
+
+.splash-reveal .splash-scene-inner {
+  position: absolute;
+  right: -1%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 97%;
+  width: auto;
+  aspect-ratio: 626 / 494;
+  max-width: 1700px;
+  max-height: 1000px;
+}
+
+.splash-reveal .splash-layer-wrap {
+  position: absolute;
+  /* "World waking up" entrance for the splash's own characters -- same
+     easing/duration/stagger recipe as the real hero's .hero-enter below
+     (same --enter-delay values, set inline per element in index.html), so
+     it reads as the same motion language in both places. This is play #1
+     of the character entrance (see js/splash-reveal.js's start()); play #2
+     is the real .hero-enter itself, retriggered fresh once the background
+     finishes dissolving (see triggerHeroReveal() there). Gated by
+     .splash-active, added by JS right as the hold phase begins. */
+  opacity: 0;
+  transform: translateY(20px) scale(0.94);
+  transition: opacity 0.6s ease, transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: var(--enter-delay, 0s);
+}
+
+.splash-reveal.splash-active .splash-layer-wrap {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.splash-reveal .splash-layer {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.splash-reveal .splash-wrap-portal { z-index: 1; }
+.splash-reveal .splash-wrap-char { z-index: 2; }
+.splash-reveal .splash-wrap-fg { z-index: 3; }
+
+@media (max-width: 900px) {
+  .splash-reveal .splash-scene-inner {
+    left: 50%;
+    right: auto;
+    top: 40%;
+    width: 92vw;
+    height: auto;
+    max-height: none;
+    min-width: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-reveal {
     display: none;
   }
 }

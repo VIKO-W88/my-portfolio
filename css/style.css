@@ -145,25 +145,49 @@ ul {
      a plain sans at the same font-size. */
   font-weight: 400;
   font-size: 1.4rem;
-  /* Nudged left of .nav-inner's own 24px padding edge, same amount and
-     same reasoning as .back-link in project.css: the nav/back chrome
-     should read as outdented from the body-text column, not flush with
-     it. -24px exactly cancels the 24px padding, landing the logo at
-     .nav-inner's own outer box edge (the same edge the marquee full-
-     bleed band and the standard column's centering math both use) --
-     then a further -50px on top of that as a trial per feedback ("先移
-     50px看看"), so it currently sits 50px outside that box edge. Below
-     600px the box itself has no auto-centering margin left to borrow
-     from, so this full offset would push the logo off the literal edge
-     of the screen -- scaled back to -8px there instead (see media query
-     below), left as-is since the extra -50px was only asked for on
-     desktop. */
-  margin-left: -74px;
+  /* Left edge locked to .hero-text's own left edge ("VIKO"), at every
+     viewport width -- not just approximately, exactly, per feedback
+     ("垂直线左对齐"). .hero-text is positioned inside .hero-inner, which
+     is inset:0 on .hero (full viewport width, no max-width), so its
+     left:7% is 7% of the RAW viewport width, always -- unlike .nav-inner,
+     which is capped at var(--max-width)/1080px and centered once the
+     viewport passes that, so its own left edge is 0 below 1080px but
+     (viewport-1080)/2 above it. Matching those two different boxes to
+     the same target line means .logo's margin-left can't be a flat
+     number -- it has to be solved per width band from:
+       target_left = margin-left + nav-inner-left-edge + 24 (padding)
+     Above 1080px: nav-inner-left-edge = (100vw - 1080px)/2, target =
+     7vw, so margin-left = 7vw - (100vw-1080px)/2 - 24px
+                          = -43vw + 516px.
+     (Replaces the earlier flat -74px, itself a manual trial -- "先移
+     50px看看" -- that got the direction right but never landed on exact
+     alignment; the real target sits further left still at most desktop
+     widths, e.g. -103px at 1440px wide vs. the old -74px.) */
+  margin-left: calc(-43vw + 516px);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1080px) {
   .logo {
-    margin-left: -8px;
+    /* 901-1080px: nav-inner is no longer centered (viewport <= its own
+       max-width, so its left edge is flush at 0), but .hero-text is
+       still on its "wide" 7% formula (that switch happens at 900px, not
+       1080px -- see the .hero-text media query further down). So this
+       band uses the same target_left formula as above with the
+       nav-inner-left-edge term dropped to 0: margin-left = 7vw - 24px. */
+    margin-left: calc(7vw - 24px);
+  }
+}
+
+@media (max-width: 900px) {
+  .logo {
+    /* At and below 900px .hero-text switches to left:6% (viewport-
+       relative, see the .hero-text media query further down); nav-inner
+       is still flush at the viewport edge here too, so margin-left =
+       6vw - 24px. (This band was fixed first; it used to be a flat
+       -8px that only approximated one width and, worse, wasn't applied
+       above 600px at all -- so 600-900px was still on the desktop
+       -74px margin and got clipped off the left edge of the screen.) */
+    margin-left: calc(6vw - 24px);
   }
 }
 
@@ -940,27 +964,112 @@ body.has-custom-cursor button {
   color: var(--title-color);
 }
 
-/* About */
-.about-content {
+/* About -- a slanted trapezoid that bleeds all the way to the real left
+   edge of the browser window (not just this centred section's own edge)
+   and fills the section's full height, per feedback. The trapezoid itself
+   is filled with the photo (cropped to cover it, with the accent
+   gradient behind as a fallback where the source image has any
+   transparency) rather than a small frame set inside a colour block. The
+   title/copy stay in the normal centred column, pushed clear of it.
+
+   --about-bleed is the horizontal gap between the viewport edge and
+   where this section's own content starts (half the leftover space once
+   the centred, max-width, padded column is subtracted from the viewport,
+   plus the section's own left padding) -- i.e. exactly how far the shape
+   has to reach left to touch the window edge, at any window width. The
+   shape's total width is that reach plus a fixed amount further into the
+   content column, capped so it doesn't sprawl into an ultra-wide, barely
+   diagonal band on very wide monitors. Stacks to a small contained card
+   above the text on narrow screens, where there's no room to bleed. */
+.about-section {
+  /* No overflow:hidden here -- .about-shape deliberately extends past this
+     section's own (centred, max-width) box to reach the real viewport
+     edge; clipping to the section's box would cut that bleed right off.
+     body already has overflow-x:hidden globally as a safety net. */
+  position: relative;
+  min-height: 760px;
   display: flex;
-  align-items: center;
-  gap: 40px;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
 }
 
-.about-avatar {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 40%, #ff8fd8));
-  flex-shrink: 0;
+.about-shape {
+  --about-bleed: calc((100vw - min(100vw - 48px, var(--max-width))) / 2 + 24px);
+  position: absolute;
+  /* Overscan top/bottom well past the section's own edge -- a plain
+     top:0/bottom:0 (and even a smaller 10px overscan) still left a
+     hairline gap in testing on some displays, so this goes bigger, and
+     the image inside is stretched taller still (see .about-shape-photo)
+     as a second layer of margin. None of it is visible since the image's
+     own colour runs right to its edge. */
+  top: -24px;
+  bottom: -24px;
+  left: calc(-1 * var(--about-bleed));
+  width: min(calc(var(--about-bleed) + 460px), 680px);
+  overflow: hidden;
+}
+
+.about-shape-photo {
+  /* The trapezoid itself -- shape, sky/ocean scene and all -- is the
+     source image's own artwork (transparent outside the diagonal), not a
+     CSS clip-path anymore. It's stretched to exactly match this box in
+     width, and slightly taller than the box in height (with a matching
+     negative top) so there's a few extra pixels of vertical margin over
+     and above the container's own overscan -- belt and suspenders against
+     the top/bottom hairline gap. */
+  display: block;
+  position: absolute;
+  top: -6px;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 12px);
+  object-fit: fill;
+}
+
+.about-body {
+  position: relative;
+  padding-left: 520px;
 }
 
 .about-text {
   max-width: 560px;
   color: var(--text-muted);
   font-size: 1.05rem;
+}
+
+@media (max-width: 1080px) {
+  .about-body {
+    padding-left: 420px;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-body {
+    padding-left: 320px;
+  }
+}
+
+@media (max-width: 720px) {
+  .about-section {
+    min-height: 0;
+    display: block;
+  }
+
+  /* Per feedback: no room for the trapezoid to read well on a phone-width
+     screen, so it's dropped entirely there and the section is just the
+     title and copy. */
+  .about-shape {
+    display: none;
+  }
+
+  .about-body {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .about-text {
+    margin: 0 auto;
+  }
 }
 
 /* Skills */
@@ -994,15 +1103,29 @@ body.has-custom-cursor button {
   font-size: 0.95rem;
 }
 
-/* Projects — single horizontal row, drag-to-scroll (see main.js) */
+/* Wider than the site's normal 1080px content column -- at that width
+   only ~3 cards fit in view and the row looks sparse/empty on any
+   laptop-or-larger screen, with a lot of dead margin on both sides
+   ("左右留白太多了，显得页面很空"). 1600px comfortably shows 4 full
+   cards plus a peek of the next one before the row needs to scroll. */
+#projects.section {
+  max-width: 1600px;
+}
+
+/* Projects — centered "coverflow" carousel: cards nearest the row's
+   center are scaled up by main.js (--focus-scale custom property based on
+   distance from center), tapering down sharply toward the edges (see
+   .project-card below for the reference-matched sizing). Extra inline
+   padding lets the first/last cards scroll all the way to center. */
 .projects-grid {
   display: flex;
-  gap: 18px;
+  align-items: center;
+  gap: 22px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 6px 6px 22px;
-  margin: 0 -6px;
+  padding: 34px max(24px, calc(50% - 150px)) 40px;
   scroll-snap-type: x proximity;
+  scroll-padding-inline: max(24px, calc(50% - 150px));
   cursor: grab;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
@@ -1031,24 +1154,33 @@ body.has-custom-cursor button {
 .project-card {
   display: flex;
   flex-direction: column;
-  flex: 0 0 220px;
-  width: 220px;
-  scroll-snap-align: start;
+  flex: 0 0 300px;
+  width: 300px;
+  scroll-snap-align: center;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+  transform: scale(var(--focus-scale, 1));
+  /* transform: scale() shrinks a card around its own center without
+     freeing up any of the flex row's layout space, so a shrunk card
+     used to leave a visibly bigger gap next to it than a full-size one
+     -- reported as uneven spacing. This margin cancels exactly that
+     card's own reserved-but-unused half-width on each side (e.g. at
+     scale 0.75 it pulls in 150px * 0.25 = 37.5px per side), so the row's
+     22px gap reads as the same visual gap everywhere regardless of any
+     card's current scale. */
+  margin-inline: calc((var(--focus-scale, 1) - 1) * 150px);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), margin 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-14px) scale(1.18);
+  transform: scale(calc(var(--focus-scale, 1) * 1.04)) translateY(-8px);
   box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.35);
-  z-index: 2;
 }
 
 .project-thumb {
-  height: 150px;
+  height: 220px;
   flex-shrink: 0;
   background: linear-gradient(135deg, var(--bg-alt), var(--border));
 }
@@ -1069,10 +1201,10 @@ body.has-custom-cursor button {
 
 .mockup-frame {
   position: relative;
-  width: 64px;
-  height: 128px;
-  border-radius: 14px;
-  border: 3px solid #1f2430;
+  width: 92px;
+  height: 184px;
+  border-radius: 18px;
+  border: 4px solid #1f2430;
   background-color: #fff;
   background-size: cover;
   background-position: center 10%;
@@ -1083,11 +1215,11 @@ body.has-custom-cursor button {
 .mockup-frame::before {
   content: "";
   position: absolute;
-  top: 7px;
+  top: 9px;
   left: 50%;
   transform: translateX(-50%);
-  width: 20px;
-  height: 3px;
+  width: 28px;
+  height: 4px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.6);
 }
@@ -1098,7 +1230,7 @@ body.has-custom-cursor button {
 }
 
 .project-body {
-  padding: 12px 14px;
+  padding: 18px 20px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -1109,24 +1241,24 @@ body.has-custom-cursor button {
   background: color-mix(in srgb, var(--accent) 12%, transparent);
   color: var(--accent);
   font-weight: 700;
-  font-size: 0.68rem;
-  padding: 2px 9px;
+  font-size: 0.75rem;
+  padding: 3px 11px;
   border-radius: 999px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .project-body h3 {
-  margin: 0 0 4px;
-  font-size: 0.95rem;
+  margin: 0 0 6px;
+  font-size: 1.15rem;
 }
 
 .project-body p {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   color: var(--text-muted);
-  font-size: 0.78rem;
-  line-height: 1.4;
+  font-size: 0.9rem;
+  line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1134,9 +1266,45 @@ body.has-custom-cursor button {
 .project-link {
   font-weight: 600;
   color: var(--accent);
-  font-size: 0.9rem;
+  font-size: 1rem;
   margin-top: auto;
-  padding-top: 10px;
+  padding-top: 12px;
+}
+
+/* Placeholder project cards -- reserve a spot in the carousel for work
+   that isn't written up yet. Dashed border + muted "+" mark it clearly
+   as a stand-in rather than a finished, clickable case study. */
+.project-card-placeholder {
+  border-style: dashed;
+  background: var(--bg-alt);
+}
+
+.project-card-placeholder:hover {
+  box-shadow: none;
+}
+
+.project-thumb-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-alt);
+}
+
+.placeholder-icon {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--border);
+  line-height: 1;
+}
+
+.project-tag-placeholder {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.project-card-placeholder .project-body p {
+  color: var(--text-muted);
 }
 
 /* Timeline */

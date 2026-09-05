@@ -35,10 +35,48 @@ if (nav) {
 }
 
 // Projects row — click-and-drag horizontal scrolling (in addition to
-// trackpad/touch scroll, which already works natively).
+// trackpad/touch scroll, which already works natively), plus a
+// closed-loop wrap so dragging past the last card cycles back to the
+// first (and back past the first cycles to the last) instead of
+// hitting a hard stop.
 const projectsGrid = document.querySelector(".projects-grid");
 
 if (projectsGrid) {
+  // --- Closed-loop setup -------------------------------------------------
+  // Clone the real card set a couple of times on either side of itself,
+  // so there's always more (pixel-identical) content to scroll into.
+  // Scrolling stays completely native (drag + trackpad/touch); once the
+  // visitor drifts a full set-width away from "home" we silently jump
+  // scrollLeft back by exactly one set-width, which is invisible since
+  // the clones are identical to the originals. Which copy is "real"
+  // keeps shifting, so clones are marked aria-hidden / tabindex=-1.
+  const originalCards = Array.from(
+    projectsGrid.querySelectorAll(".project-card")
+  );
+  const LOOP_COPIES = 2;
+
+  const buildCloneSet = () =>
+    originalCards.map((card) => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      clone.querySelectorAll("a, button").forEach((el) => {
+        el.setAttribute("tabindex", "-1");
+      });
+      return clone;
+    });
+
+  if (originalCards.length) {
+    for (let i = 0; i < LOOP_COPIES; i++) {
+      const beforeFrag = document.createDocumentFragment();
+      buildCloneSet().forEach((c) => beforeFrag.appendChild(c));
+      projectsGrid.insertBefore(beforeFrag, projectsGrid.firstElementChild);
+
+      const afterFrag = document.createDocumentFragment();
+      buildCloneSet().forEach((c) => afterFrag.appendChild(c));
+      projectsGrid.appendChild(afterFrag);
+    }
+  }
+
   let isDown = false;
   let didDrag = false;
   let startX = 0;
@@ -56,6 +94,7 @@ if (projectsGrid) {
     if (!isDown) return;
     isDown = false;
     projectsGrid.classList.remove("dragging");
+    scheduleSettleCheck();
   });
 
   window.addEventListener("mousemove", (e) => {
@@ -76,6 +115,154 @@ if (projectsGrid) {
     },
     true
   );
+
+  // Coverflow-style focus scaling — the card nearest the row's own
+  // horizontal center is scaled up via a --focus-scale custom property,
+  // tapering down toward the edges as it scrolls away. Includes the
+  // loop clones so the effect stays seamless while wrapping.
+  const projectCards = Array.from(
+    projectsGrid.querySelectorAll(".project-card")
+  );
+  let focusRAF = null;
+
+  const applyProjectFocus = () => {
+    focusRAF = null;
+    const gridRect = projectsGrid.getBoundingClientRect();
+    const centerX = gridRect.left + gridRect.width / 2;
+    // Falloff distance is tied to a couple of card-widths, not half the
+    // (now much wider) row -- so the size drop-off happens over the
+    // nearest card or two, reading as a clear peak at center like the
+    // reference deck, instead of a gentle bump barely visible across a
+    // wide row.
+    const cardStep = 300 + 22; // .project-card base width + .projects-grid gap
+    const maxDist = cardStep * 1.5;
+
+    projectCards.forEach((card) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const t = Math.min(Math.abs(cardCenter - centerX) / maxDist, 1);
+      // Wider center-to-edge range (1.25x down to 0.75x, was a subtle
+      // 1.15x/0.82x) so the focused card reads as clearly bigger. No
+      // opacity fade -- every card stays fully opaque like the
+      // reference; size alone carries the focus effect.
+      const scale = 1.25 - 0.5 * t;
+      card.style.setProperty("--focus-scale", scale.toFixed(3));
+      card.style.zIndex = String(Math.round((1 - t) * 10) + 1);
+    });
+  };
+
+  const scheduleProjectFocus = () => {
+    if (focusRAF) return;
+    focusRAF = requestAnimationFrame(applyProjectFocus);
+  };
+
+  // "Home" is: the real first card (FamilyFlow) sitting a small, normal
+  // gap from the row's left edge -- rather than scrollLeft=0, which (given
+  // the row's coverflow-centering padding) leaves a big empty gap before
+  // it AND nudges it nearest the row's own center, so FamilyFlow rather
+  // than the card meant to stand out is what gets scaled up. Home also
+  // doubles as the reference point the loop wraps around.
+  let loopSetWidth = 0;
+  let loopHomeStart = 0;
+  const desiredLeftGap = 24; // matches the row's own minimum edge padding
+
+  const measureLoop = () => {
+    if (!originalCards.length) return;
+    const gridRect = projectsGrid.getBoundingClientRect();
+    const firstRect = originalCards[0].getBoundingClientRect();
+    loopHomeStart =
+      projectsGrid.scrollLeft +
+      (firstRect.left - gridRect.left - desiredLeftGap);
+
+    const nextSetFirstCard =
+      projectCards[originalCards.length * (LOOP_COPIES + 1)];
+    if (nextSetFirstCard) {
+      loopSetWidth =
+        nextSetFirstCard.getBoundingClientRect().left - firstRect.left;
+    }
+  };
+
+  let userMovedRow = false;
+  ["mousedown", "touchstart", "wheel"].forEach((evt) => {
+    projectsGrid.addEventListener(
+      evt,
+      () => {
+        userMovedRow = true;
+      },
+      { passive: true, once: true }
+    );
+  });
+
+  let didSetInitialScroll = false;
+  const setInitialScrollPosition = () => {
+    if (userMovedRow || didSetInitialScroll || !originalCards.length) return;
+    measureLoop();
+    projectsGrid.scrollLeft = loopHomeStart;
+    didSetInitialScroll = true;
+  };
+
+  // Silently jump by one set-width once the row drifts a full set away
+  // from home so it never runs out of (identical) content to show.
+  // Skipped mid-drag so it never fights the drag math; runs once
+  // scrolling/dragging settles instead. WRAP_SLOP absorbs the few px of
+  // rounding that shows up once the coverflow focus-scale transform has
+  // been applied to nearby cards (getBoundingClientRect includes CSS
+  // transforms, so a scaled-down card measures a little short of its
+  // untransformed position) -- without slack that noise alone could trip
+  // the boundary check and jump a whole extra set-width by mistake.
+  const WRAP_SLOP = 80;
+  let settleTimer = null;
+  const normalizeLoop = () => {
+    if (isDown || !loopSetWidth) return;
+    let guard = 0;
+    while (
+      projectsGrid.scrollLeft < loopHomeStart - WRAP_SLOP &&
+      guard++ < 10
+    ) {
+      projectsGrid.scrollLeft += loopSetWidth;
+    }
+    while (
+      projectsGrid.scrollLeft > loopHomeStart + loopSetWidth + WRAP_SLOP &&
+      guard++ < 20
+    ) {
+      projectsGrid.scrollLeft -= loopSetWidth;
+    }
+  };
+
+  const scheduleSettleCheck = () => {
+    if (settleTimer) clearTimeout(settleTimer);
+    settleTimer = setTimeout(normalizeLoop, 120);
+  };
+
+  projectsGrid.addEventListener(
+    "scroll",
+    () => {
+      scheduleProjectFocus();
+      scheduleSettleCheck();
+    },
+    { passive: true }
+  );
+  window.addEventListener("resize", () => {
+    measureLoop();
+    scheduleProjectFocus();
+  });
+  // Note: load/timeout intentionally re-run setInitialScrollPosition()
+  // (a no-op once it has already snapped once) but do NOT call
+  // measureLoop() again here -- by then applyProjectFocus() has already
+  // scaled nearby cards via CSS transform, and re-measuring off those
+  // transformed rects would drift loopHomeStart/loopSetWidth away from
+  // the untransformed values captured at true setup time.
+  window.addEventListener("load", () => {
+    setInitialScrollPosition();
+    scheduleProjectFocus();
+  });
+  setInitialScrollPosition();
+  scheduleProjectFocus();
+  // Re-run once thumbnails/layout settle right after first paint.
+  setTimeout(() => {
+    setInitialScrollPosition();
+    scheduleProjectFocus();
+  }, 300);
 }
 
 // Hero card — cursor-reactive 3D tilt + holographic sheen.

@@ -2,19 +2,26 @@
 
 .proto-fonts h1, .proto-fonts h2, .proto-fonts h3 { font-family: 'Baloo 2', sans-serif; }
 
+/* Back in normal document flow -- per feedback, it should scroll away
+   with the page rather than stay pinned. Top padding clears the site's
+   fixed .nav (69px tall -- see .nav in style.css). This is the first
+   thing on every project page, familyflow.html included -- the
+   .marquee-hero banner there now sits BELOW this (back button reads
+   above the image), so this rule needs no per-page override to stay
+   at the same coordinates on every page. */
 .case-header {
   max-width: var(--max-width);
   margin: 0 auto;
-  /* Was 32px -- too little clearance under the site's fixed nav (.nav,
-     position:fixed, transparent background at rest), so the back-link
-     rendered underneath/overlapping the nav's own content instead of
-     below it. Got much more visible once the nav logo switched to the
-     brush display font (var(--title-font)), which renders taller than
-     the plain sans it replaced. Bumped to 100px, comfortably clearing
-     the nav (measured ~69px tall) with margin to spare. */
   padding: 100px 24px 0;
 }
 
+/* Plain text, no pill/background -- a floating boxed version was tried
+   and rejected ("不要框框"). Left edge locked to the nav logo's own left
+   edge ("韦旻昕") at every width, by reusing .logo's exact margin-left
+   formula (see .logo in style.css for the derivation) -- .case-header
+   is built on the same max-width/margin:auto/24px-padding box as
+   .nav-inner, so the same negative margin lands both elements on the
+   same target line. */
 .back-link {
   display: inline-flex;
   align-items: center;
@@ -22,32 +29,23 @@
   color: var(--text-muted);
   font-size: 0.9rem;
   font-weight: 600;
-  /* Nudged further left than the standard content column (.case-header's
-     own 24px padding edge) -- a negative margin so the back arrow reads
-     as its own outdented nav affordance instead of lining up flush with
-     the title/body text under it. -24px exactly cancels the header's
-     24px padding, landing the arrow at .case-header's own outer box
-     edge -- the same edge the nav logo (.logo in style.css) is now
-     nudged to match, so the two pieces of "chrome" align with each
-     other, one full padding-step left of the body text. (Was -12px,
-     which wasn't enough of an offset to read as intentional.) Then a
-     further -50px on top of that as a trial per feedback ("先移50px看
-     看"), matching the same extra offset just added to .logo in
-     style.css so the two stay aligned with each other. Scaled back
-     below 600px, same as .logo, so it doesn't end up flush against the
-     literal screen edge on phones -- left as-is since the extra -50px
-     was only asked for on desktop. */
-  margin-left: -74px;
-}
-
-@media (max-width: 600px) {
-  .back-link {
-    margin-left: -8px;
-  }
+  margin-left: calc(-43vw + 516px);
 }
 
 .back-link:hover {
   color: var(--accent);
+}
+
+@media (max-width: 1080px) {
+  .back-link {
+    margin-left: calc(7vw - 24px);
+  }
+}
+
+@media (max-width: 900px) {
+  .back-link {
+    margin-left: calc(6vw - 24px);
+  }
 }
 
 .case-hero {
@@ -168,6 +166,10 @@
    deliberately kept below what would be needed to fully cover the
    window's corners, so the rows of cards above and below the visible
    one peek in at the top/bottom edges instead of being cropped out. */
+/* Sits below .case-header now (back button reads above the image, per
+   feedback) -- .case-header's own 100px top padding already clears the
+   fixed .nav, so this only needs a small breathing gap above the video,
+   not nav-clearance padding of its own. */
 .marquee-hero {
   width: 100vw;
   max-width: 1920px;
@@ -177,20 +179,7 @@
   margin-left: -50vw;
   margin-right: -50vw;
   box-sizing: border-box;
-  /* Side margin matches the exact box model every other section on the
-     page uses to center itself: max-width: var(--max-width) + margin:
-     0 auto (which centers a box no wider than that, shrinking to fill
-     the viewport below it) + an inner 24px padding on TOP of that
-     centering, not instead of it (see .case-header/.case-hero: padding
-     is 24px while the box itself is already margin:auto-centered).
-     So the real left offset those elements end up at is
-     max(0px, (100vw - var(--max-width)) / 2) + 24px -- e.g. at 1920px,
-     (1920-1080)/2 + 24 = 444px, not 420px. An earlier version of this
-     formula (max(24px, calc((100vw - var(--max-width)) / 2)), and
-     before that a clamp() tuned to only two widths) both dropped that
-     extra +24px, so this band's edge sat a flat 24px inboard of the
-     text's actual edge at every viewport above ~1100px wide. */
-  padding: 90px calc(max(0px, (100vw - var(--max-width)) / 2) + 24px);
+  padding-top: 32px;
   background: #fff;
   display: flex;
   align-items: center;
@@ -201,25 +190,17 @@
 .marquee-window {
   position: relative;
   width: 100%;
-  /* Reworked once the source was actually inspected frame-by-frame: it's
-     not a single scrolling row, it's an untilted, tiled GRID of cards
-     (multiple rows stacked). A taller window (e.g. 1.7:1) shows more of
-     the rows above/below, but changes the frame's own footprint on the
-     page -- the frame's overall size/aspect is meant to stay fixed, so
-     back to 2:1. Within a fixed 2:1 frame, the peek of neighboring rows
-     is maximized by pushing the video's tilt and oversize (see
-     .marquee-video) as low as the rotation-coverage math allows,
-     without dropping below the safe minimum that would let the
-     rotation gap slice into a card's own "Sign in" line. */
-  aspect-ratio: 2 / 1;
+  /* 3:1 -- taller than the 4:1 (half-height) version per feedback, still
+     well short of the original 2:1. object-fit: fill was tried at 4:1 to
+     keep the video's native 16:9 shape undistorted -- it visibly
+     squashed/warped the cards, rejected. cover (no distortion) instead,
+     paired with a steeper tilt on .marquee-video (20deg, approved) so a
+     16:9 video's rotated bounding box comes close to this band's own
+     shape -- see that rule's comment for the math. */
+  aspect-ratio: 3 / 1;
   overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.35);
-  /* White, not the dark #111 used at the steeper 18deg tilt -- at this
-     shallower angle and reduced oversize (see .marquee-video) the
-     rotated video deliberately doesn't fully cover the window's
-     corners, so what shows through in the gaps should read as part of
-     the surrounding white card, not a dark artifact. */
+  border-radius: 0;
+  box-shadow: none;
   background: #fff;
 }
 
@@ -227,20 +208,17 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  /* cover, not fill -- fill's non-uniform stretch distorted the cards
+     (rejected). At this band's 3:1 shape, a 16:9 video rotated 20deg
+     (the approved tilt) needs a box of ~117% width / ~197% height (of
+     the window's own width/height) to fully cover it at the video's own
+     undistorted aspect -- 120%/203% below adds a small safety margin on
+     top of that, scaled up equally so the 16:9 shape is preserved
+     exactly (no stretching). */
   object-fit: cover;
-  /* With the frame locked back to 2:1, the only lever left for showing
-     more of the rows above/below is pushing tilt and oversize as low
-     as the rotation-coverage math safely allows -- both feed the same
-     safe-minimum formula (see .marquee-window's comment), and lower
-     tilt lowers that minimum, which is what actually buys back the
-     peek. 2deg needs a safe minimum of only ~107%; 108% is right at
-     that minimum, about as far as this can be pushed in a 2:1 frame
-     without the rotation gap slicing into a card's own "Sign in"
-     line. The tilt reads much more subtly at this angle than the
-     7deg/18deg tried earlier. */
-  width: 108%;
-  height: 108%;
-  transform: translate(-50%, -50%) rotate(-2deg);
+  width: 120%;
+  height: 203%;
+  transform: translate(-50%, -50%) rotate(-20deg);
 }
 
 .meta-bar {

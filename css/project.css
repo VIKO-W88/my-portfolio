@@ -1046,11 +1046,12 @@
    the page horizontally. Definite width here + text-align:center is what
    actually prevents that horizontal scroll. */
 .case-section.poster-section {
-  /* No longer widens anything (see .case-section's comment) -- was 1600px,
-     which let .poster-shot img (below, itself capped at 1280px) display
-     noticeably larger than on any other page. At the standard column width
-     the poster now maxes out around ~1032px instead. */
-  max-width: var(--max-width);
+  /* Kept as its own class so only the SOIBON poster pages can be resized
+     independently of the shared column width used elsewhere (see
+     .case-section's comment above). Bumped 10% past --max-width (1080px
+     -> ~1188px) per request to enlarge just this page's poster content
+     without touching the site-wide column width other pages share. */
+  max-width: calc(var(--max-width) * 1.1);
 }
 
 .poster-shot {
@@ -1062,7 +1063,7 @@
 .poster-shot img {
   display: inline-block;
   width: 100%;
-  max-width: 1280px;
+  max-width: 1408px; /* was 1280px, scaled up 10% alongside the section */
   height: auto;
 }
 

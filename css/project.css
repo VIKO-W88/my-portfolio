@@ -1,4 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&family=Montserrat:wght@400;700;800&display=swap');
+
+/* Dark mode only, project detail pages only (project.css isn't loaded by
+   index.html) -- per feedback, "深色背景的时候，这个详情页上的所有线框都改成
+   紫色，白色背景不变". Everything on these pages draws its hairlines/borders
+   from --border (.meta-bar's rules, .case-section wraps, .competitor-table
+   and .userneeds-table lines, .goal-list pills, etc.), so retinting that one
+   variable for [data-theme="dark"] recolors all of them at once. Loaded
+   after style.css's own [data-theme="dark"] block, so this wins on source
+   order at equal specificity. #53418d matches the brand purple already
+   used elsewhere on this page (.goal-list's first pill, FamilyFlow's own
+   UI color) rather than inventing a new one. Light mode is untouched --
+   :root's --border in style.css still applies there. */
+[data-theme="dark"] {
+  --border: #53418d;
+}
 
 .proto-fonts h1, .proto-fonts h2, .proto-fonts h3 { font-family: 'Baloo 2', sans-serif; }
 
@@ -57,18 +72,6 @@
      logo above it -- these all sit inside the same max-width/padding
      box, so aligning text here is what actually lines them up. */
   text-align: left;
-}
-
-.case-tag {
-  display: inline-block;
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: 6px 16px;
-  border-radius: 999px;
-  margin-bottom: 18px;
-  font-family: 'Baloo 2', sans-serif;
 }
 
 .case-title {
@@ -131,6 +134,20 @@
 
 .case-hero-image.watch-hero .screen {
   border-radius: 36px;
+}
+
+/* EvacuMate hero -- replaces the old flat-screenshot-in-a-fake-bezel
+   mockup with a real rendered 3/4 product clip (already has its own
+   watch case + band baked into the footage), so this gets none of the
+   dark-bezel/.screen treatment above -- just sized and dropped straight
+   onto the white hero background. */
+.case-hero-video {
+  display: block;
+  width: 260px;
+  max-width: 60vw;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  margin: 0;
 }
 
 /* .floating-hero modifier -- the same slow up/down drift used on the
@@ -468,6 +485,109 @@
   color: var(--text-muted);
 }
 
+/* FamilyFlow-only "设计策略" cards -- same visual language as .pain-card
+   (icon + title + text) but a flex-wrap layout so 5 cards wrap as a
+   centered 3+2 instead of grid's stretched 4-then-1-orphan row, plus a
+   step number to read as an ordered strategy rather than a plain list. */
+/* "设计策略" -- a connected step-flow instead of a card grid: five icon
+   nodes in a single row, joined by a thin line (::after spans from each
+   node's own center to the next node's center, since all nodes share
+   equal flex width). Reads as an ordered process rather than a stack of
+   boxes -- deliberately not reusing .pain-grid (shared with
+   evacumate.html) or the earlier card-grid attempt on this page. */
+.strategy-flow {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 40px;
+}
+
+/* EvacuMate reuses .strategy-flow for "聚焦设计目标", but this page's other
+   paragraph-to-component gaps were standardized to 28px -- scoped override
+   (rather than editing the shared 40px default) so FamilyFlow's own
+   spacing is untouched. */
+.strategy-flow.evac-gap {
+  margin-top: 28px;
+}
+
+.strategy-node {
+  position: relative;
+  flex: 1 1 0;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.strategy-node:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.strategy-icon-circle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  font-size: 1.4rem;
+}
+
+.strategy-node h3 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.strategy-node p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* .case-section h3 (margin: 24px 0 10px) narrowly out-specifies a bare
+   .design-plan-heading class selector (0,1,1 vs 0,1,0), so the override
+   below silently never applied -- qualifying the selector with h3 here
+   matches that specificity and actually wins. Was 110px -- a leftover from
+   an earlier version of this section, wildly out of step with the page's
+   28px component rhythm and every other heading gap (max 24px elsewhere).
+   64px still reads as a deliberate break before a new major subsection
+   ("设计方案" sits alongside "设计策略" under "设计实施"), without the
+   dead-looking gap the old value left. */
+.case-section h3.design-plan-heading {
+  margin-top: 64px;
+}
+
+@media (max-width: 860px) {
+  .strategy-flow {
+    flex-direction: column;
+    gap: 22px;
+  }
+  .strategy-node {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    text-align: left;
+    padding: 0;
+  }
+  .strategy-node:not(:last-child)::after {
+    display: none;
+  }
+  .strategy-icon-circle {
+    margin: 0;
+    flex: 0 0 auto;
+  }
+}
+
 .compare-table-wrap {
   margin-top: 32px;
   overflow-x: auto;
@@ -575,6 +695,17 @@
 
 .cta-btn:hover {
   transform: translateY(-2px) scale(1.02);
+}
+
+/* FamilyFlow's CTA card uses the product's own brand purple (see the
+   sampled #53418D elsewhere on this page) instead of the site's generic
+   --accent gradient, with a subtle second stop rather than a strong one. */
+.cta-box-purple {
+  background: linear-gradient(135deg, #53418d, #8779b3);
+}
+
+.cta-box-purple .cta-btn {
+  color: #53418d;
 }
 
 /* Embedded interactive work (e.g. a p5.js sketch) inside a case-study page.
@@ -933,4 +1064,845 @@
   width: 100%;
   max-width: 1280px;
   height: auto;
+}
+
+/* ---------- FamilyFlow case-study content (项目背景/竞品分析/设计实施 等) ---------- */
+
+/* A short muted aside under a section's main content -- the "这些方向与
+   现有用户旅程中的...需求一致" kind of connective sentence that isn't a new
+   paragraph of the section's own argument. Smaller and lighter than
+   .case-section p so it visually reads as a footnote, not a fourth point. */
+.case-note {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  opacity: 0.85;
+  font-style: italic;
+  margin-top: -4px;
+}
+
+/* "用户诉求" -- has now been a bordered-card grid, a 2-column table with
+   a header row, a plain list, and finally this: a real 3-column table
+   (per feedback, "做成3列的表格"), title bold on its own line inside
+   each cell with the description below it, borders forming an actual
+   grid rather than individual card boxes. Collapses to a single stacked
+   column on narrow screens since 3 real columns won't fit there. */
+.userneeds-table-wrap {
+  margin-top: 28px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.userneeds-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.userneeds-table td {
+  border: 1px solid var(--border);
+  padding: 20px 22px;
+  vertical-align: top;
+  width: 33.333%;
+}
+
+.userneeds-table tr:first-child td {
+  border-top: none;
+}
+
+.userneeds-table tr td:first-child {
+  border-left: none;
+}
+
+.userneeds-table tr td:last-child {
+  border-right: none;
+}
+
+.userneeds-table tr:last-child td {
+  border-bottom: none;
+}
+
+.userneeds-table td strong {
+  display: block;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.userneeds-table td span {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .userneeds-table,
+  .userneeds-table tbody,
+  .userneeds-table tr,
+  .userneeds-table td {
+    display: block;
+    width: 100%;
+  }
+  .userneeds-table td {
+    padding: 16px 18px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+  }
+  .userneeds-table tr:first-child td:first-child {
+    border-top: none;
+  }
+  .userneeds-table tr:last-child td:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Keeps a short trailing word/phrase (e.g. "负责人") from being split so
+   only its last character wraps down onto its own line ("孤字" orphan) --
+   the rest of the line can still break normally, this span just refuses
+   to break internally. */
+.no-orphan {
+  white-space: nowrap;
+}
+
+/* "设计目标" -- left pill-list / right product shot, modeled on the
+   Apple-marketing reference the user linked (feature chips on the left,
+   product image on the right, first chip visually "active"). */
+.goal-split {
+  display: flex;
+  align-items: center;
+  gap: 140px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.goal-list {
+  flex: 0 1 300px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.goal-list li {
+  display: flex;
+  align-items: center;
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--text);
+  transition: transform 0.2s ease;
+}
+
+/* First goal reads as the headline one -- filled pill, like the selected
+   "Colours" chip in the reference image. Color sampled from FamilyFlow's
+   own UI (the "Get Started" button / dashboard tiles in the hero
+   screenshot, #53418D) rather than the site's generic --accent, so it
+   reads as the product's own brand purple. */
+.goal-list li:first-child {
+  background: linear-gradient(135deg, #53418d, #8779b3);
+  border-color: #53418d;
+  color: #fff;
+}
+
+.goal-list li:hover {
+  transform: translateX(4px);
+}
+
+.goal-visual {
+  flex: 1 1 480px;
+  max-width: 620px;
+  /* 3D space for the tilt effect below -- perspective lives on the
+     ancestor, the actual rotation is applied to .goal-visual-inner. */
+  perspective: 1200px;
+}
+
+/* Mouse-driven tilt (see the inline script near the bottom of this page)
+   sets transform: rotateX()/rotateY() on this element directly, so it
+   stays free of the float animation below -- the two effects compose
+   because they live on different nested elements. */
+.goal-visual-inner {
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.goal-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: goal-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* EvacuMate "定义业务目标" checklist photo -- a plain static photo (not
+   product footage meant to feel "alive"), so the float animation is
+   turned off here rather than duplicating .goal-visual/.insight-visual
+   for one image. */
+.goal-visual.static img {
+  animation: none;
+}
+
+/* Idle animation: a slow, gentle rise/fall + tiny rotation so the shot
+   reads as "alive" even before the user moves their mouse over it. */
+@keyframes goal-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(-1deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goal-visual img {
+    animation: none;
+  }
+  .goal-visual-inner {
+    transition: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .goal-split {
+    gap: 28px;
+  }
+  .goal-visual {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}
+
+/* Competitor analysis -- a real table instead of a card grid (per
+   feedback, "不要卡片的形式，做成表格"). Not reusing the shared
+   .compare-table (evacumate.html / matlab-audio.html also use that one)
+   -- a dedicated .competitor-table so this page's column widths/spacing
+   can change freely without touching those other pages. */
+.competitor-table-wrap {
+  margin-top: 28px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.competitor-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.competitor-table th,
+.competitor-table td {
+  text-align: left;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.competitor-table thead th {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  background: var(--card-bg);
+}
+
+.competitor-table tbody tr:last-child th,
+.competitor-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* .competitor-table-name is the <td> itself -- it must NOT get display:flex
+   directly (that would switch it from display:table-cell to a block flex
+   box, opting it out of the table row-sizing algorithm entirely, so its
+   border-bottom ends up sitting at its own content height instead of the
+   shared row height as soon as a sibling cell wraps to more lines --
+   exactly the misaligned-divider bug this replaced). The flex layout
+   instead lives on .competitor-name-inner, a plain wrapper div inside the
+   td, so the td keeps behaving as a normal table cell. */
+.competitor-table-name {
+  white-space: nowrap;
+}
+
+.competitor-name-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.competitor-name-inner img {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  object-fit: contain;
+}
+
+.competitor-table td:last-child {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .competitor-table th,
+  .competitor-table td {
+    padding: 14px 16px;
+  }
+  .competitor-table-name {
+    white-space: normal;
+  }
+  .competitor-name-inner {
+    gap: 14px;
+  }
+}
+
+/* Small icon chip in front of a .feature-text h3 -- used on FamilyFlow's
+   "设计方案" rows so each of the 8 items reads as an icon+label pill first
+   (matching the reference layout) before its supporting sentence. */
+.feature-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  margin-right: 8px;
+  font-size: 0.95rem;
+  vertical-align: -6px;
+}
+
+/* "设计方案" -- icon + text rows, screenshots removed per feedback
+   ("小手机图" felt thin at that size). Borderless divided list rather
+   than another card grid, for rhythm variety against .checklist /
+   .strategy-flow / .competitor-grid above it on the same page. Not
+   reusing the shared .feature-row/.feature-shot (evacumate.html still
+   uses those for its own screenshot rows). */
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.feature-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.feature-icon-circle {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  font-size: 1.2rem;
+}
+
+/* Each row gets its own tint -- 8 near-identical white/bordered circles
+   in a row read as "太雷同" (too samey); a distinct pastel per item
+   gives the eye something to tell rows apart by at a glance. */
+.feature-list-item:nth-child(1) .feature-icon-circle { background: #fde2e2; }
+.feature-list-item:nth-child(2) .feature-icon-circle { background: #fef3c7; }
+.feature-list-item:nth-child(3) .feature-icon-circle { background: #dcfce7; }
+.feature-list-item:nth-child(4) .feature-icon-circle { background: #dbeafe; }
+.feature-list-item:nth-child(5) .feature-icon-circle { background: #fce7f3; }
+.feature-list-item:nth-child(6) .feature-icon-circle { background: #ede9fe; }
+.feature-list-item:nth-child(7) .feature-icon-circle { background: #cffafe; }
+.feature-list-item:nth-child(8) .feature-icon-circle { background: #ffedd5; }
+
+.feature-list-text h3 {
+  margin: 0 0 6px;
+  font-size: 1.02rem;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.feature-list-text p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+@media (min-width: 640px) {
+  .feature-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+  .feature-list-item:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+/* Empty image slot -- used where the case-study copy is final but no
+   screenshot/photo exists yet ("你没有图片的话先把位置空出来"). Same dashed/
+   muted visual language as the homepage's placeholder project cards, so it
+   reads as "space reserved" rather than a broken image. */
+.img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 160px;
+  border: 2px dashed var(--border);
+  border-radius: inherit;
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Real photo replacing an .img-placeholder slot. Tried a 100vw bleed
+   (matching .case-banner-photo) -- too wide, no margin. Then tried
+   100% of the .case-section column -- too narrow ("大概1880"). Landed on
+   a fixed breakout width (~1880px, the requested size) that's wider than
+   the 1080px content column but capped so it never touches the viewport
+   edge: max-width leaves the same 24px side margin used elsewhere on the
+   page (.case-section's own padding), and shrinks below the 1880px cap
+   on any viewport narrower than ~1928px. Centered on the page via the
+   standard margin-left:50% + translateX(-50%) breakout trick (works here
+   because .case-section itself is centered with margin:0 auto). Aspect
+   ratio was 16:9 until "高度减少1/3" -- multiplying the ratio by 1.5 (same
+   width, height * 2/3) gives 8:3. */
+.case-scenario-photo {
+  display: block;
+  margin-top: 20px;
+  width: 1880px;
+  max-width: calc(100vw - 48px);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  aspect-ratio: 8 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+/* Poster image specifically -- aspect ratio + object-position originally
+   matched to the exact crop window the user marked up on a reference
+   screenshot (verified via template-matching against the source jpg: top
+   19.3% / bottom 10.8% cropped from the native 1448x1086), then scaled by
+   the same 1.5x height-reduction factor as the base class below so the
+   two stay proportionally consistent. object-position kept at the same
+   64% so the crop stays centered on the same content, just tighter. */
+.case-scenario-photo-poster {
+  aspect-ratio: 724 / 253;
+  object-position: center 64%;
+}
+
+/* Wide banner-style image placeholder, used as a section-level visual break
+   (e.g. under "用户诉求") rather than inside a phone-frame. */
+.banner-placeholder {
+  margin-top: 32px;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Real usage-scenario photo under "用户诉求" -- replaces the placeholder
+   above. Cropped wider/shorter than the native 16:9 photo (object-fit:
+   cover keeps it undistorted, just trims top/bottom a bit) per feedback
+   that it read as too tall; margin-top bumped for more breathing room
+   above it. Later widened to a full viewport-width bleed (per feedback,
+   "这张图片的宽度还能加吗") -- the standard 100vw + pull-back-to-center-via-
+   negative-margin trick, breaking it out of .case-section's centred,
+   padded column. body already has overflow-x:hidden (see .about-shape's
+   comment near the top of style.css) so this can't cause a horizontal
+   scrollbar. Square corners once it's edge-to-edge -- a rounded corner
+   sitting exactly on the viewport edge would just look like a stray
+   notch, not a deliberate rounded card anymore. */
+.case-banner-photo {
+  display: block;
+  margin-top: 56px;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  width: 100vw;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* EvacuMate "视觉识别与设计系统" -- the brand palette is rendered as actual
+   colored swatches (not just hex text in a table) so the color system
+   reads as a real design system, not a spec sheet. Swatch colors are the
+   product's own fixed brand tokens, so they intentionally do NOT respond
+   to this portfolio site's --accent/dark-mode variables. */
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 36px 32px;
+  margin-top: 28px;
+}
+
+.palette-grid.compact {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+/* Plain whitespace layout -- no card border/background, matching the
+   no-card treatment already used elsewhere on this page (.insight-grid,
+   .phase-split) instead of yet another row of bordered boxes. The color
+   circle is still the visual anchor, just left-aligned with its own
+   labels rather than centered inside a card. */
+.palette-swatch {
+  text-align: left;
+}
+
+.palette-swatch-color {
+  width: 117px;
+  height: 56px;
+  border-radius: var(--radius);
+  margin: 0 0 14px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+
+.palette-swatch-hex {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.palette-swatch-name {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 3px 0 10px;
+}
+
+.palette-swatch-usage {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* Typography scale -- each row is rendered at its own real size (Montserrat,
+   the product's own typeface) rather than just labeled, so the hierarchy
+   is visibly demonstrated the same way the color swatches are. */
+.type-scale {
+  margin-top: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.type-scale-row {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.type-scale-row:last-child {
+  border-bottom: none;
+}
+
+.type-scale-px {
+  flex: 0 0 64px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.type-scale-sample {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+@media (max-width: 640px) {
+  .type-scale-row {
+    padding: 10px 16px;
+    gap: 14px;
+  }
+
+  .type-scale-px {
+    flex-basis: 50px;
+  }
+}
+
+/* EvacuMate "洞见用户诉求" -- too many consecutive .pain-grid sections on
+   this page read as "太雷同" (too samey), so this one drops the bordered
+   card entirely: a plain whitespace grid with a large pale numeral as the
+   only design accent, no boxes/borders at all. */
+/* Two-column layout wrapping the paragraph + .insight-grid on the left
+   with the watch product shot (moved out of the hero, enlarged) on the
+   right -- reuses FamilyFlow's .goal-visual/.goal-visual-inner tilt
+   component (shared, see its own comment) rather than duplicating it. */
+/* margin-top lives here (not on .insight-grid below) now that the intro
+   paragraph is gone and the grid is .insight-content's only child -- as
+   a flex item, .insight-grid's own top margin would get trapped inside
+   it rather than collapsing with the heading above, so the "h2 straight
+   into a component" gap (32px, matching FamilyFlow's .goal-split) has to
+   be set here instead, where it can still collapse against the h2's own
+   18px bottom margin the normal way. */
+.insight-split {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.insight-content {
+  flex: 1 1 480px;
+  min-width: 0;
+}
+
+/* Square product photo, not a tall phone mockup -- smaller flex-basis
+   than .goal-visual's own default (480/620) so it doesn't dwarf the
+   grid next to it, but noticeably bigger than the old 260px hero video. */
+.insight-visual {
+  flex: 0 1 480px;
+  max-width: 500px;
+}
+
+/* Real footage now (was a static photo) -- .goal-visual img already
+   handles base img sizing/float animation, but that selector doesn't
+   match <video>, so this repeats it here for both. The video plays on
+   its own, un-framed (no rounded-card/shadow treatment -- per feedback,
+   "不要给框框加特效") -- that framing stays on .insight-visual img only,
+   in case a static image ever goes back in this slot. */
+.insight-visual img,
+.insight-visual video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.insight-visual img {
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.insight-visual video {
+  animation: goal-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .insight-visual video {
+    animation: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .insight-split {
+    gap: 28px;
+  }
+  .insight-visual {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 36px 32px;
+}
+
+.insight-num {
+  display: block;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: var(--accent);
+  opacity: 0.45;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.insight-item h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.insight-item p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* EvacuMate "定义业务目标" -- only two items, which would read as two
+   thin/awkward cards in a grid; instead a plain two-column text split
+   marked by an accent border-left, no card background. */
+.phase-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 28px;
+}
+
+.phase-block {
+  flex: 1 1 260px;
+  border-left: 3px solid var(--accent);
+  padding-left: 22px;
+}
+
+/* Inline with the heading (not a standalone line above it) -- reads
+   cleaner as a small marker next to the title instead of a big emoji
+   sitting alone in its own row. */
+.phase-icon {
+  display: inline-block;
+  font-size: 1.1rem;
+  margin-right: 8px;
+  vertical-align: -1px;
+}
+
+.phase-block h3 {
+  margin: 0 0 8px;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.05rem;
+}
+
+.phase-block p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 640px) {
+  .insight-grid {
+    gap: 28px 24px;
+  }
+  .phase-split {
+    gap: 28px;
+  }
+}
+
+/* EvacuMate "设计策略" / "智能手表" -- replaces the plain <ul> version (icon
+   glyphs have different intrinsic widths, so an emoji inline before a bold
+   label left each row's title starting at a different x -- exactly the
+   misalignment the user flagged). The icon now lives in its own fixed-width
+   column so every title lines up on the same left edge regardless of which
+   emoji is used, while staying a plain divided list (no circle/color fill)
+   so it still reads differently from .feature-list next to it. */
+.plain-row-list {
+  margin-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.plain-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.plain-row:last-child {
+  border-bottom: none;
+}
+
+.plain-row-icon {
+  flex: 0 0 26px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.plain-row-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.plain-row-text strong {
+  display: block;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.plain-row-text p {
+  margin: 0 0 8px;
+}
+
+.plain-row-text p:last-child {
+  margin-bottom: 0;
+}
+
+.plain-row-text ul {
+  margin: 6px 0 0;
+}
+
+@media (max-width: 640px) {
+  .plain-row {
+    gap: 12px;
+    padding: 14px 2px;
+  }
+}
+
+/* "智能手表" -- 3-column grid variant of .plain-row-list, requested instead
+   of the single-column divided list. Icon sits inline before the title
+   (same row, not stacked above it -- per feedback "图标不要另起一行"),
+   same left-of-text-block arrangement as the base .plain-row, just laid
+   out in a 3-column grid instead of a divided single column. */
+.plain-row-list.cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 28px;
+  border-top: none;
+}
+
+.plain-row-list.cols-3 .plain-row {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0;
+  border-bottom: none;
+}
+
+.plain-row-list.cols-3 .plain-row-icon {
+  flex: 0 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+@media (max-width: 860px) {
+  .plain-row-list.cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .plain-row-list.cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* "设计策略" -- numbered variant instead of emoji icons, since these four
+   items are an ordered set of strategies rather than distinct concepts each
+   needing its own pictogram. */
+.plain-row-list.numbered .plain-row-icon {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--accent);
 }

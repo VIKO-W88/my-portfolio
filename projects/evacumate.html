@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EvacuMate | 作品集 · 韦旻昕</title>
-<link rel="stylesheet" href="../css/style.css?v=48">
-<link rel="stylesheet" href="../css/project.css?v=36">
+<link rel="stylesheet" href="../css/style.css?v=51">
+<link rel="stylesheet" href="../css/project.css?v=60">
 </head>
 <body class="proto-fonts">
 
@@ -30,26 +30,22 @@
   </div>
 
   <section class="case-hero">
-    <span class="case-tag">灾难响应 · UI/UX 设计</span>
     <h1 class="case-title">EvacuMate</h1>
     <p class="case-subtitle">
       洪水不会等你看完说明书。EvacuMate 是一款为宠物饲主设计的手表端应急指引应用——
       在信息过载、慌乱决策的几分钟里，用最少的点击完成求救、找到最近的宠物友好
       避难所、确认逃生清单。
     </p>
-    <div class="case-hero-image watch-hero">
-      <div class="screen"><img src="../assets/evacumate/flood-alert.png" alt="EvacuMate 洪灾预警提醒界面"></div>
-    </div>
   </section>
 
   <div class="meta-bar">
     <div class="meta-item">
       <h4>我的角色</h4>
-      <p>UI/UX 设计</p>
+      <p>UX/UI 设计</p>
     </div>
     <div class="meta-item">
       <h4>项目周期</h4>
-      <p>待填写</p>
+      <p>2025</p>
     </div>
     <div class="meta-item">
       <h4>使用工具</h4>
@@ -57,99 +53,486 @@
     </div>
     <div class="meta-item">
       <h4>项目类型</h4>
-      <p>课程项目</p>
+      <p>团队项目</p>
     </div>
   </div>
 
-  <section class="case-section align-left">
-    <h2>设计背景</h2>
+  <section class="case-section wide align-left">
+    <h2>设计定位</h2>
+    <h3>项目背景</h3>
     <p>
-      洪灾中最容易被忽略的，往往不是"人怎么撤离"，而是"带着宠物怎么撤离"。研究显示，
-      很多宠物饲主在制定疏散计划时并未把宠物纳入考虑，即便动物的存在会显著影响撤离
-      决策（Quintana et al., 2025; Bansal et al., 2025; Taylor et al., 2015）。现有的
-      防灾类 App 大多只提供预警和清单，很少覆盖宠物的具体需求（Kangana et al., 2024）。
+      EvacuMate 是一套面向洪水场景的宠物应急准备与撤离辅助产品，主要服务宠物主人，并覆盖兽医相关使用需求。
     </p>
     <p>
-      我选择智能手表作为载体，而不是手机：灾难发生时，手表始终戴在手腕上——不需要
-      翻包找手机，触觉震动能在慌乱环境里给出比手机推送更可靠的提醒，配合导航功能
-      可以直接引导饲主和宠物前往安全地点。
+      现有洪水应急产品能够提供灾害预警、政府建议和基础导航，但对宠物家庭的支持较弱。宠物主人在实际撤离中不仅需要知道灾害发生，
+      还需要确认宠物物资、规划撤离路线、获取即时提醒，并在移动过程中快速完成关键操作。
     </p>
+    <p>
+      EvacuMate 因此将宠物安全纳入完整的洪水应急流程，通过手机、平板和智能手表覆盖灾前准备与灾中撤离两个阶段。
+    </p>
+    <h3>业务诉求</h3>
+    <p>
+      建立针对宠物家庭的洪水应急体验，补充传统灾害应用在宠物撤离场景中的不足。产品重点解决：灾前缺少系统化宠物准备、灾中信息分散且行动指引不足、撤离过程中操作手机不便、宠物相关安全信息与普通灾害信息相互割裂、紧急环境下用户难以快速确认当前任务。
+    </p>
+    <p>核心目标是将灾害信息转化为能够直接执行的撤离行动。</p>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>洞见用户诉求</h2>
+    <div class="insight-split">
+      <div class="insight-content">
+        <div class="insight-grid">
+          <div class="insight-item">
+            <span class="insight-num">01</span>
+            <h3>清晰的行动步骤</h3>
+            <p>高压环境下，用户更需要明确的步骤指导和检查清单，而不是大量信息。</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-num">02</span>
+            <h3>可靠的导航支持</h3>
+            <p>位置共享、撤离方向和路线信息是洪水撤离中的关键能力。</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-num">03</span>
+            <h3>明显的紧急反馈</h3>
+            <p>混乱环境中，单纯依赖文字通知容易被忽略，触觉和视觉反馈能够增强重要信息的可感知性。</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-num">04</span>
+            <h3>宠物撤离支持</h3>
+            <p>现有应急产品很少将宠物准备、安全确认和撤离过程整合在同一套体验中。</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-num">05</span>
+            <h3>关键功能持续可用</h3>
+            <p>灾害期间网络连接可能受到影响，重要资料和核心应急信息需要尽可能保持可访问。</p>
+          </div>
+        </div>
+      </div>
+      <div class="goal-visual insight-visual" id="insightVisual">
+        <div class="goal-visual-inner" id="insightVisualInner">
+          <video
+            src="../assets/evacumate/watch-hero.mp4?v=1"
+            poster="../assets/evacumate/watch-hero-poster.jpg"
+            autoplay
+            muted
+            loop
+            playsinline
+            aria-label="EvacuMate 智能手表洪水预警界面展示"
+          ></video>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="case-section wide align-left">
     <h2>竞品分析</h2>
-    <p>围绕"洪灾中的宠物防灾"这个方向，我把竞品分为三类做对比：</p>
-    <div class="pain-grid">
-      <div class="pain-card">
-        <span class="pain-icon">🌊</span>
-        <h3>灾害预警类</h3>
-        <p>Emergency+、My Bushfire Plan —— 侧重基于位置的预警推送和政府建议，但不涉及宠物。</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-icon">🩹</span>
-        <h3>宠物急救类</h3>
-        <p>First Aid for Pets —— 提供动物急救指引和应急知识，但不覆盖撤离场景。</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-icon">⌚</span>
-        <h3>可穿戴应急功能</h3>
-        <p>Apple Watch 紧急 SOS —— 具备实时警报、GPS 位置共享和触觉提醒，但同样是通用功能，没有针对宠物饲主的场景设计。</p>
-      </div>
+    <div class="competitor-table-wrap">
+      <table class="competitor-table">
+        <thead>
+          <tr>
+            <th>产品</th>
+            <th>定位</th>
+            <th>优点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/evacumate/logos/first-aid-for-pets.png" alt="First Aid for Pets logo">
+              <span>First Aid for Pets</span>
+            </div></td>
+            <td>宠物急救与应急指导</td>
+            <td>提供宠物急救和健康相关信息；通过分步骤指导降低紧急情况下的理解成本；支持宠物资料、药物信息和应急准备内容管理；宠物场景针对性强。</td>
+          </tr>
+          <tr>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/evacumate/logos/my-bushfire-plan.png" alt="My Bushfire Plan logo">
+              <span>My Bushfire Plan</span>
+            </div></td>
+            <td>灾前准备与应急计划</td>
+            <td>将复杂的灾害准备拆分为清晰的行动步骤；支持提前整理撤离物资、目的地和行动条件；包含宠物及牲畜相关准备事项；清单式结构便于用户快速检查完成情况。</td>
+          </tr>
+          <tr>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/evacumate/logos/emergency-plus.png" alt="Emergency+ logo">
+              <span>Emergency+</span>
+            </div></td>
+            <td>紧急求助与精准定位</td>
+            <td>利用 GPS 快速提供当前位置；支持直接联系 Triple Zero、SES 和 Police Assistance Line；通过 what3words 帮助用户准确描述位置；操作路径短，适合高压紧急场景。</td>
+          </tr>
+          <tr>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/evacumate/logos/alert-sa.png" alt="Alert SA logo">
+              <span>Alert SA</span>
+            </div></td>
+            <td>多灾种实时预警</td>
+            <td>支持火灾、洪水、极端天气和热浪等多种灾害提醒；可创建自定义 Watch Zones 接收指定区域通知；使用统一的灾害等级和视觉警示体系；地图与通知结合，便于快速了解周边风险。</td>
+          </tr>
+          <tr>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/evacumate/logos/hazards-near-me-nsw.png" alt="Hazards Near Me NSW logo">
+              <span>Hazards Near Me NSW</span>
+            </div></td>
+            <td>本地灾害信息与风险监测</td>
+            <td>提供洪水、山火和海啸等实时灾害信息；信息直接来源于应急服务机构；支持个性化 Watch Zones 和位置相关通知；通过地图呈现灾害位置及周边风险，方便用户快速判断当前环境。</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <p style="margin-top: 24px;">
-      调研方式上，先在 App Store / Google Play 收集了各竞品的真实用户评价，再逐一梳理
-      每款产品的定位、核心功能、优势与短板。结论很明确：市面上没有一款产品，把"手表的
-      即时性"和"宠物饲主的撤离需求"放在一起解决——这正是 EvacuMate 要填的空白。
+      现有产品已经分别覆盖宠物急救、灾前准备、精准定位、多灾种预警和本地风险监测等能力，但彼此分散、互不联通。
+      EvacuMate 的设计机会在于将宠物准备、实时提醒、清单确认、精准定位和撤离导航，整合进同一套洪水应急体验。
+      产品重点不是增加更多灾害信息，而是帮助宠物主人将信息转化为实际行动。
     </p>
   </section>
 
   <section class="case-section wide align-left">
-    <h2>核心功能</h2>
-    <div class="feature-rows">
-      <div class="feature-row">
-        <div class="feature-shot watch-shot"><div class="screen"><img src="../assets/evacumate/sos.png" alt="SOS 一键求救"></div></div>
-        <div class="feature-text">
-          <h3>SOS 一键求救</h3>
-          <p>手表任意界面都能通过按住表冠触发紧急呼救，不需要先解锁再找入口。</p>
+    <h2>业务目标</h2>
+    <div class="insight-split">
+      <div class="insight-content">
+        <p>EvacuMate 将产品目标集中在洪水应急过程中最关键的两个阶段：</p>
+        <div class="phase-split">
+          <div class="phase-block">
+            <h3><span class="phase-icon">🧳</span>灾前准备</h3>
+            <p>帮助用户提前完成宠物资料、物资、联系人和撤离计划整理。</p>
+          </div>
+          <div class="phase-block">
+            <h3><span class="phase-icon">🏃</span>灾中撤离</h3>
+            <p>帮助用户快速接收警报、确认任务并获得撤离导航。</p>
+          </div>
         </div>
+        <p style="margin-top: 24px;">通过两个阶段的连续体验，减少用户临时搜索信息、遗漏重要事项以及反复判断的成本。</p>
       </div>
-      <div class="feature-row reverse">
-        <div class="feature-shot watch-shot"><div class="screen"><img src="../assets/evacumate/home.png" alt="首页四宫格"></div></div>
-        <div class="feature-text">
-          <h3>首页四宫格</h3>
-          <p>Map（避难所导航）/ Check List &amp; Real-time Info（清单+实时预警）/ Contacts（联系人）—— 灾难发生时优先级最高的操作，一屏内全部可达。</p>
-        </div>
-      </div>
-      <div class="feature-row">
-        <div class="feature-shot watch-shot"><div class="screen"><img src="../assets/evacumate/contacts.png" alt="联系人右滑呼出"></div></div>
-        <div class="feature-text">
-          <h3>联系人右滑呼出</h3>
-          <p>主页右滑可以快速查看/编辑紧急联系人信息，支持电话和消息两种联系方式，多一种联系方式，救援成功率就高一分。</p>
-        </div>
-      </div>
-      <div class="feature-row reverse">
-        <div class="feature-shot watch-shot"><div class="screen"><img src="../assets/evacumate/shelter-list.png" alt="避难所地图"></div></div>
-        <div class="feature-text">
-          <h3>避难所地图</h3>
-          <p>只保留和洪灾相关的图层，突出显示宠物友好避难所，标出距离、容量和可达性。</p>
+      <div class="goal-visual insight-visual static">
+        <div class="goal-visual-inner">
+          <img src="../assets/evacumate/prep-checklist.jpg" alt="宠物应急准备清单与撤离路线示意">
         </div>
       </div>
     </div>
   </section>
 
-  <section class="case-section align-left">
-    <h2>反思与收获</h2>
+  <section class="case-section wide align-left">
+    <h2>聚焦设计目标</h2>
+    <p>四个设计目标本身就是撤离过程中依次发生的动作，因此用一条连接的流程呈现，而不是并列的卡片。</p>
+    <div class="strategy-flow evac-gap">
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🎒</span>
+        <h3>Prepare / 准备</h3>
+        <p>将分散的宠物应急信息整理为可执行的准备清单，包括宠物资料、物资、联系人和撤离计划。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🚨</span>
+        <h3>Alert / 提醒</h3>
+        <p>通过明确的视觉信息和触觉反馈强化紧急状态，降低重要提醒被忽略的概率。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🧭</span>
+        <h3>Navigate / 导航</h3>
+        <p>提供简洁的路线和方向信息，帮助用户在撤离过程中快速判断行动方向。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">✅</span>
+        <h3>Confirm / 确认</h3>
+        <p>通过任务状态和清单确认机制，让用户快速判断关键事项是否已经完成。</p>
+      </div>
+    </div>
+  </section>
+
+  <img class="case-scenario-photo section-banner" src="../assets/evacumate/scenario-photo.jpg" alt="用户在洪灾中查看 EvacuMate 手表提醒并牵引穿戴安全背带的宠物犬">
+
+  <section class="case-section wide align-left">
+    <h2>设计方案</h2>
+
+    <h3>设计策略</h3>
+    <p>按阶段划分产品体验、按设备分配任务、降低紧急状态下的操作负担、强化多感官反馈——四个方向把设计目标落到具体的产品结构上。</p>
+    <div class="plain-row-list numbered">
+      <div class="plain-row">
+        <span class="plain-row-icon">1</span>
+        <div class="plain-row-text">
+          <strong>按阶段划分产品体验</strong>
+          <p>
+            整个产品被拆分为 Planning（灾前准备）和 Evacuation（灾中撤离）。灾前允许用户进行较完整的信息整理和规划，
+            灾中则减少信息量，只保留与当前撤离行动直接相关的内容。
+          </p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">2</span>
+        <div class="plain-row-text">
+          <strong>按设备分配任务</strong>
+          <p>
+            不同设备不重复承担相同功能，而是根据使用环境分工：手机与平板承担信息量较大的准备和管理任务，智能手表承担
+            撤离中的即时提醒、导航和状态确认。这种分工避免将复杂手机界面直接缩小到手表上，同时发挥可穿戴设备随身、
+            快速和低操作成本的优势。
+          </p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">3</span>
+        <div class="plain-row-text">
+          <strong>降低紧急状态下的操作负担</strong>
+          <p>撤离界面减少文字、选项和操作层级，只突出当前最重要的信息。主要设计原则：单屏聚焦一个核心任务、重要信息优先展示、缩短操作路径、强化状态区分、减少持续查看手机的需求。</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">4</span>
+        <div class="plain-row-text">
+          <strong>强化多感官反馈</strong>
+          <p>
+            智能手表结合视觉提示与触觉反馈传递紧急信息。在用户牵引宠物、搬运物资或快速移动时，即使无法持续查看屏幕，
+            也能够感知关键状态变化。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="design-plan-heading">设计方案</h3>
+
+    <h3>手机与平板</h3>
+    <p>主要承担灾前准备和信息管理，核心功能包括：</p>
+    <div class="feature-list">
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🐾</span>
+        <div class="feature-list-text">
+          <h3>宠物资料</h3>
+          <p>记录宠物基本信息，方便撤离和救援时快速核对。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🎒</span>
+        <div class="feature-list-text">
+          <h3>应急物资清单</h3>
+          <p>提前整理食物、药品等宠物应急物资，避免撤离时遗漏。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">📇</span>
+        <div class="feature-list-text">
+          <h3>紧急联系人</h3>
+          <p>集中管理兽医、亲友等关键联系人，一键拨打或发送消息。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🌊</span>
+        <div class="feature-list-text">
+          <h3>灾害信息</h3>
+          <p>整合洪水预警和政府发布的实时灾情信息。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🏠</span>
+        <div class="feature-list-text">
+          <h3>撤离地点</h3>
+          <p>标注宠物友好避难所，方便提前确认撤离目的地。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🗺️</span>
+        <div class="feature-list-text">
+          <h3>路线规划</h3>
+          <p>提前规划前往避难所的撤离路线。</p>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 24px;">手机和平板提供更完整的信息空间，适合需要阅读、整理和规划的任务。</p>
+    <img class="case-scenario-photo case-scenario-photo-poster" src="../assets/evacumate/product-poster.jpg" alt="EvacuMate 手机、平板与手表端界面展示海报">
+
+    <h3>智能手表</h3>
+    <p>主要承担实际撤离过程中的即时操作，核心功能包括：</p>
+    <div class="plain-row-list cols-3">
+      <div class="plain-row">
+        <span class="plain-row-icon">🚨</span>
+        <div class="plain-row-text">
+          <strong>紧急警报</strong>
+          <p>第一时间推送洪水预警和紧急状态提醒。</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">👉</span>
+        <div class="plain-row-text">
+          <strong>当前行动提示</strong>
+          <p>明确告知用户此刻最该完成的一步操作。</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">🧭</span>
+        <div class="plain-row-text">
+          <strong>路线导航</strong>
+          <p>引导用户和宠物前往最近的安全避难所。</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">✅</span>
+        <div class="plain-row-text">
+          <strong>任务确认</strong>
+          <p>标记准备事项和撤离步骤是否完成。</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">🛟</span>
+        <div class="plain-row-text">
+          <strong>安全状态反馈</strong>
+          <p>实时显示用户和宠物当前安全状态。</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">📞</span>
+        <div class="plain-row-text">
+          <strong>紧急联系</strong>
+          <p>按住表冠即可快速呼叫求助。</p>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 24px;">智能手表始终佩戴在手腕上，用户无需频繁拿出手机，即可在移动状态下接收提醒和完成关键操作。</p>
+
+    <h3>跨设备体验</h3>
+    <p>手机、平板和智能手表分别承担不同阶段的任务，但保持信息连续：手机和平板负责完整信息与提前准备、智能手表负责即时行动与撤离辅助。</p>
+    <p>这种设计使产品能够同时适应低压力的准备环境和高压力的实际撤离环境。</p>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>视觉识别与设计系统</h2>
+
+    <h3>系统主色</h3>
     <p>
-      这个项目让我意识到，"好用"在日常场景和灾难场景下的定义完全不同：日常 App
-      追求的是信息丰富、路径灵活；而灾难场景下，用户的认知带宽被压缩到极限，界面
-      唯一的任务就是——用最少的信息、最少的点击，把人和宠物一起带到安全的地方。
+      手机和平板界面使用 <strong>Deep Blue（#000093）</strong>和 <strong>Warm Amber（#FEC252）</strong>，
+      传递安全、信任与温暖；智能手表版本使用更亮的 <strong>Bright Blue（#0303FF）</strong>和更深的
+      <strong>Deep Amber（#DA8E00）</strong>，在深色背景下保持清晰的辨识度和对比度。
     </p>
+    <div class="palette-grid">
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#000093;"></div>
+        <div class="palette-swatch-hex">#000093</div>
+        <div class="palette-swatch-name">Primary 1 · Deep Blue</div>
+        <p class="palette-swatch-usage">手机和平板核心界面、品牌主色、一级信息、主要视觉元素</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#0303ff;"></div>
+        <div class="palette-swatch-hex">#0303FF</div>
+        <div class="palette-swatch-name">Primary 2 · Bright Blue</div>
+        <p class="palette-swatch-usage">智能手表界面、深色背景重点信息、导航状态、高亮元素</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#fec252;"></div>
+        <div class="palette-swatch-hex">#FEC252</div>
+        <div class="palette-swatch-name">Secondary 1 · Warm Amber</div>
+        <p class="palette-swatch-usage">提醒、重点信息、次级状态、强调元素</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#da8e00;"></div>
+        <div class="palette-swatch-hex">#DA8E00</div>
+        <div class="palette-swatch-name">Secondary 2 · Deep Amber</div>
+        <p class="palette-swatch-usage">智能手表高对比界面、强调状态、深色背景提示</p>
+      </div>
+    </div>
+
+    <h3>功能色</h3>
+    <div class="palette-grid compact">
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#cf2917;"></div>
+        <div class="palette-swatch-hex">#CF2917</div>
+        <div class="palette-swatch-name">Error / Failure</div>
+        <p class="palette-swatch-usage">危险、错误、失败状态</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#f8c456;"></div>
+        <div class="palette-swatch-hex">#F8C456</div>
+        <div class="palette-swatch-name">Warning / Pending</div>
+        <p class="palette-swatch-usage">警告、等待处理、未完成状态</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#52c155;"></div>
+        <div class="palette-swatch-hex">#52C155</div>
+        <div class="palette-swatch-name">Success / Confirmation</div>
+        <p class="palette-swatch-usage">成功、完成、安全确认状态</p>
+      </div>
+    </div>
+
+    <h3>灰阶</h3>
+    <div class="palette-grid compact">
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#333333;"></div>
+        <div class="palette-swatch-hex">#333333</div>
+        <p class="palette-swatch-usage" style="margin-top:12px;">主要文字</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#666666;"></div>
+        <div class="palette-swatch-hex">#666666</div>
+        <p class="palette-swatch-usage" style="margin-top:12px;">次级信息</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#999999;"></div>
+        <div class="palette-swatch-hex">#999999</div>
+        <p class="palette-swatch-usage" style="margin-top:12px;">辅助信息</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#d1d1d1;"></div>
+        <div class="palette-swatch-hex">#D1D1D1</div>
+        <p class="palette-swatch-usage" style="margin-top:12px;">边框、分隔与弱化内容</p>
+      </div>
+    </div>
+
+    <h3>Typography</h3>
+    <p>系统使用 <strong>Montserrat</strong> 作为主要字体，清晰的无衬线风格兼顾易读性与可访问性。</p>
+    <div class="type-scale">
+      <div class="type-scale-row">
+        <span class="type-scale-px">61px</span>
+        <span class="type-scale-sample" style="font-size: 2.6rem;">Heading 1</span>
+      </div>
+      <div class="type-scale-row">
+        <span class="type-scale-px">49px</span>
+        <span class="type-scale-sample" style="font-size: 2.1rem;">Heading 2</span>
+      </div>
+      <div class="type-scale-row">
+        <span class="type-scale-px">39px</span>
+        <span class="type-scale-sample" style="font-size: 1.7rem;">Heading 3</span>
+      </div>
+      <div class="type-scale-row">
+        <span class="type-scale-px">31px</span>
+        <span class="type-scale-sample" style="font-size: 1.4rem;">Heading 4</span>
+      </div>
+      <div class="type-scale-row">
+        <span class="type-scale-px">25px</span>
+        <span class="type-scale-sample" style="font-size: 1.15rem;">Heading 5</span>
+      </div>
+      <div class="type-scale-row">
+        <span class="type-scale-px">20px</span>
+        <span class="type-scale-sample" style="font-size: 1rem;">Body</span>
+      </div>
+      <div class="type-scale-row">
+        <span class="type-scale-px">16px</span>
+        <span class="type-scale-sample" style="font-size: 0.85rem; font-weight: 400;">Small</span>
+      </div>
+      <div class="type-scale-row">
+        <span class="type-scale-px">13px</span>
+        <span class="type-scale-sample" style="font-size: 0.72rem; font-weight: 400;">Tiny</span>
+      </div>
+      <div class="type-scale-row">
+        <span class="type-scale-px">10px</span>
+        <span class="type-scale-sample" style="font-size: 0.6rem; font-weight: 400;">Footnote</span>
+      </div>
+    </div>
+    <p style="margin-top: 24px;">
+      视觉系统通过固定的颜色语义和文字层级，让用户能够快速区分危险、警告、行动和完成状态，
+      并保持手机、平板与智能手表之间的一致体验。
+    </p>
+  </section>
+
+  <section class="case-section align-left">
+    <h2>设计总结</h2>
+    <p>
+      EvacuMate 解决的核心问题不是洪水信息不足，而是现有产品无法完整支持宠物主人从准备到撤离的实际行动过程。
+      设计因此没有简单增加更多灾害内容，而是重新组织用户在不同阶段真正需要完成的任务：灾前通过手机和平板完成
+      宠物资料、物资和撤离计划整理，灾中通过智能手表提供高优先级提醒、导航和任务确认，减少移动状态下对手机的依赖。
+    </p>
+    <p>最终形成一套围绕准备、提醒、导航、确认构建的跨设备宠物洪水应急体验。</p>
   </section>
 
   <section class="cta-section">
     <div class="cta-box">
       <h2>想亲自试试看？</h2>
-      <p>下面链接会跳转到 Figma 上的可交互原型，点击卡片、按钮和箭头即可在各个页面间跳转体验（和网页里的截图是同一份设计稿）。</p>
+      <p>点击下方链接，跳转至 Figma 可交互原型（与网页中的截图为同一份设计稿）。进入后点击卡片、按钮和箭头，即可在各页面间跳转体验。</p>
       <a href="https://www.figma.com/proto/spR9JUNmHxu3rcFmBApdYa/Week10?node-id=209-97&p=f&viewport=609%2C980%2C0.25&t=iTqGPoMyy7m02oAb-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=209%3A97&page-id=2%3A3" class="cta-btn" target="_blank" rel="noopener">在 Figma 中查看可交互原型 →</a>
     </div>
   </section>
@@ -160,6 +543,42 @@
   <p>&copy; <span id="year"></span> 韦旻昕. All rights reserved.</p>
 </footer>
 
+<script>
+  // "洞见用户诉求" watch product video -- respect reduced-motion the same
+  // way the old hero clip did, before the tilt script below sets up.
+  var insightVideo = document.querySelector("#insightVisual video");
+  if (insightVideo && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    insightVideo.removeAttribute("autoplay");
+    insightVideo.pause();
+  }
+</script>
+<script>
+  // "洞见用户诉求" watch product shot -- mouse-driven 3D tilt layered on
+  // top of the CSS float animation, same pattern as FamilyFlow's
+  // "设计目标" .goal-visual (see .goal-visual-inner / @keyframes
+  // goal-float in project.css).
+  (function () {
+    var visual = document.getElementById("insightVisual");
+    var inner = document.getElementById("insightVisualInner");
+    if (!visual || !inner) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var maxTilt = 12; // degrees
+
+    visual.addEventListener("mousemove", function (e) {
+      var rect = visual.getBoundingClientRect();
+      var percentX = (e.clientX - rect.left) / rect.width - 0.5;
+      var percentY = (e.clientY - rect.top) / rect.height - 0.5;
+      var rotateY = percentX * maxTilt;
+      var rotateX = -percentY * maxTilt;
+      inner.style.transform = "rotateX(" + rotateX.toFixed(2) + "deg) rotateY(" + rotateY.toFixed(2) + "deg)";
+    });
+
+    visual.addEventListener("mouseleave", function () {
+      inner.style.transform = "rotateX(0deg) rotateY(0deg)";
+    });
+  })();
+</script>
 <script src="../js/main.js?v=9"></script>
 </body>
 </html>

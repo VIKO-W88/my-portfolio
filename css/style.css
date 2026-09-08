@@ -991,6 +991,16 @@ body.has-custom-cursor button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* .section (the shared class this also carries) sets a symmetric
+     90px/90px top/bottom padding. justify-content:center centers within
+     that padding box, so growing ONLY the bottom side shrinks the box
+     asymmetrically and nudges the true center -- and with it the
+     title+body group -- up by half the added amount, without moving or
+     resizing the image (positioned by its own absolute top/bottom
+     offsets, unrelated to this padding). 190px here is 100px more than
+     the inherited 90px, so the group moves up ~50px. Per feedback the
+     text sat too low. */
+  padding-bottom: 190px;
 }
 
 .about-shape {
@@ -1037,8 +1047,24 @@ body.has-custom-cursor button {
   font-size: 1.05rem;
 }
 
+/* The "关于我" heading sits right above this body copy, but .section-title
+   (used by every section) centers itself across the FULL section width --
+   here that put it noticeably left of the paragraph below, which starts
+   past the image at padding-left:520px. Reported as "文字没有对齐"
+   (heading and paragraph don't share a left edge). Matching this same
+   padding and left-aligning just the about heading fixes that without
+   touching every other section's centered title. */
+.about-section .section-title {
+  padding-left: 520px;
+  text-align: left;
+}
+
 @media (max-width: 1080px) {
   .about-body {
+    padding-left: 420px;
+  }
+
+  .about-section .section-title {
     padding-left: 420px;
   }
 }
@@ -1047,12 +1073,21 @@ body.has-custom-cursor button {
   .about-body {
     padding-left: 320px;
   }
+
+  .about-section .section-title {
+    padding-left: 320px;
+  }
 }
 
 @media (max-width: 720px) {
   .about-section {
     min-height: 0;
     display: block;
+    /* Undo the desktop-only asymmetric padding hack above (used to nudge
+       the vertically-centered text up) -- this stacked mobile layout
+       isn't flex-centered, so it just needs .section's normal symmetric
+       90px bottom spacing back, matching every other section. */
+    padding-bottom: 90px;
   }
 
   /* Per feedback: no room for the trapezoid to read well on a phone-width
@@ -1063,6 +1098,11 @@ body.has-custom-cursor button {
   }
 
   .about-body {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .about-section .section-title {
     padding-left: 0;
     text-align: center;
   }
@@ -1151,11 +1191,21 @@ body.has-custom-cursor button {
   border-radius: 999px;
 }
 
+/* Image-forward cards -- full-bleed cover photo with a small translucent
+   name pill floating over the bottom edge (per reference: fashion-app
+   style portrait cards), the whole card as one click target instead of
+   a separate "查看详情" link. .project-card-link is a transparent anchor
+   stretched over the entire card (the standard "stretched link"
+   pattern) so .project-card itself can stay a plain <article> -- main.js's
+   loop-clone code already tabindex=-1's every "a, button" descendant of
+   a clone, so this link is caught by that same query with no JS change
+   needed. */
 .project-card {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  display: block;
   flex: 0 0 300px;
   width: 300px;
+  aspect-ratio: 3 / 4;
   scroll-snap-align: center;
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -1180,100 +1230,50 @@ body.has-custom-cursor button {
 }
 
 .project-thumb {
-  height: 220px;
-  flex-shrink: 0;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(135deg, var(--bg-alt), var(--border));
 }
 
-/* Floating phone-mockup thumbnail -- used on the FamilyFlow card only
-   (see index.html). A small CSS device frame sits centered on the
-   thumb's existing gradient backdrop, holding the real onboarding
-   screenshot, and drifts gently up/down at rest so the card reads as a
-   live product shot instead of a static cropped screenshot. Kept as its
-   own class rather than changing .project-thumb itself so every other
-   project card keeps its plain flat thumbnail unchanged. */
-.project-thumb-mockup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.mockup-frame {
-  position: relative;
-  width: 92px;
-  height: 184px;
-  border-radius: 18px;
-  border: 4px solid #1f2430;
-  background-color: #fff;
-  background-size: cover;
-  background-position: center 10%;
-  box-shadow: 0 14px 26px -8px rgba(0, 0, 0, 0.35);
-  animation: mockupFloat 3.6s ease-in-out infinite;
-}
-
-.mockup-frame::before {
-  content: "";
+/* The name pill sitting over the photo's bottom edge -- always dark/white
+   regardless of site theme since it has to stay legible over an arbitrary
+   photo, not follow --card-bg/--text. pointer-events:none so a click
+   anywhere (including right on the pill's text) still reaches
+   .project-card-link underneath. */
+.project-card-title {
   position: absolute;
-  top: 9px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 28px;
-  height: 4px;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 1;
+  padding: 11px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.6);
-}
-
-@keyframes mockupFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.project-body {
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.project-tag {
-  display: inline-block;
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  color: var(--accent);
+  background: rgba(20, 20, 26, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
   font-weight: 700;
-  font-size: 0.75rem;
-  padding: 3px 11px;
-  border-radius: 999px;
-  margin-bottom: 8px;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  text-align: center;
+  pointer-events: none;
 }
 
-.project-body h3 {
-  margin: 0 0 6px;
-  font-size: 1.15rem;
-}
-
-.project-body p {
-  margin: 0 0 10px;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.project-link {
-  font-weight: 600;
-  color: var(--accent);
-  font-size: 1rem;
-  margin-top: auto;
-  padding-top: 12px;
+.project-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
 }
 
 /* Placeholder project cards -- reserve a spot in the carousel for work
    that isn't written up yet. Dashed border + muted "+" mark it clearly
-   as a stand-in rather than a finished, clickable case study. */
+   as a stand-in rather than a finished, clickable case study. No
+   .project-card-link on these (see index.html) -- nothing to navigate to
+   yet, so they stay non-clickable like before. The label sits centered
+   with the icon (not a bottom photo-pill like the real cards) since
+   there's no photo underneath to float over. */
 .project-card-placeholder {
   border-style: dashed;
   background: var(--bg-alt);
@@ -1285,8 +1285,10 @@ body.has-custom-cursor button {
 
 .project-thumb-placeholder {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   background: var(--bg-alt);
 }
 
@@ -1297,14 +1299,10 @@ body.has-custom-cursor button {
   line-height: 1;
 }
 
-.project-tag-placeholder {
-  background: transparent;
+.placeholder-label {
   color: var(--text-muted);
-  border: 1px solid var(--border);
-}
-
-.project-card-placeholder .project-body p {
-  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.98rem;
 }
 
 /* Timeline */

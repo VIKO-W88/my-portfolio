@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FamilyFlow | 作品集 · 韦旻昕</title>
-<link rel="stylesheet" href="../css/style.css?v=48">
-<link rel="stylesheet" href="../css/project.css?v=36">
+<link rel="stylesheet" href="../css/style.css?v=51">
+<link rel="stylesheet" href="../css/project.css?v=60">
 </head>
 <body class="proto-fonts">
 
@@ -55,111 +55,115 @@
         marqueeVideo.pause();
       } else {
         // Source clip felt too fast at native (1x) speed -- first cut to
-        // half speed, then halved again per feedback -- quarter speed
-        // reads more like a calm showcase than a sped-up demo reel.
-        marqueeVideo.playbackRate = 0.25;
+        // half speed, then halved again per feedback (quarter speed), then
+        // nudged back up slightly per follow-up feedback ("快一点点") --
+        // still a calm showcase pace, just not quite as sluggish.
+        marqueeVideo.playbackRate = 0.35;
       }
     }
   </script>
 
   <section class="case-hero">
-    <span class="case-tag">产品设计 · UI/UX</span>
     <h1 class="case-title">FamilyFlow</h1>
     <p class="case-subtitle">
       一个帮助家庭成员共享日程、任务与提醒的协作类 App。
-      在这里写一句更具体的项目一句话简介，例如解决了什么问题、面向什么用户。
     </p>
   </section>
 
   <div class="meta-bar">
     <div class="meta-item">
       <h4>我的角色</h4>
-      <p>产品设计 / UI 设计（占位）</p>
+      <p>UX/UI 设计</p>
     </div>
     <div class="meta-item">
       <h4>项目周期</h4>
-      <p>2025.xx – 2025.xx（占位）</p>
+      <p>2025</p>
     </div>
     <div class="meta-item">
       <h4>使用工具</h4>
-      <p>Figma（占位）</p>
+      <p>Figma</p>
     </div>
     <div class="meta-item">
       <h4>项目类型</h4>
-      <p>课程 / 个人项目（占位）</p>
+      <p>Google UX 设计证书项目</p>
     </div>
   </div>
 
   <section class="case-section">
-    <span class="placeholder-note">占位内容 · 待替换</span>
     <h2>项目背景</h2>
     <p>
-      在这里介绍这个项目的起因：为什么想做一个家庭协作 App？目标用户是谁（例如双职工父母、多代同堂家庭）？
-      用 2-3 段话讲清楚问题背景，可以补充一些调研数据或访谈发现作为支撑。
+      家庭日程往往分散在聊天软件、个人日历和纸质记录中，容易造成信息遗漏、时间冲突和临时变更不同步，
+      增加家庭日常协调成本。
     </p>
   </section>
 
-  <section class="case-section wide">
-    <span class="placeholder-note">占位内容 · 待替换</span>
-    <h2>用户痛点</h2>
-    <p>写一写调研中发现的核心痛点，每张卡片一个点，配一句具体的用户原话或场景会更有说服力。</p>
-    <div class="pain-grid">
-      <div class="pain-card">
-        <span class="pain-icon">📅</span>
-        <h3>日程靠口头传达</h3>
-        <p>家庭成员的安排分散在各自手机里，经常靠口头提醒，容易遗漏或记错时间。</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-icon">🧩</span>
-        <h3>任务分工不清晰</h3>
-        <p>接送孩子、取快递这类琐事没有明确指派给谁，最后变成"谁想起来谁做"。</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-icon">🔔</span>
-        <h3>提醒太多或太少</h3>
-        <p>要么被各类 App 的通知轰炸，要么重要的事情完全没人提醒。</p>
-      </div>
+  <section class="case-section">
+    <h2>业务诉求</h2>
+    <p>
+      打造一个以家庭协作为核心的共享日程产品，集中管理家庭成员的日程、任务与变更信息，
+      提升家庭安排的清晰度与协作效率。
+    </p>
+  </section>
+
+  <section class="case-section">
+    <h2>用户诉求</h2>
+    <div class="userneeds-table-wrap">
+      <table class="userneeds-table">
+        <tbody>
+          <tr>
+            <td><strong>统一查看：</strong><span>集中查看全家日程与任务</span></td>
+            <td><strong>成员清晰：</strong><span>快速区分不同家庭成员的安排</span></td>
+            <td><strong>责任明确：</strong><span>明确接送、购物等事项的<span class="no-orphan">负责人</span></span></td>
+          </tr>
+          <tr>
+            <td><strong>及时同步：</strong><span>重要变更及时通知相关成员</span></td>
+            <td><strong>操作简单：</strong><span>快速创建、修改、确认日程</span></td>
+            <td><strong>减少冲突：</strong><span>提前发现时间与任务安排冲突</span></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <img class="case-banner-photo" src="../assets/familyflow/scenario-photo.jpg" alt="一家人在厨房用 FamilyFlow 查看当天日程与任务">
   </section>
 
   <section class="case-section wide">
-    <span class="placeholder-note">占位内容 · 待替换</span>
     <h2>竞品分析</h2>
-    <p>选 2-3 个同类产品做对比，说明它们各自的优劣势，以及 FamilyFlow 想差异化的地方。</p>
-    <div class="compare-table-wrap">
-      <table class="compare-table">
+    <div class="competitor-table-wrap">
+      <table class="competitor-table">
         <thead>
           <tr>
-            <th>对比维度</th>
-            <th class="col-us">FamilyFlow</th>
-            <th>竞品 A（占位）</th>
-            <th>竞品 B（占位）</th>
+            <th>产品</th>
+            <th>优点</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>共享日历</td>
-            <td class="col-us">支持，按颜色区分成员</td>
-            <td>支持</td>
-            <td>不支持</td>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/familyflow/logos/cozi.png?v=2" alt="Cozi Family Organizer logo">
+              <span>Cozi Family Organizer</span>
+            </div></td>
+            <td>家庭场景定位清晰，日历、任务和购物清单集中在同一产品里，功能结构完整。</td>
           </tr>
           <tr>
-            <td>任务指派</td>
-            <td class="col-us">支持，可指派给具体成员</td>
-            <td>不支持</td>
-            <td>支持</td>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/familyflow/logos/familywall.png?v=2" alt="FamilyWall logo">
+              <span>FamilyWall</span>
+            </div></td>
+            <td>围绕"家庭中心"的概念展开，把日程管理和家庭协作绑定在一起，鼓励全家共同参与。</td>
           </tr>
           <tr>
-            <td>语音快速创建</td>
-            <td class="col-us">支持</td>
-            <td>不支持</td>
-            <td>不支持</td>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/familyflow/logos/timetree.png?v=2" alt="TimeTree logo">
+              <span>TimeTree</span>
+            </div></td>
+            <td>体验足够轻量，围绕具体日程展开沟通，减少了日程和聊天工具之间来回切换的成本。</td>
           </tr>
           <tr>
-            <td>价格</td>
-            <td class="col-us">占位</td>
-            <td>占位</td>
-            <td>占位</td>
+            <td class="competitor-table-name"><div class="competitor-name-inner">
+              <img src="../assets/familyflow/logos/apple-calendar.png?v=2" alt="Apple Calendar logo">
+              <span>Apple Calendar</span>
+            </div></td>
+            <td>交互成熟简洁，创建和查看日程的效率很高，几乎没有额外的学习成本。</td>
           </tr>
         </tbody>
       </table>
@@ -167,102 +171,138 @@
   </section>
 
   <section class="case-section">
-    <span class="placeholder-note">占位内容 · 待替换</span>
-    <h2>设计目标</h2>
+    <h2>业务目标</h2>
     <p>
-      列出这个项目希望达成的 2-4 个核心目标，例如：
-      让全家人一眼看清今天/本周的安排、把任务快速分配给具体成员、
-      减少沟通成本、支持语音快速创建日程等。
+      建立一个统一、清晰、易协作的家庭日程管理平台，减少信息分散和重复沟通，
+      提高家庭成员处理日常安排与临时变化的效率。
     </p>
-    <div class="shot-row">
-      <figure class="shot-frame">
-        <img src="../assets/familyflow/onboarding-1.png" alt="引导页 1">
-      </figure>
-      <figure class="shot-frame">
-        <img src="../assets/familyflow/onboarding-2.png" alt="引导页 2">
-      </figure>
-      <figure class="shot-frame">
-        <img src="../assets/familyflow/onboarding-3.png" alt="引导页 3">
-      </figure>
+  </section>
+
+  <section class="case-section wide">
+    <h2>设计目标</h2>
+    <div class="goal-split">
+      <ul class="goal-list">
+        <li>全家日程一目了然</li>
+        <li>成员与责任清晰可辨</li>
+        <li>临时变更快速处理</li>
+        <li>重要信息准确触达</li>
+        <li>核心操作简单高效</li>
+      </ul>
+      <div class="goal-visual" id="goalVisual">
+        <div class="goal-visual-inner" id="goalVisualInner">
+          <img src="../assets/familyflow/hero-duo-mockup.png" alt="FamilyFlow 引导页与首页界面展示">
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="case-section wide">
-    <span class="placeholder-note">占位内容 · 待替换</span>
-    <h2>核心功能</h2>
-    <p>介绍几个主要功能模块，每个模块配一张截图和一句说明，让访客快速理解 App 能做什么。</p>
-    <div class="feature-rows">
-      <div class="feature-row">
-        <div class="feature-shot"><div class="screen"><img src="../assets/familyflow/home.png" alt="首页仪表盘"></div></div>
-        <div class="feature-text">
-          <h3>首页仪表盘</h3>
-          <p>集中展示今日事项、日历、任务和通知数量，家庭成员一打开就能快速掌握当天安排。</p>
+    <h2>设计实施</h2>
+
+    <h3>设计策略</h3>
+    <p>围绕"信息集中—成员可视化—责任明确—变更同步—降低门槛"五个方向，把设计目标落到具体的产品结构上。</p>
+    <div class="strategy-flow">
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🗂️</span>
+        <h3>信息集中</h3>
+        <p>统一承载家庭日程、任务、成员和提醒信息。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🎨</span>
+        <h3>成员可视化</h3>
+        <p>通过头像、颜色和标签建立清晰的成员识别体系。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">✅</span>
+        <h3>责任明确</h3>
+        <p>为家庭事项设置负责人、确认状态和完成状态。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🔄</span>
+        <h3>变更同步</h3>
+        <p>强化临时改期、成员变更和相关人员通知能力。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🎯</span>
+        <h3>降低门槛</h3>
+        <p>延续用户熟悉的日历操作方式，减少复杂设置和学习成本。</p>
+      </div>
+    </div>
+
+    <h3 class="design-plan-heading">设计方案</h3>
+    <div class="feature-list">
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">📅</span>
+        <div class="feature-list-text">
+          <h3>家庭共享日历</h3>
+          <p>统一展示所有家庭成员的日程。</p>
         </div>
       </div>
-      <div class="feature-row reverse">
-        <div class="feature-shot"><div class="screen"><img src="../assets/familyflow/calendar-today.png" alt="共享日历"></div></div>
-        <div class="feature-text">
-          <h3>共享日历</h3>
-          <p>按天查看时间轴上的日程，不同颜色区分事件类型，支持切换到总览模式一次看完全周。</p>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🗓️</span>
+        <div class="feature-list-text">
+          <h3>家庭周览</h3>
+          <p>快速掌握一周整体安排和时间冲突。</p>
         </div>
       </div>
-      <div class="feature-row">
-        <div class="feature-shot"><div class="screen"><img src="../assets/familyflow/tasks.png" alt="任务清单"></div></div>
-        <div class="feature-text">
-          <h3>任务清单</h3>
-          <p>轻量的待办列表，勾选即完成，适合记录接送小孩、取快递这类日常琐事。</p>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">👨‍👩‍👧</span>
+        <div class="feature-list-text">
+          <h3>成员管理</h3>
+          <p>通过头像、颜色和权限区分不同家庭成员。</p>
         </div>
       </div>
-      <div class="feature-row reverse">
-        <div class="feature-shot"><div class="screen"><img src="../assets/familyflow/new-event.png" alt="新建事件"></div></div>
-        <div class="feature-text">
-          <h3>新建事件</h3>
-          <p>支持手动填写或语音快速创建，还能设置提醒重复规则、优先级并指派给具体家庭成员。</p>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🧺</span>
+        <div class="feature-list-text">
+          <h3>共享任务</h3>
+          <p>支持创建、分配和确认接送、购物等家庭事项。</p>
         </div>
       </div>
-      <div class="feature-row">
-        <div class="feature-shot"><div class="screen"><img src="../assets/familyflow/assign-to.png" alt="成员分配"></div></div>
-        <div class="feature-text">
-          <h3>成员与分配</h3>
-          <p>管理家庭成员列表，把事件和任务指派给对应的人，责任更清晰。</p>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🔔</span>
+        <div class="feature-list-text">
+          <h3>智能提醒</h3>
+          <p>针对重要活动、任务和临时变化进行提醒。</p>
         </div>
       </div>
-      <div class="feature-row reverse">
-        <div class="feature-shot"><div class="screen"><img src="../assets/familyflow/notifications.png" alt="消息通知"></div></div>
-        <div class="feature-text">
-          <h3>消息通知</h3>
-          <p>及时同步家人对事件的评论、反应和邀请，避免信息遗漏。</p>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">⚠️</span>
+        <div class="feature-list-text">
+          <h3>冲突提示</h3>
+          <p>识别成员之间的时间冲突和安排冲突。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">↻</span>
+        <div class="feature-list-text">
+          <h3>快速改期</h3>
+          <p>修改日程后同步受影响的家庭成员。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">➕</span>
+        <div class="feature-list-text">
+          <h3>快捷加入</h3>
+          <p>降低家庭成员加入和完成基础设置的操作成本。</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="case-section">
-    <span class="placeholder-note">占位内容 · 待替换</span>
-    <h2>视觉系统</h2>
-    <p>简单介绍一下视觉设计方向，例如为什么选择紫色作为主色调、圆角风格希望传达出的亲和感等。</p>
-    <div class="palette-row">
-      <div class="swatch"><div class="swatch-color" style="background:#5b3e8e"></div><span>主色</span></div>
-      <div class="swatch"><div class="swatch-color" style="background:#d9d0f0"></div><span>浅紫</span></div>
-      <div class="swatch"><div class="swatch-color" style="background:#f0b45a"></div><span>强调橙</span></div>
-      <div class="swatch"><div class="swatch-color" style="background:#8fb768"></div><span>强调绿</span></div>
-      <div class="swatch"><div class="swatch-color" style="background:#1a1a1a"></div><span>文字</span></div>
-    </div>
-  </section>
-
-  <section class="case-section">
-    <span class="placeholder-note">占位内容 · 待替换</span>
-    <h2>反思与收获</h2>
+    <h2>设计总结</h2>
     <p>
-      写一写做这个项目学到了什么、遇到过什么设计难题、如果重新做一次会做哪些不同的选择。
-      这部分最能体现你的思考过程，建议认真填写。
+      本产品以家庭协作日程为核心，将分散的日程、成员、任务和变更信息集中管理。
+      通过清晰展示家庭安排、明确成员责任与及时同步变化，帮助家庭减少沟通成本与安排冲突，
+      让日常协调更加清晰、高效、可控。
     </p>
   </section>
 
   <section class="cta-section">
-    <div class="cta-box">
+    <div class="cta-box cta-box-purple">
       <h2>想亲自试试看？</h2>
-      <p>下面是一个可点击的完整交互原型，手机屏幕大小，点击卡片、按钮和箭头即可在各个页面间跳转体验。</p>
+      <p>点击下方按钮，即可打开一个还原手机尺寸的完整交互原型，点击卡片、按钮和箭头就能在各个页面间跳转体验。</p>
       <a href="familyflow-prototype.html" class="cta-btn" target="_blank" rel="noopener">进入可交互原型 →</a>
     </div>
   </section>
@@ -273,6 +313,34 @@
   <p>&copy; <span id="year"></span> 韦旻昕. All rights reserved.</p>
 </footer>
 
+<script>
+  // "设计目标" phone mockup -- mouse-driven 3D tilt layered on top of the
+  // CSS float animation (see .goal-visual-inner / @keyframes goal-float in
+  // project.css). The float animation lives on the <img> itself; this
+  // script only ever touches the wrapping .goal-visual-inner, so the two
+  // transforms compose instead of fighting over the same element.
+  (function () {
+    var visual = document.getElementById("goalVisual");
+    var inner = document.getElementById("goalVisualInner");
+    if (!visual || !inner) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var maxTilt = 12; // degrees
+
+    visual.addEventListener("mousemove", function (e) {
+      var rect = visual.getBoundingClientRect();
+      var percentX = (e.clientX - rect.left) / rect.width - 0.5;
+      var percentY = (e.clientY - rect.top) / rect.height - 0.5;
+      var rotateY = percentX * maxTilt;
+      var rotateX = -percentY * maxTilt;
+      inner.style.transform = "rotateX(" + rotateX.toFixed(2) + "deg) rotateY(" + rotateY.toFixed(2) + "deg)";
+    });
+
+    visual.addEventListener("mouseleave", function () {
+      inner.style.transform = "rotateX(0deg) rotateY(0deg)";
+    });
+  })();
+</script>
 <script src="../js/main.js?v=9"></script>
 </body>
 </html>

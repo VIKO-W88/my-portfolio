@@ -15,17 +15,15 @@
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   --radius: 14px;
   --max-width: 1080px;
-  /* Brush display face for the hero headline, section titles, eyebrow,
-     link, nav logo and intro name. Permanent Marker leads the stack for
-     Latin text (per feedback); Long Cang is the fallback that kicks in
-     for any Chinese character Permanent Marker has no glyph for (Google
-     Fonts stacks fall back per-character, not per-element, so "VIKO"
-     renders in Permanent Marker and "关于我" etc. renders in Long Cang
-     from the same declaration). Both loaded from Google Fonts (see the
-     <link> in index.html) so they render identically on every
-     device/OS; falls back to a system script font, then plain sans, if
-     the page is ever opened offline. */
-  --title-font: "Permanent Marker", "Long Cang", "Yuanti SC", "STXingkai", "Microsoft YaHei", "PingFang SC", cursive;
+  /* Display face for the hero headline, section titles, eyebrow, link,
+     nav labels, nav logo and intro name -- unified site-wide onto Noto
+     Sans SC per feedback (previously Permanent Marker + Long Cang, a
+     Latin/Chinese pair that fell back per-character and read as two
+     different fonts glued together; see --name-font's history below,
+     since resolved the same way). One face, full Latin + Chinese
+     coverage, loaded from Google Fonts (see the <link> in every page's
+     <head>) with the system sans as an offline fallback. */
+  --title-font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   /* Dedicated face for the "韦旻昕" name wherever it appears (nav logo,
      splash intro name) -- kept separate from --title-font because that
      stack mixes Permanent Marker (Latin) with Long Cang (Chinese) per
@@ -209,6 +207,13 @@ ul {
   /* Slightly larger than before (was 0.95rem) -- still a quiet nav label,
      just a touch more present. */
   font-size: 1.05rem;
+  /* Pulled onto the same Noto Sans SC used by the logo/hero/section
+     titles -- these were previously unstyled (plain body system-sans),
+     which is close to Noto Sans SC but not the same face, so "关于我" /
+     "作品集" / "联系方式" now render from the exact same font file as
+     everything else instead of a look-alike system fallback. */
+  font-family: var(--title-font);
+  font-weight: 500;
   color: var(--text-muted);
   transition: color 0.2s ease;
 }
@@ -363,10 +368,9 @@ ul {
   gap: 8px;
   color: var(--accent);
   font-family: var(--title-font);
-  /* 400 instead of 700 -- Permanent Marker is a single-weight display
-     face, so a heavier weight here would just trigger the browser's
-     synthetic/faux bold instead of an actual bolder cut. */
-  font-weight: 400;
+  /* 600 -- Noto Sans SC's semibold cut, now that the display face has a
+     real weight axis instead of Permanent Marker's single cut. */
+  font-weight: 600;
   margin: 0 0 30px;
   letter-spacing: 0.06em;
   font-size: 1.1rem;
@@ -390,7 +394,9 @@ ul {
   font-size: clamp(92px, 9vw, 150px);
   line-height: 0.82;
   margin: 0 0 20px;
-  font-weight: 400;
+  /* 900 -- Noto Sans SC's black cut, for a wordmark this size; Permanent
+     Marker had no bold of its own so this used to sit at 400. */
+  font-weight: 900;
   letter-spacing: 0.04em;
   color: var(--title-color);
 }
@@ -407,10 +413,9 @@ ul {
   align-items: center;
   gap: 6px;
   font-family: var(--title-font);
-  /* 400 instead of 600 -- Permanent Marker is a single-weight display
-     face, so a heavier weight here would just trigger the browser's
-     synthetic/faux bold instead of an actual bolder cut. */
-  font-weight: 400;
+  /* 600 -- matches .hero-eyebrow's weight now that Noto Sans SC gives us
+     a real semibold cut instead of Permanent Marker's single weight. */
+  font-weight: 600;
   font-size: 1.1rem;
   color: var(--accent);
   position: relative;
@@ -960,12 +965,10 @@ body.has-custom-cursor button {
 .section-title {
   font-family: var(--title-font);
   font-size: 2.3rem;
-  /* 400 instead of the old 800 -- the brush font has no real bold face of
-     its own, so a heavy weight here would just trigger the browser's
-     synthetic/faux bold (mechanically thickened strokes), which looks
-     blocky and ruins the hand-lettered feel. Matches the hero title's own
-     font-weight for the same reason. */
-  font-weight: 400;
+  /* 700 -- back to a real bold now that Noto Sans SC has its own bold
+     cut (used to sit at 400 because the brush font had none, and a heavy
+     weight there just triggered faux-bold). */
+  font-weight: 700;
   margin: 0 0 40px;
   text-align: center;
   letter-spacing: 0.02em;

@@ -26,6 +26,17 @@
      device/OS; falls back to a system script font, then plain sans, if
      the page is ever opened offline. */
   --title-font: "Permanent Marker", "Long Cang", "Yuanti SC", "STXingkai", "Microsoft YaHei", "PingFang SC", cursive;
+  /* Dedicated face for the "韦旻昕" name wherever it appears (nav logo,
+     splash intro name) -- kept separate from --title-font because that
+     stack mixes Permanent Marker (Latin) with Long Cang (Chinese) per
+     character, and Long Cang has no glyphs for 旻/昕, so those two
+     characters silently fell back to a different system font than 韦,
+     making the name look like three mismatched fonts glued together.
+     Noto Sans SC covers all three characters in one face, so the name
+     renders consistently everywhere it appears. Loaded from Google Fonts
+     on every page that shows the logo (see each page'''s <head>), with
+     the system sans as an offline fallback. */
+  --name-font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   /* Deep indigo ink for the headline -- echoes the portal/purple-character
      palette. Overridden to a lighter tint in dark mode below so it stays
      readable against the near-black background instead of going muddy. */
@@ -137,13 +148,10 @@ ul {
 }
 
 .logo {
-  font-family: var(--title-font);
-  /* 400 instead of 700 -- Permanent Marker is a single-weight display
-     face, so a heavier weight here would just trigger the browser's
-     synthetic/faux bold instead of an actual bolder cut. Sized up a bit
-     from the old 1.1rem since brush-marker letterforms read smaller than
-     a plain sans at the same font-size. */
-  font-weight: 400;
+  font-family: var(--name-font);
+  /* 600 -- Noto Sans SC's semibold cut reads closer to a wordmark at this
+     size than its regular weight, which looked thin here. */
+  font-weight: 600;
   font-size: 1.4rem;
   /* Left edge locked to .hero-text's own left edge ("VIKO"), at every
      viewport width -- not just approximately, exactly, per feedback
@@ -804,9 +812,9 @@ ul {
 }
 
 .intro-name {
-  font-family: var(--title-font);
+  font-family: var(--name-font);
   font-size: clamp(1.6rem, 5vw, 2.8rem);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0.02em;
   color: #fff;
   opacity: 0;

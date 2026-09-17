@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EZ Stock | 作品集 · 韦旻昕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css?v=53">
+<link rel="stylesheet" href="../css/project.css?v=68">
+</head>
+<body class="proto-fonts">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">韦旻昕</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="../index.html#about">关于我</a></li>
+        <li><a href="../index.html#projects">作品集</a></li>
+        <li><a href="../index.html#contact">联系方式</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深色模式">🌙</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="case-header">
+    <a href="../index.html#projects" class="back-link">← 返回作品集</a>
+  </div>
+
+  <section class="ez-hero" id="ezHero">
+    <iframe class="ez-hero-bg" id="ezHeroBg" src="ezstock-app/index.html#/hero-bg-embed" title="" aria-hidden="true" tabindex="-1" scrolling="no" loading="lazy"></iframe>
+    <div class="ez-hero-scrim" aria-hidden="true"></div>
+    <div class="ez-hero-content">
+      <p class="ez-hero-eyebrow">Intelligent inventory, in motion</p>
+      <h2 class="ez-hero-heading">Inventory, orchestrated.</h2>
+      <p class="ez-hero-text">See every item, predict every shortage, and coordinate every movement from one intelligent workspace.</p>
+      <div class="ez-hero-actions">
+        <a href="ezstock-app/index.html#/inventory" target="_blank" rel="noopener" class="ez-btn ez-btn-primary">View Inventory</a>
+        <a href="ezstock-app/index.html#/add-product" target="_blank" rel="noopener" class="ez-btn ez-btn-secondary">Add Product</a>
+      </div>
+      <ul class="ez-hero-capabilities">
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Real-time tracking</span></li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Predictive alerts</span></li>
+        <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Automated workflows</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="case-hero">
+    <h1 class="case-title">EZ Stock</h1>
+    <p class="case-subtitle">
+      纸质台账和 Excel 表格很难跟上一家小型零售店的真实节奏——盘点耗时、数据难转录、库存记录一旦出错就直接变成损耗。
+      EZ Stock 是一款面向独立零售店主的库存管理网页应用，把分散、易错的纸面流程收进一套随时能查、随时能改的系统里。
+    </p>
+  </section>
+
+  <div class="meta-bar">
+    <div class="meta-item">
+      <h4>我的角色</h4>
+      <p>UX/UI 设计 · 前端开发</p>
+    </div>
+    <div class="meta-item">
+      <h4>项目周期</h4>
+      <p>8 周（2023.07–2023.09）</p>
+    </div>
+    <div class="meta-item">
+      <h4>使用工具</h4>
+      <p>Figma · React + Vite</p>
+    </div>
+    <div class="meta-item">
+      <h4>项目类型</h4>
+      <p>个人项目</p>
+    </div>
+  </div>
+
+  <section class="case-section wide align-left">
+    <h2>设计定位</h2>
+    <h3>项目背景</h3>
+    <p>
+      零售店主长期依赖纸质台账和 Excel 表格管理库存。随着商品种类和数量增加，人工记录、盘点和核对的方式越来越难以
+      跟上门店的实际经营节奏。店主需要的是一套能够替代这些易错、难以扩展的表格记录，并且在不同设备上都能顺畅使用
+      的数字化方案。
+    </p>
+    <h3>业务诉求</h3>
+    <p>
+      库存管理本身就是一件耗时且繁琐的工作，而纸质记录转录成电子数据、人工盘点效率低、库存数字不准确导致的
+      损耗和利润损失，进一步放大了这个问题。EZ Stock 需要做的，是提供一套能够替代 Excel 表格的库存管理平台，
+      并且足够安全、足够直观，能够支撑店主管理和追踪与库存相关的各项任务。
+    </p>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>洞察用户诉求</h2>
+    <div class="insight-split">
+      <div class="insight-content">
+        <p>
+          为了理解店主在日常经营中的真实困扰，我通过用户访谈收集了一手信息——一位独立经营零售店的店主，
+          正在寻找省钱和让库存流程自动化的方法。围绕她的行为、情绪和诉求，梳理出以下几个反复出现的痛点：
+        </p>
+        <div class="insight-grid">
+          <div class="insight-item">
+            <span class="insight-num">01</span>
+            <h3>混乱的仓储环境</h3>
+            <p>杂乱、缺乏秩序的库房环境，不利于养成良好的库存管理习惯。</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-num">02</span>
+            <h3>盘点耗时过长</h3>
+            <p>人手和时间都不够用，需要找到方法简化部分流程，缩短整体耗时。</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-num">03</span>
+            <h3>纸质数据难转录</h3>
+            <p>从纸质记录转录到电脑的过程繁琐易错，解决方案应当能够直接把手写库存记录数字化。</p>
+          </div>
+          <div class="insight-item">
+            <span class="insight-num">04</span>
+            <h3>记录失准导致损耗</h3>
+            <p>库存记录不准确造成了库存和利润的双重损失，系统需要能根据销售和退货实时更新库存数字。</p>
+          </div>
+        </div>
+      </div>
+      <div class="goal-visual insight-visual static">
+        <div class="goal-visual-inner">
+          <img src="../assets/ezstock/warehouse-hero.png" alt="仓库场景插画，示意库存管理需要面对的真实环境">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>聚焦设计目标</h2>
+    <p>三个设计目标对应库存管理中依次发生的三个环节——预判、可视、协同，因此用一条连接的流程呈现。</p>
+    <div class="strategy-flow">
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">📈</span>
+        <h3>预判 · Predictive</h3>
+        <p>在库存见底之前提前预判：识别销售趋势变化，发现潜在的低库存风险，为提前补货提供依据。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">👁️</span>
+        <h3>可视 · Visibility</h3>
+        <p>让每一件商品的状态都清晰可见：实时监控库存状态，跨库位追踪商品，及时提示低库存情况。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🔄</span>
+        <h3>协同 · Orchestration</h3>
+        <p>把扫描、分拣与补货整合成一套协同运作的流程，减少人工衔接环节产生的误差和延迟。</p>
+      </div>
+    </div>
+  </section>
+
+  <img class="case-scenario-photo section-banner" src="../assets/ezstock/intel-orchestrate.png" alt="仓储场景插画，示意库存在系统中被统一协调调度">
+
+  <section class="case-section wide align-left">
+    <h2>设计方案</h2>
+    <p>围绕店主每天要做的具体任务，EZ Stock 被拆分成六个页面，从概览到执行层层递进：</p>
+    <div class="feature-list">
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🏠</span>
+        <div class="feature-list-text">
+          <h3>首页</h3>
+          <p>品牌化的入口页面，用一句话讲清楚产品能做什么，并引导进入仪表盘和其他核心功能。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">📊</span>
+        <div class="feature-list-text">
+          <h3>仪表盘</h3>
+          <p>库存总览、低库存/缺货数量、月度销售额，配合库存水平、销售趋势图表和热销排行，一屏看懂当前经营状况。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">📦</span>
+        <div class="feature-list-text">
+          <h3>库存</h3>
+          <p>可搜索、可筛选、可排序的商品列表，库存状态（充足 / 低库存 / 缺货）一目了然。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🔍</span>
+        <div class="feature-list-text">
+          <h3>商品详情</h3>
+          <p>交互式 3D 商品查看器、库存状况细分（良好 / 临期 / 损坏），以及销售与补货历史记录。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">➕</span>
+        <div class="feature-list-text">
+          <h3>新增商品</h3>
+          <p>带校验的新增商品表单，支持直接上传商品图片，把纸面记录变成结构化数据。</p>
+        </div>
+      </div>
+      <div class="feature-list-item">
+        <span class="feature-icon-circle">🧾</span>
+        <div class="feature-list-text">
+          <h3>销售登记</h3>
+          <p>选择商品、录入销量、预览扣减后的库存水平，确认后自动更新库存数字，避免手工核对出错。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>可用性测试与迭代</h2>
+    <p>在低保真原型阶段做了一轮可用性测试（4 位参与者，远程、不加引导，每人 20–30 分钟），据此定义了三个需要优先解决的问题：</p>
+    <div class="plain-row-list numbered">
+      <div class="plain-row">
+        <span class="plain-row-icon">1</span>
+        <div class="plain-row-text">
+          <strong>不清楚从哪里开始</strong>
+          <p>用户在进入某些任务时找不到明确的起点。对应调整：补充更清晰的操作提示，帮助用户快速定位入口。</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">2</span>
+        <div class="plain-row-text">
+          <strong>新增商品步骤偏多</strong>
+          <p>一次性呈现的信息量偏大。对应调整：把流程拆分成多个分区，加入分步（stepper）引导，让填写过程更连贯。</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">3</span>
+        <div class="plain-row-text">
+          <strong>设置入口不易发现</strong>
+          <p>设置图标原本的位置不够显眼。对应调整：移动到主导航旁边，提升可见性。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section wide align-left">
+    <h2>视觉识别与设计系统</h2>
+    <p>
+      配色以暖白背景搭配一种沉静的墨绿作为主色，传递“可靠、踏实”的经营工具属性；状态色单独区分——琥珀色代表
+      低库存，红色只用于缺货这一种最需要被立刻看到的状态，避免颜色语义被稀释。
+    </p>
+    <div class="palette-grid">
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#4b6a52;"></div>
+        <div class="palette-swatch-hex">#4B6A52</div>
+        <div class="palette-swatch-name">Primary · 墨绿</div>
+        <p class="palette-swatch-usage">品牌主色、导航与主要操作按钮</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#b5822a;"></div>
+        <div class="palette-swatch-hex">#B5822A</div>
+        <div class="palette-swatch-name">Warning · 琥珀</div>
+        <p class="palette-swatch-usage">低库存状态提示</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#b3413a;"></div>
+        <div class="palette-swatch-hex">#B3413A</div>
+        <div class="palette-swatch-name">Danger · 红</div>
+        <p class="palette-swatch-usage">仅用于缺货这一种状态</p>
+      </div>
+      <div class="palette-swatch">
+        <div class="palette-swatch-color" style="background:#f6f3ec;"></div>
+        <div class="palette-swatch-hex">#F6F3EC</div>
+        <div class="palette-swatch-name">Background · 暖白</div>
+        <p class="palette-swatch-usage">页面底色，降低长时间使用的视觉疲劳</p>
+      </div>
+    </div>
+    <p style="margin-top: 24px;">正文统一使用 Inter，一款为界面阅读优化过的无衬线字体，在数据密集的仪表盘和列表页里保持清晰易读。</p>
+  </section>
+
+  <section class="case-section align-left">
+    <h2>设计总结</h2>
+    <p>
+      EZ Stock 要解决的核心问题不是“店主不知道库存有多少”，而是记录库存的方式（纸质台账、Excel）本身就跟不上
+      经营节奏，进而放大了盘点耗时、数据转录出错、损耗难追溯这些问题。设计因此没有停在“做一个更好看的表格”，
+      而是把预判、可视、协同三个目标拆解成六个具体页面，让店主在同一套系统里完成从查库存到记销售的全部日常动作。
+    </p>
+    <p>
+      这也是这几个作品集项目里少数不止停留在 Figma 原型阶段的一个——上方的演示按钮打开的就是用 React 实际
+      实现出来的版本，从设计稿到可以点开操作的产品，是这个项目里我自己觉得收获最大的一段。
+    </p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; <span id="year"></span> 韦旻昕. All rights reserved.</p>
+</footer>
+
+<script>
+  // EZ Stock hero banner. The animated background itself (the baked-in
+  // "hologram" photo graphics breathing/drifting, plus the particle/route
+  // overlay) is not a hand-ported reimplementation -- #ezHeroBg is an
+  // <iframe> straight onto the real app's own HeroScene/GlowPhoto
+  // components (see ezstock-app/src/pages/HeroBgEmbed.jsx), so it's
+  // guaranteed to look and animate exactly like the real thing, lines and
+  // all. This script only reproduces the small pointer-driven parallax
+  // drift of the whole background layer, skipped for touch input and
+  // reduced-motion, the same way the source HeroBanner.jsx does.
+  (function () {
+    var hero = document.getElementById('ezHero');
+    var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if (!hero || prefersReducedMotion || isCoarsePointer) return;
+
+    hero.addEventListener('pointermove', function (e) {
+      var rect = hero.getBoundingClientRect();
+      var nx = (e.clientX - rect.left) / rect.width - 0.5;
+      var ny = (e.clientY - rect.top) / rect.height - 0.5;
+      hero.style.setProperty('--ez-parallax-x', (-nx * 8).toFixed(1) + 'px');
+      hero.style.setProperty('--ez-parallax-y', (-ny * 6).toFixed(1) + 'px');
+    });
+    hero.addEventListener('pointerleave', function () {
+      hero.style.setProperty('--ez-parallax-x', '0px');
+      hero.style.setProperty('--ez-parallax-y', '0px');
+    });
+  })();
+</script>
+<script src="../js/main.js?v=9"></script>
+</body>
+</html>

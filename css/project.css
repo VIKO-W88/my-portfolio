@@ -2277,3 +2277,278 @@
      column would run very tall on mobile. */
   .my-eco-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ---------- EZ Stock · hero banner (ported from the app itself) ----------
+   This is not a screenshot or a generic CTA card -- it's the app's own
+   Home-page HeroBanner component (src/components/dashboard/HeroBanner.jsx
+   + .css in the EZ Stock source), rebuilt in plain HTML/CSS so it can
+   live on a static project page. Colors/spacing/radii below are that
+   component's own design tokens (src/index.css), copied as literal
+   values since this site's stylesheet doesn't define them.
+
+   #ezHeroBg is the plain photo -- no particle/route overlay, no animated
+   "hologram" glow layer. Both were tried (first hand-ported to vanilla JS
+   + three.js, then as an <iframe> onto the real app's own HeroScene/
+   GlowPhoto components running for real), but the dashed cyan/mint line
+   pattern read as stiff and out of place once actually visible, so it was
+   dropped in favor of just the clean photo. The small pointer-parallax
+   drift of the photo on mouse move is still reproduced directly here
+   (second inline <script> block in ezstock.html) since it's simple and
+   was never the problem. Both buttons open the real, running build in a
+   new tab rather than navigating the portfolio site away.
+
+   Width: the real component has no max-width at all -- it just fills the
+   app's content column, which reads as "wide, confident, image-led" per
+   its own source comment. A flat 1080px cap (this page's shared column
+   width) made it feel cramped by comparison, so this breaks out of the
+   column the same way .case-scenario-photo already does elsewhere on
+   this page: a wide fixed width, capped so it never touches the viewport
+   edge (24px side margin), centered via the standard
+   margin-left:50% + translateX(-50%) trick. */
+.ez-hero {
+  --ez-parallax-x: 0px;
+  --ez-parallax-y: 0px;
+  width: 1880px;
+  max-width: calc(100vw - 48px);
+  margin: 28px 0 0;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.ez-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 20px;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 12px 32px rgba(44, 42, 38, 0.12);
+}
+
+@media (min-width: 720px) {
+  .ez-hero {
+    height: 460px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ez-hero {
+    height: clamp(500px, 34vw, 580px);
+  }
+}
+
+/* #ezHeroBg is an <iframe> straight onto the real app's own animated hero
+   background (see ezstock-app/index.html#/hero-bg-embed, which renders
+   only its HeroScene + GlowPhoto layers, no sidebar/text/chrome) -- not a
+   reimplementation, so it's guaranteed to look and animate exactly like
+   the real thing. It's sized/oversized and parallax-driven exactly like a
+   CSS-background div would be, but with pointer-events disabled so
+   clicks/hover pass through to .ez-hero's own pointermove listener and to
+   the buttons in .ez-hero-content above it. The background-image here is
+   just an instant-paint fallback shown for the brief moment before the
+   iframe's own content finishes painting. */
+.ez-hero-bg {
+  /* Explicit width/height (not just inset/top/left) because #ezHeroBg is
+     a replaced element (an <iframe>) -- absolutely-positioned replaced
+     elements don't stretch to fill their inset box the way a plain div
+     does when only top/right/bottom/left are set; without an explicit
+     size they fall back to the browser default iframe size (300x150px),
+     which is what silently shrank the whole hero photo down to a tiny
+     box in one revision of this file. */
+  position: absolute;
+  top: -4%;
+  left: -4%;
+  width: 108%;
+  height: 108%;
+  z-index: 0;
+  border: 0;
+  display: block;
+  pointer-events: none;
+  background-color: #fbf9f4;
+  background-image: url('../assets/ezstock/warehouse-hero.png');
+  background-size: cover;
+  background-position: 15% center;
+  background-repeat: no-repeat;
+  transform: translate3d(var(--ez-parallax-x), var(--ez-parallax-y), 0);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+@media (min-width: 720px) {
+  .ez-hero-bg {
+    background-position: center right;
+  }
+}
+
+.ez-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(255, 255, 255, 0.93) 38%,
+    rgba(255, 255, 255, 0.65) 58%,
+    rgba(255, 255, 255, 0.2) 74%,
+    rgba(255, 255, 255, 0) 88%
+  );
+}
+
+@media (min-width: 720px) {
+  .ez-hero-scrim {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.88) 28%,
+      rgba(255, 255, 255, 0.5) 48%,
+      rgba(255, 255, 255, 0.12) 64%,
+      rgba(255, 255, 255, 0) 76%
+    );
+  }
+}
+
+.ez-hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 560px;
+}
+
+@media (min-width: 720px) {
+  .ez-hero-content {
+    padding: 32px 48px;
+  }
+}
+
+.ez-hero-eyebrow {
+  color: #394f3d;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.ez-hero-heading {
+  color: #2c2a26;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.15;
+  max-width: 16ch;
+  margin: 0;
+}
+
+@media (min-width: 720px) {
+  .ez-hero-heading {
+    font-size: 2.2rem;
+  }
+}
+
+.ez-hero-text {
+  color: #6b6860;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  max-width: 40ch;
+  margin: 4px 0 0;
+}
+
+@media (min-width: 720px) {
+  .ez-hero-text {
+    font-size: 1.02rem;
+  }
+}
+
+.ez-hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+@media (min-width: 480px) {
+  .ez-hero-actions {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+  }
+}
+
+.ez-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 22px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 0.96rem;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ez-btn:active {
+  transform: translateY(1px);
+}
+
+.ez-btn-primary {
+  background: #4b6a52;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(44, 42, 38, 0.06);
+}
+
+.ez-btn-primary:hover {
+  background: #394f3d;
+}
+
+.ez-btn-secondary {
+  background: rgba(255, 255, 255, 0.92);
+  color: #2c2a26;
+  border-color: #e7e2d6;
+  box-shadow: 0 12px 32px rgba(44, 42, 38, 0.12);
+}
+
+.ez-btn-secondary:hover {
+  background: #fbf9f4;
+  border-color: #d8d2c2;
+}
+
+.ez-hero-capabilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ez-hero-capabilities li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px 5px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #e7e2d6;
+  color: #2c2a26;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.ez-hero-capabilities li svg {
+  color: #394f3d;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ez-hero-bg {
+    transition: none;
+  }
+}

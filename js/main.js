@@ -258,6 +258,92 @@ if (projectsGrid) {
   });
   setInitialScrollPosition();
   scheduleProjectFocus();
+
+  // Left/right page buttons — step the row by one card at a time, always
+  // landing the target card at the row's center (where the coverflow focus
+  // scale peaks). The target is measured from the card's current on-screen
+  // rect, but because card widths/margins animate with --focus-scale as the
+  // row scrolls, that first estimate can be a few px off; once scrolling
+  // settles we re-measure and nudge the remainder. Works across the loop
+  // clones, so it wraps endlessly like dragging does.
+  const prevBtn = document.getElementById("projectsPrev");
+  const nextBtn = document.getElementById("projectsNext");
+
+  const cardCenterOffset = (card) => {
+    const gridRect = projectsGrid.getBoundingClientRect();
+    const r = card.getBoundingClientRect();
+    return r.left + r.width / 2 - (gridRect.left + gridRect.width / 2);
+  };
+
+  const centeredCardIndex = () => {
+    let best = 0;
+    let bestDist = Infinity;
+    projectCards.forEach((card, i) => {
+      const d = Math.abs(cardCenterOffset(card));
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
+    });
+    return best;
+  };
+
+  let pageTarget = null;
+  let pageRAF = null;
+
+  // Native smooth scrolling can't be used here: card widths/margins
+  // animate with --focus-scale while the row moves, so the target's
+  // position keeps shifting under a fixed scrollTo destination (and the
+  // loop's silent wrap-around jump would corrupt an absolute target).
+  // Instead ease toward the target card frame by frame, re-measuring it
+  // live each time, so the row converges on the card's true center.
+  const pageProjects = (dir) => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Keep stepping from the card we're already heading to, so rapid
+    // clicks advance one card each instead of restarting from mid-scroll.
+    let i = pageTarget !== null ? pageTarget : centeredCardIndex();
+    i = Math.max(0, Math.min(projectCards.length - 1, i + dir));
+    pageTarget = i;
+    const card = projectCards[i];
+
+    // Snap would fight the eased scroll; it's re-enabled as soon as the
+    // visitor scrolls/drags/touches the row themselves.
+    projectsGrid.style.scrollSnapType = "none";
+
+    if (pageRAF) cancelAnimationFrame(pageRAF);
+    const t0 = performance.now();
+    let calmFrames = 0;
+    const step = (now) => {
+      const off = cardCenterOffset(card);
+      projectsGrid.scrollLeft += reduce ? off : off * 0.18;
+      calmFrames = Math.abs(off) < 0.8 ? calmFrames + 1 : 0;
+      if (calmFrames >= 4 || now - t0 > 1400 || (reduce && calmFrames >= 1)) {
+        pageRAF = null;
+        pageTarget = null;
+        return;
+      }
+      pageRAF = requestAnimationFrame(step);
+    };
+    pageRAF = requestAnimationFrame(step);
+  };
+
+  ["wheel", "touchstart", "mousedown"].forEach((evt) => {
+    projectsGrid.addEventListener(
+      evt,
+      () => {
+        if (pageRAF) {
+          cancelAnimationFrame(pageRAF);
+          pageRAF = null;
+          pageTarget = null;
+        }
+        projectsGrid.style.scrollSnapType = "";
+      },
+      { passive: true }
+    );
+  });
+
+  if (prevBtn) prevBtn.addEventListener("click", () => pageProjects(-1));
+  if (nextBtn) nextBtn.addEventListener("click", () => pageProjects(1));
   // Re-run once thumbnails/layout settle right after first paint.
   setTimeout(() => {
     setInitialScrollPosition();
@@ -338,6 +424,51 @@ if (revealEls.length) {
     );
 
     revealEls.forEach((el) => revealObserver.observe(el));
+  }
+}
+
+// Count-up stat numerals ("用户最常问" percentages, baidu-map.html) — tally
+// up from 0 to the real value once the row scrolls into view, then settle.
+const countEls = document.querySelectorAll("[data-count-target]");
+
+if (countEls.length) {
+  const runCount = (el) => {
+    const target = parseFloat(el.getAttribute("data-count-target"));
+    const suffix = el.textContent.trim().replace(/^[\d.]+/, ""); // e.g. "%"
+    const duration = 1100;
+    const start = performance.now();
+
+    const tick = (now) => {
+      const elapsed = Math.min((now - start) / duration, 1);
+      // Ease-out-expo: fast climb, gentle settle onto the final number.
+      const eased = elapsed === 1 ? 1 : 1 - Math.pow(2, -10 * elapsed);
+      const value = (target * eased).toFixed(1);
+      el.textContent = `${value}${suffix}`;
+      if (elapsed < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = `${target}${suffix}`;
+      }
+    };
+    requestAnimationFrame(tick);
+  };
+
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    // Values are already correct in the markup — nothing to do.
+  } else {
+    const countObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            runCount(entry.target);
+            countObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    countEls.forEach((el) => countObserver.observe(el));
   }
 }
 

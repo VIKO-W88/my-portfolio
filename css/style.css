@@ -1202,6 +1202,66 @@ body.has-custom-cursor button {
   border-radius: 999px;
 }
 
+/* Projects carousel — left/right page buttons. The wrapper only exists to
+   give the buttons a positioning context; the scrolling row itself is
+   still .projects-grid. Buttons float over the row's left/right edges,
+   vertically centered, above the coverflow cards (their z-index tops out
+   at 11). */
+.projects-carousel {
+  position: relative;
+}
+
+.projects-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--card-bg) 62%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--text);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.projects-nav-prev { left: 12px; }
+.projects-nav-next { right: 12px; }
+
+.projects-nav:hover {
+  background: color-mix(in srgb, var(--text) 16%, var(--card-bg) 84%);
+  border-color: color-mix(in srgb, var(--text) 22%, transparent);
+  color: var(--text);
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+}
+
+.projects-nav:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.projects-nav:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .projects-nav {
+    width: 40px;
+    height: 40px;
+  }
+  .projects-nav-prev { left: 6px; }
+  .projects-nav-next { right: 6px; }
+}
+
 /* Image-forward cards -- full-bleed cover photo with a small translucent
    name pill floating over the bottom edge (per reference: fashion-app
    style portrait cards), the whole card as one click target instead of

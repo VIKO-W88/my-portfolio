@@ -1179,7 +1179,18 @@ body.has-custom-cursor button {
    --px/--py cursor-parallax offset set by the about-scene parallax
    block in main.js (mirrors the hero's, scoped to .about-scene). */
 .about-char-orange {
-  animation: aboutBobA 3.6s ease-in-out 0.1s infinite;
+  /* Second animation layered on top of the idle bob adds the hero photographer
+     character's own occasional camera-flash brightness pulse (see
+     .hero-char-media / mediaFlash) -- per feedback asking for the same
+     "偶尔闪一闪" effect here. */
+  animation: aboutBobA 3.6s ease-in-out 0.1s infinite,
+    aboutOrangeFlash 7.4s ease-in-out 2.2s infinite;
+}
+
+@keyframes aboutOrangeFlash {
+  0%, 91%, 100% { filter: brightness(1); }
+  93% { filter: brightness(1.4); }
+  96% { filter: brightness(1.05); }
 }
 
 .about-char-pink {

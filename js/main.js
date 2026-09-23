@@ -430,6 +430,13 @@ if (revealEls.length) {
 // About scene -- pop-in on scroll (mirrors the reveal block above, but as
 // its own observer so each prop's --enter-delay-ish stagger comes from
 // its own inline transition-delay instead of the generic .reveal timing).
+// Unlike the generic .reveal observer, this one does NOT unobserve after
+// the first trigger -- it toggles "in-view" on and off as the illustration
+// cluster enters/leaves the viewport, so the pop-in replays every time a
+// visitor scrolls back to the About section instead of only ever once per
+// page load (per feedback, "这几个人物也要加出场动画" -- the characters need
+// their entrance animation to actually be seen, not just fire once and be
+// missed).
 const aboutEnterEls = document.querySelectorAll(".about-enter");
 
 if (aboutEnterEls.length) {
@@ -439,10 +446,7 @@ if (aboutEnterEls.length) {
     const aboutEnterObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in-view");
-            aboutEnterObserver.unobserve(entry.target);
-          }
+          entry.target.classList.toggle("in-view", entry.isIntersecting);
         });
       },
       { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }

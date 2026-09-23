@@ -1193,8 +1193,8 @@ body.has-custom-cursor button {
 }
 
 @keyframes aboutBobA {
-  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(0) rotate(0deg); }
-  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(-11px) rotate(-2deg); }
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-11px) rotate(-2deg); }
 }
 
 @keyframes aboutBobB {
@@ -1203,8 +1203,8 @@ body.has-custom-cursor button {
 }
 
 @keyframes aboutBobPink {
-  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(0) rotate(0deg); }
-  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(-19px) rotate(7deg); }
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-19px) rotate(7deg); }
 }
 
 .about-char-bird {
@@ -1212,9 +1212,9 @@ body.has-custom-cursor button {
 }
 
 @keyframes aboutBirdFly {
-  0% { transform: translate(var(--px, 0px), var(--py, 0px)) translate(0, 0) rotate(-5deg); }
-  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translate(16px, -20px) rotate(5deg); }
-  100% { transform: translate(var(--px, 0px), var(--py, 0px)) translate(0, 0) rotate(-5deg); }
+  0% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translate(0, 0) rotate(-5deg); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translate(16px, -20px) rotate(5deg); }
+  100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translate(0, 0) rotate(-5deg); }
 }
 
 /* Wing flap -- nested animation on a wrapper one level inside the bird's

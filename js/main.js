@@ -489,6 +489,59 @@ if (aboutSection && aboutLayers.length && !prefersReducedMotion) {
   });
 }
 
+// About characters "dodge" the cursor -- same technique as the hero's
+// dodgeChars block above (see its comment for the full rationale), just
+// scoped to the About illustration's own individual mascots (orange,
+// pink, bird) rather than the hero's. Books/plant/speech-bubble/sparkle
+// are props, not characters, so they sit this one out -- only the actual
+// "people" (and the bird) flinch away from the cursor (per feedback,
+// "单个人物的鼠标躲避交互效果").
+const aboutDodgeChars = Array.from(
+  document.querySelectorAll(".about-char-orange, .about-char-pink, .about-char-bird")
+).map((el) => ({ el, dx: 0, dy: 0, tx: 0, ty: 0 }));
+
+if (aboutSection && aboutDodgeChars.length && !prefersReducedMotion) {
+  const ABOUT_DODGE_RADIUS = 200;
+  const ABOUT_DODGE_STRENGTH = 40;
+
+  aboutSection.addEventListener("mousemove", (e) => {
+    aboutDodgeChars.forEach((c) => {
+      const r = c.el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dxRaw = cx - e.clientX;
+      const dyRaw = cy - e.clientY;
+      const dist = Math.hypot(dxRaw, dyRaw) || 1;
+      if (dist < ABOUT_DODGE_RADIUS) {
+        const strength = (1 - dist / ABOUT_DODGE_RADIUS) ** 2;
+        c.tx = (dxRaw / dist) * ABOUT_DODGE_STRENGTH * strength;
+        c.ty = (dyRaw / dist) * ABOUT_DODGE_STRENGTH * strength;
+      } else {
+        c.tx = 0;
+        c.ty = 0;
+      }
+    });
+  });
+
+  aboutSection.addEventListener("mouseleave", () => {
+    aboutDodgeChars.forEach((c) => {
+      c.tx = 0;
+      c.ty = 0;
+    });
+  });
+
+  const tickAboutDodge = () => {
+    aboutDodgeChars.forEach((c) => {
+      c.dx += (c.tx - c.dx) * 0.14;
+      c.dy += (c.ty - c.dy) * 0.14;
+      c.el.style.setProperty("--dx", `${c.dx.toFixed(2)}px`);
+      c.el.style.setProperty("--dy", `${c.dy.toFixed(2)}px`);
+    });
+    requestAnimationFrame(tickAboutDodge);
+  };
+  requestAnimationFrame(tickAboutDodge);
+}
+
 // Count-up stat numerals ("用户最常问" percentages, baidu-map.html) — tally
 // up from 0 to the real value once the row scrolls into view, then settle.
 const countEls = document.querySelectorAll("[data-count-target]");

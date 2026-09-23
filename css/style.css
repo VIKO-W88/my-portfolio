@@ -1198,8 +1198,8 @@ body.has-custom-cursor button {
 }
 
 @keyframes aboutBobB {
-  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(0) rotate(0deg); }
-  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(-9px) rotate(4deg); }
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(0) rotate(0deg); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) translateY(-9px) rotate(4deg); }
 }
 
 @keyframes aboutBobPink {
@@ -1237,17 +1237,20 @@ body.has-custom-cursor button {
 }
 
 @keyframes aboutSway {
-  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) rotate(0deg); }
-  50% { transform: translate(var(--px, 0px), var(--py, 0px)) rotate(3deg); }
+  0%, 100% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) rotate(0deg); }
+  50% { transform: translate(calc(var(--px, 0px) + var(--dx, 0px)), calc(var(--py, 0px) + var(--dy, 0px))) rotate(3deg); }
 }
 
 /* Books stack -- real cutouts (cropped out of the reference moodboard
    image with OpenCV grabCut, since no separate clean asset existed for
    these), not flat CSS "spines", so they read as the same rendered
-   3D-toy style as the characters instead of flat color blocks. */
+   3D-toy style as the characters instead of flat color blocks. Dodges
+   the cursor as one rigid unit (see aboutDodgeChars in main.js) rather
+   than each book flinching separately, which would break the stack. */
 .about-books {
   display: flex;
   flex-direction: column;
+  transform: translate(var(--dx, 0px), var(--dy, 0px));
 }
 
 .about-book-img {
@@ -1285,8 +1288,8 @@ body.has-custom-cursor button {
 }
 
 @keyframes aboutSparkle {
-  0%, 100% { opacity: 0.5; transform: scale(0.85); }
-  50% { opacity: 1; transform: scale(1.15); }
+  0%, 100% { opacity: 0.5; transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(0.85); }
+  50% { opacity: 1; transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(1.15); }
 }
 
 @media (max-width: 900px) {

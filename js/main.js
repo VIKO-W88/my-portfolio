@@ -489,15 +489,19 @@ if (aboutSection && aboutLayers.length && !prefersReducedMotion) {
   });
 }
 
-// About characters "dodge" the cursor -- same technique as the hero's
-// dodgeChars block above (see its comment for the full rationale), just
-// scoped to the About illustration's own individual mascots (orange,
-// pink, bird) rather than the hero's. Books/plant/speech-bubble/sparkle
-// are props, not characters, so they sit this one out -- only the actual
-// "people" (and the bird) flinch away from the cursor (per feedback,
-// "单个人物的鼠标躲避交互效果").
+// About scene props+characters "dodge" the cursor -- same technique as the
+// hero's dodgeChars block above (see its comment for the full rationale).
+// Started out scoped to just the mascots (orange/pink/bird); extended to
+// every remaining prop (books, plant, speech bubble, sparkle) per
+// follow-up feedback asking for "这些一样，单独的鼠标躲避交互效果" -- so now
+// the whole illustration cluster flinches away from the cursor, each
+// piece individually, not just the three characters. The books stack
+// dodges as one rigid unit (see .about-books's own transform) rather
+// than each book flinching separately.
 const aboutDodgeChars = Array.from(
-  document.querySelectorAll(".about-char-orange, .about-char-pink, .about-char-bird")
+  document.querySelectorAll(
+    ".about-char-orange, .about-char-pink, .about-char-bird, .about-char-bubble, .about-char-plant, .about-sparkle, .about-books"
+  )
 ).map((el) => ({ el, dx: 0, dy: 0, tx: 0, ty: 0 }));
 
 if (aboutSection && aboutDodgeChars.length && !prefersReducedMotion) {

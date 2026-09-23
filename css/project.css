@@ -2539,6 +2539,57 @@
   border-color: #d8d2c2;
 }
 
+/* Closing CTA card on the EZ Stock case page -- links out to the live,
+   interactive app prototype. Reuses the case's own green/cream brand
+   colors (see .ez-btn-primary / the palette swatches above) rather than
+   the site-wide accent, since this is specifically "go open EZ Stock". */
+.ez-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 40px;
+  border-radius: 24px;
+  background: #f6f3ec;
+  border: 1px solid #ece6d8;
+}
+
+.ez-cta-eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #4b6a52;
+}
+
+.ez-cta-title {
+  margin: 0 0 10px;
+  font-family: var(--title-font);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #2c2a26;
+}
+
+.ez-cta-desc {
+  margin: 0;
+  max-width: 560px;
+  color: #6b665a;
+  line-height: 1.7;
+}
+
+.ez-cta-btn {
+  flex-shrink: 0;
+}
+
+@media (min-width: 720px) {
+  .ez-cta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 48px 56px;
+  }
+}
+
 .ez-hero-capabilities {
   display: flex;
   flex-wrap: wrap;

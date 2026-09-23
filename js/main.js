@@ -457,24 +457,31 @@ if (aboutEnterEls.length) {
 }
 
 // About scene -- cursor parallax, same data-depth/--px/--py technique as
-// the hero scene above, just scoped to this smaller section instead.
-const aboutScene = document.querySelector(".about-scene");
+// the hero scene above. Was scoped to (and measured against) just
+// .about-scene -- the small illustration cluster itself -- so the effect
+// only ever kicked in with the cursor already sitting right over the
+// characters, and felt like it barely existed the rest of the time. Now
+// listens on the whole section (like heroSection above) and uses the
+// same 60/30 multipliers, so moving the mouse anywhere in the About
+// section drives it, same as the homepage hero (per feedback, "鼠标交互的
+// 效果不明显，要和首页一样明显").
+const aboutSection = document.querySelector(".about-section");
 const aboutLayers = document.querySelectorAll(".about-scene .about-layer");
 
-if (aboutScene && aboutLayers.length && !prefersReducedMotion) {
-  aboutScene.addEventListener("mousemove", (e) => {
-    const rect = aboutScene.getBoundingClientRect();
+if (aboutSection && aboutLayers.length && !prefersReducedMotion) {
+  aboutSection.addEventListener("mousemove", (e) => {
+    const rect = aboutSection.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
 
     aboutLayers.forEach((layer) => {
       const depth = parseFloat(layer.dataset.depth || "0.16");
-      layer.style.setProperty("--px", `${-px * depth * 50}px`);
-      layer.style.setProperty("--py", `${-py * depth * 26}px`);
+      layer.style.setProperty("--px", `${-px * depth * 60}px`);
+      layer.style.setProperty("--py", `${-py * depth * 30}px`);
     });
   });
 
-  aboutScene.addEventListener("mouseleave", () => {
+  aboutSection.addEventListener("mouseleave", () => {
     aboutLayers.forEach((layer) => {
       layer.style.setProperty("--px", "0px");
       layer.style.setProperty("--py", "0px");

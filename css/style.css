@@ -1049,11 +1049,14 @@ body.has-custom-cursor button {
 .about-title {
   /* Brought back down to line up with the site's other section titles
      (.section-title is 2.3rem) -- per feedback, "字号太大了，标题和正文
-     的字号要保持一致" -- after going as high as 4.6rem in earlier passes. */
+     的字号要保持一致" -- after going as high as 4.6rem in earlier passes.
+     margin-bottom bumped up since .about-subtitle (which used to sit
+     between title and body) was removed -- title and body need their
+     own breathing room now. */
   font-family: var(--title-font);
   font-size: 2.6rem;
   font-weight: 700;
-  margin: 0 0 14px;
+  margin: 0 0 28px;
   color: var(--title-color);
   letter-spacing: 0.02em;
   line-height: 1.1;

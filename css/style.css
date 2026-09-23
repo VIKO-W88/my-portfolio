@@ -1062,15 +1062,6 @@ body.has-custom-cursor button {
   line-height: 1.1;
 }
 
-.about-title-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-left: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  vertical-align: middle;
-}
 
 .about-subtitle {
   font-size: 1.2rem;

@@ -1550,9 +1550,8 @@
    above it. Later widened to a full viewport-width bleed (per feedback,
    "这张图片的宽度还能加吗") -- the standard 100vw + pull-back-to-center-via-
    negative-margin trick, breaking it out of .case-section's centred,
-   padded column. body already has overflow-x:hidden (see .about-shape's
-   comment near the top of style.css) so this can't cause a horizontal
-   scrollbar. Square corners once it's edge-to-edge -- a rounded corner
+   padded column. body already has overflow-x:hidden globally so this
+   can't cause a horizontal scrollbar. Square corners once it's edge-to-edge -- a rounded corner
    sitting exactly on the viewport edge would just look like a stray
    notch, not a deliberate rounded card anymore. */
 .case-banner-photo {
@@ -2386,7 +2385,7 @@
   display: block;
   pointer-events: none;
   background-color: #fbf9f4;
-  background-image: url('../assets/ezstock/warehouse-hero.png');
+  background-image: url('../assets/ezstock/warehouse-hero.webp');
   background-size: cover;
   background-position: 15% center;
   background-repeat: no-repeat;

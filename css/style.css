@@ -975,153 +975,379 @@ body.has-custom-cursor button {
   color: var(--title-color);
 }
 
-/* About -- a slanted trapezoid that bleeds all the way to the real left
-   edge of the browser window (not just this centred section's own edge)
-   and fills the section's full height, per feedback. The trapezoid itself
-   is filled with the photo (cropped to cover it, with the accent
-   gradient behind as a fallback where the source image has any
-   transparency) rather than a small frame set inside a colour block. The
-   title/copy stay in the normal centred column, pushed clear of it.
-
-   --about-bleed is the horizontal gap between the viewport edge and
-   where this section's own content starts (half the leftover space once
-   the centred, max-width, padded column is subtracted from the viewport,
-   plus the section's own left padding) -- i.e. exactly how far the shape
-   has to reach left to touch the window edge, at any window width. The
-   shape's total width is that reach plus a fixed amount further into the
-   content column, capped so it doesn't sprawl into an ultra-wide, barely
-   diagonal band on very wide monitors. Stacks to a small contained card
-   above the text on narrow screens, where there's no room to bleed. */
+/* About -- left text column / right character illustration, sitting
+   directly on the page like the hero (no card/panel behind it -- per
+   feedback, "不是做成卡片"). Per later feedback the first pass read as
+   scattered independent floats rather than one illustration: the fix
+   isn't per-element tweaks, it's the same *shape* of fix twice --
+   .about-copy stays at a fixed ~38%-of-page basis instead of sharing
+   flex-grow with the scene (so it never drifts toward center), and
+   .about-scene-inner (the box every prop is percentage-positioned
+   inside, same trick as .hero-scene-inner) is sized SMALLER than its
+   own .about-scene slot and pinned to that slot's bottom-right corner
+   instead of filling it -- which is what pushes the whole cluster
+   down/right as a unit, rather than moving individual props around.
+   The clustering itself (books + orange as the anchor, everything else
+   tight around it, pink layered behind) lives in the DOM order and the
+   percentages on each .about-enter in index.html, not here. */
+/* Dedicated section wrapper (overrides the shared .section's tighter
+   1080px cap) -- wider hero-style max-width, fills the first screen
+   below the fixed nav, and vertically centers the two-column row inside
+   it, per feedback ("整个Hero内容没有占满首屏...Hero高度calc(100vh-navbar高度)"). */
 .about-section {
-  /* No overflow:hidden here -- .about-shape deliberately extends past this
-     section's own (centred, max-width) box to reach the real viewport
-     edge; clipping to the section's box would cut that bleed right off.
-     body already has overflow-x:hidden globally as a safety net. */
-  position: relative;
-  min-height: 760px;
+  max-width: 1420px;
+  padding: 40px 70px 60px;
+  min-height: calc(100vh - 69px);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* .section (the shared class this also carries) sets a symmetric
-     90px/90px top/bottom padding. justify-content:center centers within
-     that padding box, so growing ONLY the bottom side shrinks the box
-     asymmetrically and nudges the true center -- and with it the
-     title+body group -- up by half the added amount, without moving or
-     resizing the image (positioned by its own absolute top/bottom
-     offsets, unrelated to this padding). 190px here is 100px more than
-     the inherited 90px, so the group moves up ~50px. Per feedback the
-     text sat too low. */
-  padding-bottom: 190px;
+  align-items: center;
 }
 
-.about-shape {
-  --about-bleed: calc((100vw - min(100vw - 48px, var(--max-width))) / 2 + 24px);
-  position: absolute;
-  /* Overscan top/bottom well past the section's own edge -- a plain
-     top:0/bottom:0 (and even a smaller 10px overscan) still left a
-     hairline gap in testing on some displays, so this goes bigger, and
-     the image inside is stretched taller still (see .about-shape-photo)
-     as a second layer of margin. None of it is visible since the image's
-     own colour runs right to its edge. */
-  top: -24px;
-  bottom: -24px;
-  left: calc(-1 * var(--about-bleed));
-  width: min(calc(var(--about-bleed) + 460px), 680px);
-  overflow: hidden;
-}
-
-.about-shape-photo {
-  /* The trapezoid itself -- shape, sky/ocean scene and all -- is the
-     source image's own artwork (transparent outside the diagonal), not a
-     CSS clip-path anymore. It's stretched to exactly match this box in
-     width, and slightly taller than the box in height (with a matching
-     negative top) so there's a few extra pixels of vertical margin over
-     and above the container's own overscan -- belt and suspenders against
-     the top/bottom hairline gap. */
-  display: block;
-  position: absolute;
-  top: -6px;
-  left: 0;
+.about-layout {
+  display: flex;
+  align-items: center;
+  gap: 100px;
   width: 100%;
-  height: calc(100% + 12px);
-  object-fit: fill;
+}
+
+.about-copy {
+  /* flex-grow:0 -- stays at its own basis instead of sharing the row's
+     leftover space with .about-scene, so that space (and any extra as
+     the viewport widens) goes entirely to the scene instead of pulling
+     the text column wider/closer to center. ~38% of the 1080px section
+     at this basis. */
+  flex: 0 1 500px;
+  min-width: 0;
+  /* Nudged up and left per feedback ("文字区也往上移往左移") --
+     supersedes the earlier downward nudge. */
+  margin-top: -80px;
+  margin-left: -30px;
+}
+
+.about-eyebrow {
+  /* Font-size/letter-spacing aligned to .hero-eyebrow (was 0.85rem /
+     0.14em, noticeably smaller/tighter than the rest of the site) per
+     feedback, "字体样式要和其他页面统一". */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-family: var(--title-font);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-size: 1.1rem;
+  margin: 0 0 16px;
+}
+
+.about-eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+.about-title {
+  /* Brought back down to line up with the site's other section titles
+     (.section-title is 2.3rem) -- per feedback, "字号太大了，标题和正文
+     的字号要保持一致" -- after going as high as 4.6rem in earlier passes. */
+  font-family: var(--title-font);
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin: 0 0 14px;
+  color: var(--title-color);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.about-title-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: middle;
+}
+
+.about-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 22px;
 }
 
 .about-body {
-  position: relative;
-  padding-left: 520px;
+  max-width: 500px;
 }
 
 .about-text {
-  max-width: 560px;
   color: var(--text-muted);
   font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0;
 }
 
-/* The "关于我" heading sits right above this body copy, but .section-title
-   (used by every section) centers itself across the FULL section width --
-   here that put it noticeably left of the paragraph below, which starts
-   past the image at padding-left:520px. Reported as "文字没有对齐"
-   (heading and paragraph don't share a left edge). Matching this same
-   padding and left-aligning just the about heading fixes that without
-   touching every other section's centered title. */
-.about-section .section-title {
-  padding-left: 520px;
-  text-align: left;
+.about-text + .about-text {
+  margin-top: 14px;
 }
 
-@media (max-width: 1080px) {
-  .about-body {
-    padding-left: 420px;
-  }
+.about-text strong {
+  color: var(--text);
+  font-weight: 600;
+}
 
-  .about-section .section-title {
-    padding-left: 420px;
+/* The slot .about-scene-inner sits inside -- deliberately bigger than
+   the illustration itself (see .about-scene-inner below), which is
+   what gives the cluster room to sit off toward that slot's own
+   bottom-right corner instead of centered in it. */
+.about-scene {
+  position: relative;
+  flex: 1 1 560px;
+  max-width: 760px;
+  aspect-ratio: 680 / 520;
+}
+
+.about-scene-inner {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+  height: 86%;
+}
+
+/* Desktop-only: enlarge the whole illustration cluster and push it
+   further right/down within the page, per feedback across several
+   rounds -- enlarge+shift right, scale back down 0.75x, then push
+   further right/down again since the group still read as hugging the
+   left/bottom of its slot ("整体太挤左挤下...视觉中心在右侧中部").
+   Scoped above the tablet/mobile breakpoint (which resizes .about-scene
+   to a small fixed box) so these numbers don't blow past a cramped
+   small-viewport slot -- mobile keeps the base rule above. */
+@media (min-width: 901px) {
+  .about-scene-inner {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
   }
+}
+
+.about-ground-shadow {
+  position: absolute;
+  left: 14%;
+  bottom: 2%;
+  width: 62%;
+  height: 14%;
+  background: radial-gradient(ellipse at center, rgba(35, 25, 70, 0.14) 0%, rgba(35, 25, 70, 0) 72%);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.about-layer {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+  transform-origin: bottom center;
+  will-change: transform;
+}
+
+/* Reveal-in wrapper -- position (left/top/bottom/width, set inline per
+   element) plus a one-time pop-in on scroll, gated by .in-view (added by
+   the dedicated IntersectionObserver in main.js, not the generic
+   .reveal one, so each prop can stagger via its own transition-delay
+   without fighting the simpler fade the rest of the page uses). */
+.about-enter {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(24px) scale(0.92);
+  transition: opacity 0.6s ease, transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.about-enter.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Idle motion -- same idea as the hero's per-character animations: each
+   prop gets its own gentle infinite loop, composed with the live
+   --px/--py cursor-parallax offset set by the about-scene parallax
+   block in main.js (mirrors the hero's, scoped to .about-scene). */
+.about-char-orange {
+  animation: aboutBobA 3.6s ease-in-out 0.1s infinite;
+}
+
+.about-char-pink {
+  /* Own keyframe (bigger amplitude than aboutBobB, which .about-char-bubble
+     still uses) per feedback, "粉色小人的跳动幅度加大". */
+  animation: aboutBobPink 3.1s ease-in-out 0.3s infinite;
+}
+
+.about-char-bubble {
+  animation: aboutBobB 4s ease-in-out 0.5s infinite;
+}
+
+@keyframes aboutBobA {
+  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(0) rotate(0deg); }
+  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(-11px) rotate(-2deg); }
+}
+
+@keyframes aboutBobB {
+  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(0) rotate(0deg); }
+  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(-9px) rotate(4deg); }
+}
+
+@keyframes aboutBobPink {
+  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(0) rotate(0deg); }
+  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translateY(-19px) rotate(7deg); }
+}
+
+.about-char-bird {
+  animation: aboutBirdFly 6.4s ease-in-out 0.2s infinite;
+}
+
+@keyframes aboutBirdFly {
+  0% { transform: translate(var(--px, 0px), var(--py, 0px)) translate(0, 0) rotate(-5deg); }
+  50% { transform: translate(var(--px, 0px), var(--py, 0px)) translate(16px, -20px) rotate(5deg); }
+  100% { transform: translate(var(--px, 0px), var(--py, 0px)) translate(0, 0) rotate(-5deg); }
+}
+
+/* Wing flap -- nested animation on a wrapper one level inside the bird's
+   own drift (parent = flight path, child = fast wing beat), same
+   squash/stretch-stands-in-for-a-wing composition as the hero bird's
+   .bird-flap since this is also a single flattened sprite. */
+.about-bird-flap {
+  display: block;
+  width: 100%;
+  animation: aboutBirdFlap 0.8s ease-in-out infinite;
+}
+
+@keyframes aboutBirdFlap {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  50% { transform: scaleX(1.08) scaleY(0.94); }
+}
+
+.about-char-plant {
+  animation: aboutSway 5s ease-in-out 0.4s infinite;
+}
+
+@keyframes aboutSway {
+  0%, 100% { transform: translate(var(--px, 0px), var(--py, 0px)) rotate(0deg); }
+  50% { transform: translate(var(--px, 0px), var(--py, 0px)) rotate(3deg); }
+}
+
+/* Books stack -- real cutouts (cropped out of the reference moodboard
+   image with OpenCV grabCut, since no separate clean asset existed for
+   these), not flat CSS "spines", so they read as the same rendered
+   3D-toy style as the characters instead of flat color blocks. */
+.about-books {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-book-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.16));
+}
+
+.about-book-img:nth-child(1) {
+  position: relative;
+  z-index: 3;
+  transform: rotate(-1deg);
+}
+.about-book-img:nth-child(2) {
+  position: relative;
+  z-index: 2;
+  margin-top: -16%;
+  transform: rotate(0.8deg);
+}
+.about-book-img:nth-child(3) {
+  position: relative;
+  z-index: 1;
+  margin-top: -16%;
+  transform: rotate(-0.6deg);
+}
+
+.about-sparkle {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  fill: #ffb443;
+  animation: aboutSparkle 2.6s ease-in-out infinite;
+}
+
+@keyframes aboutSparkle {
+  0%, 100% { opacity: 0.5; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
 }
 
 @media (max-width: 900px) {
-  .about-body {
-    padding-left: 320px;
-  }
-
-  .about-section .section-title {
-    padding-left: 320px;
-  }
-}
-
-@media (max-width: 720px) {
+  /* The desktop-only "fill the first screen" treatment (min-height +
+     vertical centering + wide padding) doesn't apply once the layout
+     stacks -- it just leaves a tall empty gap above short mobile
+     content. Falls back to the shared .section's own padding/height. */
   .about-section {
+    max-width: var(--max-width);
+    padding: 90px 24px;
     min-height: 0;
     display: block;
-    /* Undo the desktop-only asymmetric padding hack above (used to nudge
-       the vertically-centered text up) -- this stacked mobile layout
-       isn't flex-centered, so it just needs .section's normal symmetric
-       90px bottom spacing back, matching every other section. */
-    padding-bottom: 90px;
   }
 
-  /* Per feedback: no room for the trapezoid to read well on a phone-width
-     screen, so it's dropped entirely there and the section is just the
-     title and copy. */
-  .about-shape {
-    display: none;
+  .about-layout {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .about-copy {
+    flex-basis: auto;
+    margin-top: 0; /* the desktop-only up/left nudge doesn't apply once stacked/centered */
+    margin-left: 0;
+  }
+
+  .about-eyebrow {
+    justify-content: center;
   }
 
   .about-body {
-    padding-left: 0;
-    text-align: center;
-  }
-
-  .about-section .section-title {
-    padding-left: 0;
-    text-align: center;
-  }
-
-  .about-text {
     margin: 0 auto;
   }
+
+  .about-scene {
+    /* Smaller than the desktop cap -- also has to leave room for the
+       negative-left props (badge, bird) that intentionally bleed past
+       .about-scene-inner's own left edge; sized too close to the
+       viewport width and that bleed runs off-screen instead. */
+    width: min(320px, 78vw);
+    max-width: none;
+    flex: none;
+    margin-left: 0; /* the desktop-only rightward nudge doesn't apply once stacked/centered */
+  }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .about-char-orange,
+  .about-char-pink,
+  .about-char-bird,
+  .about-bird-flap,
+  .about-char-plant,
+  .about-char-bubble,
+  .about-sparkle {
+    animation: none;
+  }
+
+  .about-enter {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 
 /* Skills */
 .skills-grid {

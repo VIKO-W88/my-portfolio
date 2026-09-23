@@ -147,15 +147,68 @@
   </section>
 
   <section id="about" class="section about-section">
-    <div class="about-shape" aria-hidden="true">
-      <img src="assets/about-shape.webp?v=4" class="about-shape-photo" alt="" />
-    </div>
-    <h2 class="section-title reveal">关于我</h2>
-    <div class="about-body reveal">
-      <p class="about-text">
-        在这里写一段自我介绍。介绍你的背景、擅长的领域、工作经历和目标方向，
-        让访客快速了解你是谁、做什么、擅长什么。建议控制在 3-5 句话，简洁有重点。
-      </p>
+    <div class="about-layout">
+      <div class="about-copy">
+        <p class="about-eyebrow reveal">ABOUT ME</p>
+        <h2 class="about-title reveal">关于我<span class="about-title-dot" aria-hidden="true"></span></h2>
+        <div class="about-body reveal">
+          <p class="about-text">跨学科复合背景：悉尼大学交互设计与电子艺术硕士（2027年7月毕业），具备计算机与艺术设计跨学科知识体系，持 Google UX Design 职业证书，兼具用户体验设计能力、逻辑分析能力与视觉设计能力。</p>
+          <p class="about-text"><strong>百度（UX）：</strong>负责百度地图地点详情页 AI 智能摘要交互优化，针对步行与驾车等不同使用场景设计快捷提问与语音交互入口，帮助用户更高效地获取核心信息并降低信息查找与决策成本。</p>
+          <p class="about-text"><strong>字节跳动（UI）：</strong>基于 ByteDesign 企业级设计体系，主导抖音生活服务宠物赛道品牌视觉与 UI 的全链路设计升级，覆盖 POI 门店主页、团购卡券、直播物料等场景，兼顾品牌一致性、信息传达效率与业务场景需求。</p>
+          <p class="about-text">全流程 UX 技能与技术衔接：熟练掌握 Figma、用户调研、信息架构、交互原型与可用性测试等 UX 方法；具备 Vibe Coding、Python、p5.js 编程基础及 Blender 三维建模能力，能够理解技术实现逻辑，并与开发团队进行高效沟通与协作。</p>
+        </div>
+      </div>
+
+      <!-- One clustered illustration group, not scattered independent
+           floats: books + the orange character are the anchor (bottom,
+           center-right), everything else is positioned close around
+           that anchor and layered front-to-back in DOM order (pink is
+           first/behind so books and orange can overlap and partly hide
+           it -- see .about-enter's default stacking, no z-index tricks
+           needed). .about-scene-inner now fills .about-scene exactly
+           (desktop override) so the group sits centered across the
+           right half of the section instead of pinned into a corner. -->
+      <div class="about-scene" aria-hidden="true">
+        <div class="about-scene-inner">
+          <div class="about-ground-shadow"></div>
+
+          <div class="about-enter" style="left:21%;bottom:2%;width:54%;transition-delay:.1s;">
+            <div class="about-books">
+              <img src="assets/about/book-ideas.webp" class="about-book-img" alt="Ideas" />
+              <img src="assets/about/book-design.webp" class="about-book-img" alt="Design" />
+              <img src="assets/about/book-tomorrow.webp" class="about-book-img" alt="A Better Tomorrow" />
+            </div>
+          </div>
+
+          <div class="about-enter" style="left:23%;bottom:24%;width:44%;transition-delay:.32s;">
+            <img src="assets/about/character-orange.webp" class="about-layer about-char about-char-orange" data-depth="0.16" alt="" />
+          </div>
+
+          <div class="about-enter" style="left:5%;bottom:38%;width:26%;transition-delay:.2s;">
+            <img src="assets/about/character-pink.webp" class="about-layer about-char about-char-pink" data-depth="0.14" alt="" />
+          </div>
+
+          <div class="about-enter" style="left:13%;top:-9%;width:18%;transition-delay:.46s;">
+            <div class="about-bird-flap">
+              <img src="assets/about/character-bird.webp" class="about-layer about-char about-char-bird" data-depth="0.22" alt="" />
+            </div>
+          </div>
+
+          <div class="about-enter" style="left:79%;top:13%;width:18%;transition-delay:.5s;">
+            <img src="assets/about/bubble-code.webp" class="about-layer about-char about-char-bubble" data-depth="0.18" alt="" />
+          </div>
+
+          <div class="about-enter" style="left:74%;top:1%;width:6%;transition-delay:.64s;">
+            <svg class="about-sparkle" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+            </svg>
+          </div>
+
+          <div class="about-enter" style="left:76%;bottom:2%;width:21%;transition-delay:.4s;">
+            <img src="assets/about/plant.webp" class="about-layer about-char about-char-plant" data-depth="0.12" alt="" />
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -175,12 +228,12 @@
         <a href="projects/familyflow.html" class="project-card-link" aria-label="查看 FamilyFlow 详情"></a>
       </article>
       <article class="project-card">
-        <div class="project-thumb" style="background-image:url('assets/ezstock/card-cover.png');background-size:cover;background-position:center;" aria-hidden="true"></div>
+        <div class="project-thumb" style="background-image:url('assets/ezstock/card-cover.webp');background-size:cover;background-position:center;" aria-hidden="true"></div>
         <span class="project-card-title">EZ Stock</span>
         <a href="projects/ezstock.html" class="project-card-link" aria-label="查看 EZ Stock 详情"></a>
       </article>
       <article class="project-card">
-        <div class="project-thumb" style="background-image:url('assets/baidu-map/card-cover.png?v=2');background-size:cover;background-position:center;" aria-hidden="true"></div>
+        <div class="project-thumb" style="background-image:url('assets/baidu-map/card-cover.webp?v=2');background-size:cover;background-position:center;" aria-hidden="true"></div>
         <span class="project-card-title">百度地图 · 地点 AI 摘要</span>
         <a href="projects/baidu-map.html" class="project-card-link" aria-label="查看 百度地图 · 地点 AI 摘要 详情"></a>
       </article>

@@ -7,3 +7,10 @@ familyflow/card-cover-v1-backup.png
 evacumate/logos/apple-watch-sos.png
 evacumate/logos/apple-watch-sos-alt.png
 _to_delete/
+
+# Working / reference files not part of the published site
+/ChatGPT Image*.png
+/Frame *.png
+/Claude outputs/
+/Untitled.pptx
+/百度地图竞品分析/

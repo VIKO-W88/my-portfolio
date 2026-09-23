@@ -427,6 +427,57 @@ if (revealEls.length) {
   }
 }
 
+// About scene -- pop-in on scroll (mirrors the reveal block above, but as
+// its own observer so each prop's --enter-delay-ish stagger comes from
+// its own inline transition-delay instead of the generic .reveal timing).
+const aboutEnterEls = document.querySelectorAll(".about-enter");
+
+if (aboutEnterEls.length) {
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    aboutEnterEls.forEach((el) => el.classList.add("in-view"));
+  } else {
+    const aboutEnterObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            aboutEnterObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    aboutEnterEls.forEach((el) => aboutEnterObserver.observe(el));
+  }
+}
+
+// About scene -- cursor parallax, same data-depth/--px/--py technique as
+// the hero scene above, just scoped to this smaller section instead.
+const aboutScene = document.querySelector(".about-scene");
+const aboutLayers = document.querySelectorAll(".about-scene .about-layer");
+
+if (aboutScene && aboutLayers.length && !prefersReducedMotion) {
+  aboutScene.addEventListener("mousemove", (e) => {
+    const rect = aboutScene.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+
+    aboutLayers.forEach((layer) => {
+      const depth = parseFloat(layer.dataset.depth || "0.16");
+      layer.style.setProperty("--px", `${-px * depth * 50}px`);
+      layer.style.setProperty("--py", `${-py * depth * 26}px`);
+    });
+  });
+
+  aboutScene.addEventListener("mouseleave", () => {
+    aboutLayers.forEach((layer) => {
+      layer.style.setProperty("--px", "0px");
+      layer.style.setProperty("--py", "0px");
+    });
+  });
+}
+
 // Count-up stat numerals ("用户最常问" percentages, baidu-map.html) — tally
 // up from 0 to the real value once the row scrolls into view, then settle.
 const countEls = document.querySelectorAll("[data-count-target]");

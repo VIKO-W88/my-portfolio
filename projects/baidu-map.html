@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>百度地图 · 地点详情页 AI 智能摘要 | 作品集 · 韦旻昕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css?v=53">
+<link rel="stylesheet" href="../css/project.css?v=99">
+</head>
+<body class="proto-fonts">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">韦旻昕</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="../index.html#about">关于我</a></li>
+        <li><a href="../index.html#projects">作品集</a></li>
+        <li><a href="../index.html#contact">联系方式</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深色模式">🌙</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="case-header">
+    <a href="../index.html#projects" class="back-link">← 返回作品集</a>
+  </div>
+
+  <!-- ============ Hero / 项目定位 ============ -->
+  <section class="case-hero">
+    <h1 class="case-title">百度地图 · 地点详情页 AI 智能摘要</h1>
+    <p class="case-subtitle">
+      在保留百度地图原有页面结构与功能路径的基础上，为地点详情页增加轻量 AI 能力，帮助用户更低成本地
+      获取地点摘要、高频问题答案和场景化信息。
+    </p>
+  </section>
+
+  <div class="meta-bar">
+    <div class="meta-item">
+      <h4>我的角色</h4>
+      <p>UX/UI 设计</p>
+    </div>
+    <div class="meta-item">
+      <h4>项目周期</h4>
+      <p>2026.01 – 2026.02</p>
+    </div>
+    <div class="meta-item">
+      <h4>项目类型</h4>
+      <p>内驱探索项目</p>
+    </div>
+    <div class="meta-item">
+      <h4>设计范围</h4>
+      <p>地点详情页</p>
+    </div>
+  </div>
+
+  <!-- ============ 01 项目背景 ============ -->
+  <section class="case-section wide align-left">
+    <h2>01 项目背景</h2>
+    <p class="my-lead">增量优化，而非重构。</p>
+    <p>
+      不改变百度地图原有核心路径与信息结构，仅在地点详情页内探索 AI 如何更自然地融入，帮助用户更低
+      成本地获取地点摘要、高频问题答案和场景化信息。设计范围聚焦地点详情页，核心能力包括：AI 自动
+      摘要、高频快捷问题、地点上下文问答。
+    </p>
+
+    <h3 style="margin-top:48px;">用户现状与现有问题</h3>
+    <div class="my-split my-split-4060 tight-visual" style="margin-top:20px;">
+      <div>
+        <p class="my-lead-muted">现有 AI 总结能回答：</p>
+        <p class="my-lead" style="font-size:1.4rem;">"大家怎么说？"</p>
+        <p class="my-lead-muted" style="margin-top:20px;">但还没有充分回答：</p>
+        <p class="my-lead" style="font-size:1.4rem; color:#2468F2;">"我现在去这里，需要知道什么？"</p>
+
+        <div class="plain-row-list numbered" style="margin-top:32px;">
+          <div class="plain-row">
+            <span class="plain-row-icon">1</span>
+            <div class="plain-row-text">
+              <strong>信息类型偏单一</strong>
+              <p>主要总结评价内容，对用户具体到店问题支持有限。</p>
+            </div>
+          </div>
+          <div class="plain-row">
+            <span class="plain-row-icon">2</span>
+            <div class="plain-row-text">
+              <strong>信息优先级不明确</strong>
+              <p>口味、停车、排队、价格等内容混在一起。</p>
+            </div>
+          </div>
+          <div class="plain-row">
+            <span class="plain-row-icon">3</span>
+            <div class="plain-row-text">
+              <strong>摘要可扫读性不足</strong>
+              <p>连续文本需要用户再次自行提取重点。</p>
+            </div>
+          </div>
+          <div class="plain-row">
+            <span class="plain-row-icon">4</span>
+            <div class="plain-row-text">
+              <strong>缺少进一步查询入口</strong>
+              <p>用户产生"停车方便吗？"等具体问题后，缺少低成本继续获取答案的方式。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:-40px;">
+        <img class="bm-shot" style="max-width:260px; margin:0 auto;" src="../assets/baidu-map/before-existing.webp?v=1" alt="百度地图现有的 AI 内容总结，以连续文本概括用户评价">
+        <p class="case-note" style="text-align:center; margin-top:12px;">现有 AI 总结截图，来自百度地图 App</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px;">设计目标</h3>
+    <div class="strategy-flow" style="margin-top:20px;">
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">⚡</span>
+        <h3>更高效</h3>
+        <p>核心信息尽量在首屏获取，减少下滑与切换标签的成本。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🎯</span>
+        <h3>更直接</h3>
+        <p>高频问题一键查看答案，降低输入和搜索成本。</p>
+      </div>
+      <div class="strategy-node">
+        <span class="strategy-icon-circle">🪶</span>
+        <h3>更轻量</h3>
+        <p>AI 自然融入详情页，不改变原有使用路径。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 竞品分析 ============ -->
+  <section class="case-section wide align-left">
+    <h2>02 竞品分析</h2>
+
+    <p class="my-lead" style="font-size:1.5rem; max-width:720px;">
+      什么信息应该被优先总结？什么问题值得被快捷回答？
+    </p>
+
+    <h3 style="margin-top:48px;">竞品研究范围</h3>
+    <div class="plain-row-list" style="margin-top:20px;">
+      <div class="plain-row">
+        <span class="plain-row-icon">🗺️</span>
+        <div class="plain-row-text">
+          <strong>地图 / 本地生活</strong>
+          <p>美团、Google Maps、高德地图、大众点评、携程</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">✈️</span>
+        <div class="plain-row-text">
+          <strong>旅游</strong>
+          <p>携程、美团酒店</p>
+        </div>
+      </div>
+      <div class="plain-row">
+        <span class="plain-row-icon">💬</span>
+        <div class="plain-row-text">
+          <strong>AI 交互参考</strong>
+          <p>小红书、淘宝、天猫、京东、唯品会</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px;">竞品案例</h3>
+    <div class="bm-research-grid" style="margin-top:20px;">
+      <div class="bm-research-card">
+        <img src="../assets/baidu-map/research-amap.webp?v=1" alt="高德地图地点详情页截图">
+        <span class="name">高德地图</span>
+        <p class="note">营业时间、点评较全，但没有停车 / 无障碍 / 充电信息，也不显示拥挤程度。</p>
+      </div>
+      <div class="bm-research-card">
+        <img src="../assets/baidu-map/research-dianping.webp?v=1" alt="大众点评地点详情页截图">
+        <span class="name">大众点评</span>
+        <p class="note">评分体系成熟，但没有 AI 问答、停车、无障碍与实时拥挤度。</p>
+      </div>
+      <div class="bm-research-card">
+        <img src="../assets/baidu-map/research-meituan.webp?v=1" alt="美团地点详情页截图">
+        <span class="name">美团</span>
+        <p class="note">结构简洁，但决策类信息（停车、排队、无障碍）同样缺失。</p>
+      </div>
+      <div class="bm-research-card">
+        <img src="../assets/baidu-map/research-ctrip-ai.webp?v=1" alt="携程 AI 问答入口截图">
+        <span class="name">携程 · AI 问道</span>
+        <p class="note">悬浮球进入 AI 提问，但入口只在首页，其他页面无法同时提问。</p>
+      </div>
+      <div class="bm-research-card">
+        <img src="../assets/baidu-map/research-tmall-ai.webp?v=1" alt="天猫 AI 导购截图">
+        <span class="name">天猫 · AI 导购</span>
+        <p class="note">按预算 / 场景给出分层建议，回答方式结构化、可扫读。</p>
+      </div>
+      <div class="bm-research-card">
+        <img src="../assets/baidu-map/research-vip-ai.webp?v=1" alt="唯品会 AI 小唯截图">
+        <span class="name">唯品会 · AI 小唯</span>
+        <p class="note">已上线，但在 App 内实际入口位置较隐蔽，不容易被发现。</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px;">用户最常问</h3>
+    <div class="bm-quotes" style="margin-top:20px;">
+      <span>"人均消费多少？"</span>
+      <span>"排队情况，人多不多？"</span>
+      <span>"附近有没有停车场啊？"</span>
+      <span>"有包间吗？环境怎么样？"</span>
+      <span>"晚上营业到几点？"</span>
+    </div>
+    <div class="bm-freq-grid">
+      <div class="bm-freq-item">
+        <span class="bm-freq-num">01</span>
+        <span class="bm-freq-pct" data-count-target="42.1">42.1%</span>
+        <span class="bm-freq-name">基础确认</span>
+      </div>
+      <div class="bm-freq-item">
+        <span class="bm-freq-num">02</span>
+        <span class="bm-freq-pct" data-count-target="26.3">26.3%</span>
+        <span class="bm-freq-name">消费判断</span>
+      </div>
+      <div class="bm-freq-item">
+        <span class="bm-freq-num">03</span>
+        <span class="bm-freq-pct" data-count-target="15.8">15.8%</span>
+        <span class="bm-freq-name">内容选择</span>
+      </div>
+      <div class="bm-freq-item">
+        <span class="bm-freq-num">04</span>
+        <span class="bm-freq-pct" data-count-target="10.5">10.5%</span>
+        <span class="bm-freq-name">体验判断</span>
+      </div>
+      <div class="bm-freq-item">
+        <span class="bm-freq-num">05</span>
+        <span class="bm-freq-pct" data-count-target="5.3">5.3%</span>
+        <span class="bm-freq-name">即时场景判断</span>
+      </div>
+    </div>
+    <p class="case-note" style="margin-top:16px;">
+      以上占比来自对各平台公开评论区与问答区用户提问的人工归类统计，样本量有限，仅作为设计参考，不代表百度地图内部数据。
+    </p>
+  </section>
+
+  <!-- ============ 03 设计策略 ============ -->
+  <section class="case-section wide align-left">
+    <h2>03 设计策略</h2>
+    <div class="my-split my-split-4060">
+      <div>
+        <p class="my-lead-muted" style="margin-bottom:20px;">四个早期设计判断：</p>
+        <div class="plain-row-list numbered roomy">
+          <div class="plain-row">
+            <span class="plain-row-icon">1</span>
+            <div class="plain-row-text"><p>用户先快速判断，再深入查看</p></div>
+          </div>
+          <div class="plain-row">
+            <span class="plain-row-icon">2</span>
+            <div class="plain-row-text"><p>地点问题具有强即时性</p></div>
+          </div>
+          <div class="plain-row">
+            <span class="plain-row-icon">3</span>
+            <div class="plain-row-text"><p>用户的问题会从共性走向个性</p></div>
+          </div>
+          <div class="plain-row">
+            <span class="plain-row-icon">4</span>
+            <div class="plain-row-text"><p>高价值信息不应该都等用户主动问</p></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="bm-tiers" style="margin-top:0;">
+          <div class="bm-tier bm-tier-1">
+            <div class="bm-tier-label"><span class="n">第一层</span><span class="t">直接展示</span></div>
+            <div>
+              <p>这类信息应该在页面中直接展示，不需要用户经过 AI 才能看到。</p>
+              <div class="bm-tier-tags"><span>营业时间</span><span>人均</span><span>排队</span><span>停车</span></div>
+            </div>
+          </div>
+          <div class="bm-tier bm-tier-2">
+            <div class="bm-tier-label"><span class="n">第二层</span><span class="t">快捷获取</span></div>
+            <div>
+              <p>这类问题高频出现，但不值得每次都让用户完整输入，通过 AI 摘要 + 快捷问题降低获取成本。</p>
+              <div class="bm-tier-tags"><span>推荐菜</span><span>包间</span><span>最佳到访时间</span></div>
+            </div>
+          </div>
+          <div class="bm-tier bm-tier-3">
+            <div class="bm-tier-label"><span class="n">第三层</span><span class="t">主动提问</span></div>
+            <div>
+              <p>这类问题更加个性化，适合交给地点上下文 AI 继续回答。</p>
+              <div class="bm-tier-tags"><span>老人</span><span>儿童</span><span>宠物</span><span>特殊需求</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="my-lead-muted" style="margin-top:28px;">
+      AI 的价值不是让用户问更多问题，而是降低用户寻找信息和组织问题的成本。
+    </p>
+  </section>
+
+  <!-- ============ 04 方案探索 ============ -->
+  <section class="case-section wide align-left">
+    <h2>04 方案探索</h2>
+    <p>AI 入口该以什么形态出现在详情页？围绕这个问题，尝试了三种方向，用同一个真实场景（融和凯粤酒家）反复验证：</p>
+    <div class="bm-options cols-3">
+      <div class="bm-option">
+        <div class="bm-option-head">
+          <span class="bm-option-name">方案一</span>
+          <span class="bm-option-tag">卡片式快问快答</span>
+        </div>
+        <div class="bm-option-shot">
+          <img src="../assets/baidu-map/variant-card.webp?v=3" alt="方案一：卡片式快问快答">
+        </div>
+        <div class="bm-option-list">
+          <div class="row pos"><span class="m">+</span><span>信息立即可见</span></div>
+          <div class="row pos"><span class="m">+</span><span>简单问题获取速度快</span></div>
+          <div class="row neg"><span class="m">–</span><span>占据首屏空间</span></div>
+          <div class="row neg"><span class="m">–</span><span>挤压原有团购和评价内容</span></div>
+        </div>
+      </div>
+      <div class="bm-option">
+        <div class="bm-option-head">
+          <span class="bm-option-name">方案二</span>
+          <span class="bm-option-tag">悬浮球</span>
+        </div>
+        <div class="bm-option-shot">
+          <img src="../assets/baidu-map/variant-floating.webp?v=2" alt="方案二：悬浮球">
+        </div>
+        <div class="bm-option-list">
+          <div class="row pos"><span class="m">+</span><span>保留当前页面上下文</span></div>
+          <div class="row pos"><span class="m">+</span><span>适合轻量问答</span></div>
+          <div class="row neg"><span class="m">–</span><span>入口容易忽略</span></div>
+          <div class="row neg"><span class="m">–</span><span>复杂内容空间不足</span></div>
+        </div>
+      </div>
+      <div class="bm-option">
+        <div class="bm-option-head">
+          <span class="bm-option-name">方案三</span>
+          <span class="bm-option-tag">常驻提示 + 导航栏入口</span>
+        </div>
+        <div class="bm-option-shot">
+          <img src="../assets/baidu-map/variant-persistent.webp?v=2" alt="方案三：常驻提示条 + 导航栏入口">
+        </div>
+        <div class="bm-option-list">
+          <div class="row pos"><span class="m">+</span><span>AI 可发现性较高</span></div>
+          <div class="row neg"><span class="m">–</span><span>存在感过强</span></div>
+          <div class="row neg"><span class="m">–</span><span>影响原页面扫读</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:52px;">AI 回答的呈现方式探索</h3>
+    <p>点击入口后，AI 回答本身该以什么样的页面呈现，尝试过三种方向：</p>
+    <div class="bm-options cols-3">
+      <div class="bm-option">
+        <div class="bm-option-head">
+          <span class="bm-option-name">呈现方式一</span>
+          <span class="bm-option-tag">跳转独立页面</span>
+        </div>
+        <div class="bm-option-shot">
+          <img src="../assets/baidu-map/ai-summary-questions.webp?v=2" alt="标签页式AI问答页，与地点详情页同层级标签切换">
+        </div>
+        <p class="bm-scenario-note">与详情页同层级的标签切换，保留地点上下文，也给 AI 回答独立展示空间。</p>
+      </div>
+      <div class="bm-option">
+        <div class="bm-option-head">
+          <span class="bm-option-name">呈现方式二</span>
+          <span class="bm-option-tag">浮窗页面</span>
+        </div>
+        <div class="bm-option-shot">
+          <img src="../assets/baidu-map/answer-fullpage.webp?v=1" alt="以浮层形式覆盖在地点详情页上方的AI问答面板，带返回箭头">
+        </div>
+        <p class="bm-scenario-note">以浮窗形式覆盖在详情页上方展示 AI 回答，关闭后无缝回到详情页。</p>
+      </div>
+      <div class="bm-option">
+        <div class="bm-option-head">
+          <span class="bm-option-name">呈现方式三</span>
+          <span class="bm-option-tag">详情页内嵌展开</span>
+        </div>
+        <div class="bm-option-shot">
+          <img src="../assets/baidu-map/answer-inline.webp?v=1" alt="AI问答直接在地点详情页内展开为卡片，不离开当前页面">
+        </div>
+        <p class="bm-scenario-note">AI 问答直接在详情页内展开为一张卡片，不离开当前页面，但会挤压原有内容空间。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 最终方案 ============ -->
+  <section class="case-section wide align-left">
+    <h2>05 最终方案</h2>
+    <p class="my-lead-muted">最终方向：轻量卡片 + 页面跳转</p>
+
+    <div class="flow-steps" style="margin-top:20px;">
+      <div class="flow-step"><span class="flow-num">1</span><span class="flow-label">地点详情页</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><span class="flow-num">2</span><span class="flow-label">轻量 AI 入口</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step"><span class="flow-num">3</span><span class="flow-label">点击后的 AI 页面</span></div>
+    </div>
+
+    <div class="bm-scenarios" style="margin-top:36px;">
+      <div>
+        <img class="bm-shot" src="../assets/baidu-map/entry-card.webp?v=3" alt="地点详情页首屏，底部为轻量AI入口卡片，带问一问按钮：问Ai·实时排队、停车、推荐菜？">
+        <p class="case-note" style="text-align:center; margin-top:12px;">地点详情页 + 轻量 AI 入口</p>
+      </div>
+      <div>
+        <img class="bm-shot" src="../assets/baidu-map/answer-page-general.webp?v=1" alt="点击轻量AI入口后进入的问答页面，默认展示地点的AI推荐总结">
+        <p class="case-note" style="text-align:center; margin-top:12px;">点击后的 AI 页面（默认回答）</p>
+      </div>
+      <div>
+        <img class="bm-shot" src="../assets/baidu-map/answer-page-queue.webp?v=1" alt="点选“现场排队情况”快捷问题后的结构化回答，附带在线取号和联系商家按钮">
+        <p class="case-note" style="text-align:center; margin-top:12px;">选中快捷问题后的结构化回答</p>
+      </div>
+    </div>
+
+    <div class="bm-option-list" style="margin-top:32px; max-width:520px;">
+      <div class="row pos"><span class="m">+</span><span>首屏占用小</span></div>
+      <div class="row pos"><span class="m">+</span><span>不会抢原有核心内容</span></div>
+      <div class="row pos"><span class="m">+</span><span>独立页面可以承载更完整回答</span></div>
+      <div class="row neg"><span class="m">–</span><span>代价：多一步跳转</span></div>
+    </div>
+    <p class="my-lead-muted" style="margin-top:20px;">这就是最终方案为什么成立。</p>
+
+    <h3 style="margin-top:52px;">用户常问的回答模式探索</h3>
+    <p>围绕用户最常问的四类问题，AI 提供结构化回答，并搭配对应的快捷操作：</p>
+    <div class="bm-scenarios cols-4">
+      <div class="bm-scenario">
+        <div class="bm-scenario-shot">
+          <img src="../assets/baidu-map/ai-summary-questions.webp?v=2" alt="介绍地点：AI自动生成核心特色与实用信息摘要">
+        </div>
+        <div class="bm-scenario-name">介绍地点</div>
+        <div class="bm-scenario-note">AI 自动生成核心特色与实用信息摘要，附带来源说明。</div>
+      </div>
+      <div class="bm-scenario">
+        <div class="bm-scenario-shot">
+          <img src="../assets/baidu-map/scenario-queue.webp?v=2" alt="现场排队问答：给出高峰时段和预计等待时间，并提供在线取号、电话联系商家操作入口">
+        </div>
+        <div class="bm-scenario-name">现场排队</div>
+        <div class="bm-scenario-note">高峰规律、错峰建议，配在线取号、电话联系商家。</div>
+      </div>
+      <div class="bm-scenario">
+        <div class="bm-scenario-shot">
+          <img src="../assets/baidu-map/context-chat.webp?v=3" alt="停车询问：结论先行，配一键导航前往、绑定车牌领优惠券操作入口">
+        </div>
+        <div class="bm-scenario-name">停车询问</div>
+        <div class="bm-scenario-note">停车位置、收费、高峰建议，配一键导航前往、绑定车牌领券。</div>
+      </div>
+      <div class="bm-scenario">
+        <div class="bm-scenario-shot">
+          <img src="../assets/baidu-map/scenario-room.webp?v=2" alt="订包间问答：提示包间较为紧俏、建议提前预约，并提供电话联系商家、在线预订入口">
+        </div>
+        <div class="bm-scenario-name">订包间</div>
+        <div class="bm-scenario-note">预订提醒，配在线预订、电话联系商家。</div>
+      </div>
+    </div>
+    <p class="my-lead-muted" style="margin-top:24px;">
+      AI 回答 + 快捷操作功能卡片，减少用户后续操作步骤，并根据当前问题预判可能的下一步行为。
+    </p>
+
+    <!-- 记忆边栏 -- de-emphasized footnote, not a standalone chapter -->
+    <div class="my-split my-split-4060" style="margin-top:64px; opacity:0.9;">
+      <div>
+        <h3 style="margin-top:0;">记忆边栏</h3>
+        <p style="margin-top:4px;">
+          <span class="bm-option-tag">全局 AI 延伸方向</span>
+          <span class="bm-option-tag" style="margin-left:8px;">非本次核心方案</span>
+        </p>
+        <p style="margin-top:16px;">
+          如果地点 AI 未来扩展成全局助手，历史地点问答可以进一步沉淀为场景记忆，帮助用户快速找回之前的咨询记录。
+        </p>
+      </div>
+      <div>
+        <img class="bm-shot" style="max-width:300px; margin:0 auto; opacity:0.85;" src="../assets/baidu-map/sidebar-memory.webp?v=1" alt="记忆边栏设想：左侧展示AI助手历史问答记录，按场景归档，右侧为地点问答页面">
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; <span id="year"></span> 韦旻昕. All rights reserved.</p>
+</footer>
+
+<script src="../js/main.js?v=10"></script>
+</body>
+</html>

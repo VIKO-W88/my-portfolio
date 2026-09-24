@@ -71,48 +71,35 @@
     </p>
 
     <h3 style="margin-top:48px;">用户现状与现有问题</h3>
-    <div class="my-split my-split-4060 tight-visual" style="margin-top:20px;">
-      <div>
-        <p class="my-lead-muted">现有 AI 总结能回答：</p>
-        <p class="my-lead" style="font-size:1.4rem;">"大家怎么说？"</p>
-        <p class="my-lead-muted" style="margin-top:20px;">但还没有充分回答：</p>
-        <p class="my-lead" style="font-size:1.4rem; color:#2468F2;">"我现在去这里，需要知道什么？"</p>
+    <div style="margin-top:20px;">
+      <p class="my-lead-muted">现有 AI 总结能回答：</p>
+      <p class="my-lead" style="font-size:1.4rem;">"大家怎么说？"</p>
+      <p class="my-lead-muted" style="margin-top:20px;">但还没有充分回答：</p>
+      <p class="my-lead" style="font-size:1.4rem; color:#2468F2;">"我现在去这里，需要知道什么？"</p>
 
-        <div class="plain-row-list numbered" style="margin-top:32px;">
-          <div class="plain-row">
-            <span class="plain-row-icon">1</span>
-            <div class="plain-row-text">
-              <strong>信息类型偏单一</strong>
-              <p>主要总结评价内容，对用户具体到店问题支持有限。</p>
-            </div>
-          </div>
-          <div class="plain-row">
-            <span class="plain-row-icon">2</span>
-            <div class="plain-row-text">
-              <strong>信息优先级不明确</strong>
-              <p>口味、停车、排队、价格等内容混在一起。</p>
-            </div>
-          </div>
-          <div class="plain-row">
-            <span class="plain-row-icon">3</span>
-            <div class="plain-row-text">
-              <strong>摘要可扫读性不足</strong>
-              <p>连续文本需要用户再次自行提取重点。</p>
-            </div>
-          </div>
-          <div class="plain-row">
-            <span class="plain-row-icon">4</span>
-            <div class="plain-row-text">
-              <strong>缺少进一步查询入口</strong>
-              <p>用户产生"停车方便吗？"等具体问题后，缺少低成本继续获取答案的方式。</p>
-            </div>
-          </div>
+      <div class="bm-annotate">
+        <div class="bm-annotate-image">
+          <img class="bm-shot" src="../assets/baidu-map/before-existing.webp?v=1" alt="百度地图现有的 AI 内容总结，以连续文本概括用户评价">
+          <div class="bm-annotate-highlight"></div>
+        </div>
+        <div class="bm-annotate-callout pos-left" style="top:41%;">
+          <div class="bm-annotate-head"><span class="bm-annotate-num">1</span><strong>信息类型偏单一</strong></div>
+          <p>主要总结评价内容，对用户具体到店问题支持有限。</p>
+        </div>
+        <div class="bm-annotate-callout pos-right" style="top:48%;">
+          <div class="bm-annotate-head"><span class="bm-annotate-num">2</span><strong>信息优先级不明确</strong></div>
+          <p>口味、停车、排队、价格等内容混在一起。</p>
+        </div>
+        <div class="bm-annotate-callout pos-left" style="top:55%;">
+          <div class="bm-annotate-head"><span class="bm-annotate-num">3</span><strong>摘要可扫读性不足</strong></div>
+          <p>连续文本需要用户再次自行提取重点。</p>
+        </div>
+        <div class="bm-annotate-callout pos-right" style="top:61%;">
+          <div class="bm-annotate-head"><span class="bm-annotate-num">4</span><strong>缺少进一步查询入口</strong></div>
+          <p>用户产生"停车方便吗？"等具体问题后，缺少低成本继续获取答案的方式。</p>
         </div>
       </div>
-      <div style="margin-top:-40px;">
-        <img class="bm-shot" style="max-width:260px; margin:0 auto;" src="../assets/baidu-map/before-existing.webp?v=1" alt="百度地图现有的 AI 内容总结，以连续文本概括用户评价">
-        <p class="case-note" style="text-align:center; margin-top:12px;">现有 AI 总结截图，来自百度地图 App</p>
-      </div>
+      <p class="case-note" style="text-align:center; margin-top:16px;">现有 AI 总结截图，来自百度地图 App；标注问题均指向图中「AI总结」卡片</p>
     </div>
 
     <h3 style="margin-top:48px;">设计目标</h3>
@@ -382,7 +369,7 @@
           <span class="bm-option-tag">详情页内嵌展开</span>
         </div>
         <div class="bm-option-shot">
-          <img src="../assets/baidu-map/answer-inline.webp?v=1" alt="AI问答直接在地点详情页内展开为卡片，不离开当前页面">
+          <img src="../assets/baidu-map/answer-inline.webp?v=2" alt="AI问答直接在地点详情页内展开为卡片，不离开当前页面">
         </div>
         <p class="bm-scenario-note">AI 问答直接在详情页内展开为一张卡片，不离开当前页面，但会挤压原有内容空间。</p>
       </div>
@@ -404,7 +391,7 @@
 
     <div class="bm-scenarios" style="margin-top:36px;">
       <div>
-        <img class="bm-shot" src="../assets/baidu-map/entry-card.webp?v=3" alt="地点详情页首屏，底部为轻量AI入口卡片，带问一问按钮：问Ai·实时排队、停车、推荐菜？">
+        <img class="bm-shot" src="../assets/baidu-map/entry-card.webp?v=4" alt="地点详情页首屏，底部为轻量AI入口卡片，带问一问按钮：问Ai·实时排队、停车、推荐菜？">
         <p class="case-note" style="text-align:center; margin-top:12px;">地点详情页 + 轻量 AI 入口</p>
       </div>
       <div>

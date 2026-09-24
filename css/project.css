@@ -3120,28 +3120,59 @@
   .bm-pie-label { font-size: 0.9rem; }
 }
 
-/* Spin-in on scroll, via the sitewide .reveal/.in-view mechanism (see
-   the generic .reveal observer in main.js -- this element just needs the
-   "reveal" class in the HTML). Overrides the generic translateY reveal
-   with a few full turns settling to rest instead, per feedback ("能做成
-   会动的吗，转起来，然后停"). transform-origin stays the CSS default
-   (50% 50%) -- the donut is drawn centered in its own viewBox (280/560,
-   230/460 are both exactly the midpoint), so rotating the whole <svg>
-   around its own center never wobbles it off-axis. */
+/* Draws itself out on scroll, via the sitewide .reveal/.in-view
+   mechanism (see the generic .reveal observer in main.js -- this element
+   just needs the "reveal" class in the HTML). First attempt was a spin
+   ("转起来，然后停"); per follow-up feedback ("不是这种转，是饼图慢慢的跑
+   成圈，饼图在长的感觉") this instead grows each ring segment out from
+   nothing, one after another going all the way around at constant
+   angular speed (each segment's own share of a fixed 2.4s sweep), then
+   its leader line + dot + label fade in right as that segment finishes --
+   reads as the donut "drawing" itself continuously rather than rotating.
+   The .bm-pie-annotated container itself is exempted from the generic
+   .reveal fade/slide (opacity/transform neutralized below) since the
+   growing strokes and fading labels carry the whole reveal now. Per-
+   segment timing (--dash/--rest/--off/--delay/--dur) and per-label
+   --reveal-delay are computed in the page and set inline, since they
+   differ per slice. */
 .bm-pie-annotated.reveal {
-  transform: rotate(-1080deg) scale(0.82);
-  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
-.bm-pie-annotated.reveal.in-view {
-  transform: rotate(0deg) scale(1);
+.bm-pie-seg {
+  stroke-dasharray: 0 999;
+  stroke-dashoffset: var(--off);
+  transition: stroke-dasharray var(--dur) ease-in-out var(--delay);
+}
+
+.bm-pie-annotated.in-view .bm-pie-seg {
+  stroke-dasharray: var(--dash) var(--rest);
+}
+
+.bm-pie-annotated .bm-pie-leader,
+.bm-pie-annotated .bm-pie-dot,
+.bm-pie-annotated .bm-pie-label {
+  opacity: 0;
+  transition: opacity 0.45s ease var(--reveal-delay, 0s);
+}
+
+.bm-pie-annotated.in-view .bm-pie-leader,
+.bm-pie-annotated.in-view .bm-pie-dot,
+.bm-pie-annotated.in-view .bm-pie-label {
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bm-pie-annotated.reveal {
+  .bm-pie-seg {
     transition: none;
-    transform: none;
+    stroke-dasharray: var(--dash) var(--rest);
+  }
+  .bm-pie-annotated .bm-pie-leader,
+  .bm-pie-annotated .bm-pie-dot,
+  .bm-pie-annotated .bm-pie-label {
+    transition: none;
     opacity: 1;
   }
 }

@@ -3074,66 +3074,52 @@
   .my-split-4060.tight-visual { grid-template-columns: 1fr 300px; }
 }
 
-/* "用户最常问" as a donut chart (竞品分析) -- replaces the earlier big-
-   percentage-numeral treatment per feedback ("这一块不要数据了，做成饼图").
-   Categorical palette (5 nominal categories, sorted by share -- swapping
-   two would not change what they mean, so this is nominal-categorical,
-   not ordinal) drawn from the dataviz skill's validated default order
-   (blue/orange/aqua/yellow/magenta), both modes re-validated against this
-   page's own surfaces (#ffffff light / #101114 dark) with
-   scripts/validate_palette.js -- all six checks pass; light mode's aqua/
-   yellow/magenta slots sit under the 3:1 contrast floor by design (light
-   hues), so the legend's text values (not the fill) carry those numbers --
-   the required "relief" channel, per the skill's contrast check. */
+/* "用户最常问" as an annotated donut chart (竞品分析) -- replaces the
+   earlier big-percentage-numeral treatment, then a donut+flat-legend
+   version, per feedback ("这一块不要数据了，做成饼图" -> "图文结合，在饼图
+   旁边画一个箭头出来然后写对应的说明"). Each slice gets its own radiating
+   leader line ending in a dot + inline label (name + %), positioned at
+   the slice's own mid-angle around the ring, so nothing crosses. 5
+   nominal-categorical slices (swapping two wouldn't change their meaning,
+   so plain identity, not rank) drawn from the dataviz skill's validated
+   default order (blue/orange/aqua/yellow/magenta); both modes
+   re-validated against this page's own surfaces (#ffffff light /
+   #101114 dark) with scripts/validate_palette.js -- all six checks pass.
+   Light mode's aqua/yellow/magenta slots sit under the 3:1 contrast
+   floor by design (light hues); the label text (ink, not the fill)
+   carries those numbers -- the "relief" channel the skill's contrast
+   check requires. */
 .bm-pie-wrap {
   display: flex;
-  align-items: center;
-  gap: 48px;
+  justify-content: center;
   margin-top: 28px;
-  flex-wrap: wrap;
 }
 
-.bm-pie {
-  flex: 0 0 auto;
+.bm-pie-annotated {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
 }
 
-.bm-pie-legend {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 200px;
+.bm-pie-leader {
+  fill: none;
+  stroke-width: 1.5;
+  opacity: 0.55;
 }
 
-.bm-pie-legend li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.bm-pie-legend .sw {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex: 0 0 auto;
-}
-
-.bm-pie-legend .name {
-  color: var(--text);
+.bm-pie-label .nm {
+  fill: var(--text);
   font-size: 0.95rem;
-  flex: 1;
+  font-family: var(--title-font, inherit);
 }
 
-.bm-pie-legend .pct {
+.bm-pie-label .pc {
+  fill: var(--text-muted);
   font-family: 'Baloo 2', sans-serif;
   font-weight: 700;
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
+  font-size: 0.95rem;
 }
 
 @media (max-width: 560px) {
-  .bm-pie-wrap { flex-direction: column; align-items: flex-start; gap: 24px; }
-  .bm-pie svg { width: 180px; height: 180px; }
+  .bm-pie-annotated { max-width: 380px; }
 }

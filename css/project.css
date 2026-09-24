@@ -15,23 +15,31 @@
   --border: #53418d;
 }
 
-/* "用户最常问" donut chart -- categorical slots, light values straight
-   from the dataviz skill's validated default order; dark values are that
-   same order's dark steps. See the .bm-pie-wrap comment further down for
-   the validation notes. */
+/* "用户最常问" donut chart. Went through a categorical (multi-hue) phase
+   before this, per follow-up feedback ("颜色能换成同一色系吗") this is now
+   a single-hue blue ramp instead -- an *ordinal* palette (dataviz skill's
+   --ordinal check: monotone lightness, >=0.06 steps, light end clears
+   contrast), since the slices are already sorted by share: darkest/most
+   prominent for the biggest slice down to the lightest for the smallest.
+   Dark mode inverts which end is "prominent" (light pops on a dark
+   surface, not dark), so its ramp runs light-to-dark for the same big-to-
+   small order rather than reusing the light steps. Both re-validated
+   with scripts/validate_palette.js --ordinal against this page's own
+   surfaces. See the .bm-pie-wrap comment further down for how the chart
+   itself is built. */
 :root {
-  --bm-pie-1: #eda100;
-  --bm-pie-2: #e87ba4;
-  --bm-pie-3: #008300;
-  --bm-pie-4: #4a3aa7;
-  --bm-pie-5: #e34948;
+  --bm-pie-1: #104281;
+  --bm-pie-2: #1c5cab;
+  --bm-pie-3: #2a78d6;
+  --bm-pie-4: #5598e7;
+  --bm-pie-5: #86b6ef;
 }
 [data-theme="dark"] {
-  --bm-pie-1: #c98500;
-  --bm-pie-2: #d55181;
-  --bm-pie-3: #008300;
-  --bm-pie-4: #9085e9;
-  --bm-pie-5: #e66767;
+  --bm-pie-1: #9ec5f4;
+  --bm-pie-2: #6da7ec;
+  --bm-pie-3: #3987e5;
+  --bm-pie-4: #256abf;
+  --bm-pie-5: #184f95;
 }
 
 .proto-fonts h1, .proto-fonts h2, .proto-fonts h3 { font-family: 'Baloo 2', sans-serif; }

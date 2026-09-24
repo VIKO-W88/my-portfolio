@@ -3086,9 +3086,11 @@
    re-validated against this page's own surfaces (#ffffff light /
    #101114 dark) with scripts/validate_palette.js -- all six checks pass.
    Light mode's aqua/yellow/magenta slots sit under the 3:1 contrast
-   floor by design (light hues); the label text (ink, not the fill)
-   carries those numbers -- the "relief" channel the skill's contrast
-   check requires. */
+   floor by design (light hues); per later feedback ("百分比的数据删掉，
+   图标放大居中") the percentage values were dropped from the on-chart
+   labels entirely -- category names only now, with the exact figures
+   kept in the SVG's aria-label for accessibility -- and the chart was
+   enlarged (620px vs. the original 480px cap). */
 .bm-pie-wrap {
   display: flex;
   justify-content: center;
@@ -3097,7 +3099,7 @@
 
 .bm-pie-annotated {
   width: 100%;
-  max-width: 480px;
+  max-width: 620px;
   height: auto;
 }
 
@@ -3107,19 +3109,13 @@
   opacity: 0.55;
 }
 
-.bm-pie-label .nm {
+.bm-pie-label {
   fill: var(--text);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-family: var(--title-font, inherit);
 }
 
-.bm-pie-label .pc {
-  fill: var(--text-muted);
-  font-family: 'Baloo 2', sans-serif;
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
 @media (max-width: 560px) {
-  .bm-pie-annotated { max-width: 380px; }
+  .bm-pie-annotated { max-width: 440px; }
+  .bm-pie-label { font-size: 0.9rem; }
 }

@@ -15,6 +15,25 @@
   --border: #53418d;
 }
 
+/* "用户最常问" donut chart -- categorical slots, light values straight
+   from the dataviz skill's validated default order; dark values are that
+   same order's dark steps. See the .bm-pie-wrap comment further down for
+   the validation notes. */
+:root {
+  --bm-pie-1: #2a78d6;
+  --bm-pie-2: #eb6834;
+  --bm-pie-3: #1baf7a;
+  --bm-pie-4: #eda100;
+  --bm-pie-5: #e87ba4;
+}
+[data-theme="dark"] {
+  --bm-pie-1: #3987e5;
+  --bm-pie-2: #d95926;
+  --bm-pie-3: #199e70;
+  --bm-pie-4: #c98500;
+  --bm-pie-5: #d55181;
+}
+
 .proto-fonts h1, .proto-fonts h2, .proto-fonts h3 { font-family: 'Baloo 2', sans-serif; }
 
 /* Back in normal document flow -- per feedback, it should scroll away
@@ -3055,57 +3074,66 @@
   .my-split-4060.tight-visual { grid-template-columns: 1fr 300px; }
 }
 
-/* "用户最常问" as large stat numerals (竞品分析) -- the deck shows this
-   as big percentage figures per category, not a bar chart (.bm-stats
-   above is kept for other pages that reuse it, just not this one
-   anymore). Same restrained, unboxed language as the rest of this
-   page's grids. */
-.bm-freq-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 64px 24px;
+/* "用户最常问" as a donut chart (竞品分析) -- replaces the earlier big-
+   percentage-numeral treatment per feedback ("这一块不要数据了，做成饼图").
+   Categorical palette (5 nominal categories, sorted by share -- swapping
+   two would not change what they mean, so this is nominal-categorical,
+   not ordinal) drawn from the dataviz skill's validated default order
+   (blue/orange/aqua/yellow/magenta), both modes re-validated against this
+   page's own surfaces (#ffffff light / #101114 dark) with
+   scripts/validate_palette.js -- all six checks pass; light mode's aqua/
+   yellow/magenta slots sit under the 3:1 contrast floor by design (light
+   hues), so the legend's text values (not the fill) carry those numbers --
+   the required "relief" channel, per the skill's contrast check. */
+.bm-pie-wrap {
+  display: flex;
+  align-items: center;
+  gap: 48px;
   margin-top: 28px;
+  flex-wrap: wrap;
 }
 
-.bm-freq-item {
+.bm-pie {
+  flex: 0 0 auto;
+}
+
+.bm-pie-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  gap: 14px;
+  min-width: 200px;
+}
+
+.bm-pie-legend li {
+  display: flex;
   align-items: center;
-  text-align: center;
-  gap: 6px;
+  gap: 10px;
 }
 
-.bm-freq-num {
+.bm-pie-legend .sw {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.bm-pie-legend .name {
+  color: var(--text);
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.bm-pie-legend .pct {
   font-family: 'Baloo 2', sans-serif;
-  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
   color: var(--text-muted);
-  opacity: 0.7;
-}
-
-.bm-freq-pct {
-  font-family: 'Baloo 2', sans-serif;
-  font-weight: 800;
-  font-size: 4.6rem;
-  color: #2468F2;
-  line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
 
-.bm-freq-name {
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-@media (max-width: 900px) {
-  .bm-freq-pct { font-size: 3.6rem; }
-}
-@media (max-width: 640px) {
-  .bm-freq-grid { grid-template-columns: repeat(2, 1fr); gap: 48px 20px; }
-  .bm-freq-pct { font-size: 3rem; }
-}
-@media (max-width: 400px) {
-  .bm-freq-pct { font-size: 2.4rem; }
+@media (max-width: 560px) {
+  .bm-pie-wrap { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .bm-pie svg { width: 180px; height: 180px; }
 }

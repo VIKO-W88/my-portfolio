@@ -20,18 +20,18 @@
    same order's dark steps. See the .bm-pie-wrap comment further down for
    the validation notes. */
 :root {
-  --bm-pie-1: #2a78d6;
-  --bm-pie-2: #eb6834;
-  --bm-pie-3: #1baf7a;
-  --bm-pie-4: #eda100;
-  --bm-pie-5: #e87ba4;
+  --bm-pie-1: #eda100;
+  --bm-pie-2: #e87ba4;
+  --bm-pie-3: #008300;
+  --bm-pie-4: #4a3aa7;
+  --bm-pie-5: #e34948;
 }
 [data-theme="dark"] {
-  --bm-pie-1: #3987e5;
-  --bm-pie-2: #d95926;
-  --bm-pie-3: #199e70;
-  --bm-pie-4: #c98500;
-  --bm-pie-5: #d55181;
+  --bm-pie-1: #c98500;
+  --bm-pie-2: #d55181;
+  --bm-pie-3: #008300;
+  --bm-pie-4: #9085e9;
+  --bm-pie-5: #e66767;
 }
 
 .proto-fonts h1, .proto-fonts h2, .proto-fonts h3 { font-family: 'Baloo 2', sans-serif; }
@@ -3118,4 +3118,30 @@
 @media (max-width: 560px) {
   .bm-pie-annotated { max-width: 440px; }
   .bm-pie-label { font-size: 0.9rem; }
+}
+
+/* Spin-in on scroll, via the sitewide .reveal/.in-view mechanism (see
+   the generic .reveal observer in main.js -- this element just needs the
+   "reveal" class in the HTML). Overrides the generic translateY reveal
+   with a few full turns settling to rest instead, per feedback ("能做成
+   会动的吗，转起来，然后停"). transform-origin stays the CSS default
+   (50% 50%) -- the donut is drawn centered in its own viewBox (280/560,
+   230/460 are both exactly the midpoint), so rotating the whole <svg>
+   around its own center never wobbles it off-axis. */
+.bm-pie-annotated.reveal {
+  transform: rotate(-1080deg) scale(0.82);
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bm-pie-annotated.reveal.in-view {
+  transform: rotate(0deg) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bm-pie-annotated.reveal {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
 }

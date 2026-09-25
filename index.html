@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=87">
+<link rel="stylesheet" href="css/style.css?v=102">
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
@@ -66,13 +66,27 @@
 <header class="nav">
   <div class="nav-inner">
     <a href="#home" class="logo">韦旻昕</a>
-    <nav>
+    <!-- GooeyNav (vanilla port of React Bits <GooeyNav />, js/gooey-nav.js):
+         clicking an item bursts particles and a gooey pill blobs onto it;
+         the pill also follows the page you're on while scrolling. -->
+    <nav class="gooey-nav" aria-label="主导航">
       <ul class="nav-links">
         <li><a href="#about">关于我</a></li>
         <li><a href="#projects">作品集</a></li>
         <li><a href="#contact">联系方式</a></li>
       </ul>
+      <span class="gooey-effect gooey-filter" aria-hidden="true"></span>
+      <span class="gooey-effect gooey-text" aria-hidden="true"></span>
     </nav>
+    <!-- Gooey filter: blur + alpha threshold, so overlapping blobs melt
+         together while keeping their colours (works on a light nav). -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <filter id="gooey-filter">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo"/>
+        <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+      </filter>
+    </svg>
     <button class="theme-toggle" id="themeToggle" aria-label="切换深色模式">🌙</button>
   </div>
 </header>
@@ -84,7 +98,7 @@
 
     <div class="hero-inner hero-split">
       <div class="hero-text">
-        <p class="hero-eyebrow">Hello, I’m</p>
+        <p class="hero-eyebrow" lang="en">Hello, I’m</p>
         <h1 class="hero-title">VIKO</h1>
         <a href="#projects" class="hero-link magnetic">查看作品 →</a>
       </div>
@@ -150,11 +164,11 @@
   </section>
 
   <section id="about" class="section about-section">
-    <p class="page-eyebrow reveal">01 — About me</p>
-    <h2 class="page-title reveal">关于我</h2>
+    <p class="page-eyebrow">01 — About me</p>
+    <h2 class="page-title">关于我</h2>
     <div class="about-layout">
       <div class="about-copy">
-        <div class="about-body reveal">
+        <div class="about-body">
           <p class="about-text">跨学科复合背景：悉尼大学交互设计与电子艺术硕士，具备计算机与艺术设计跨学科知识体系，持 Google UX Design 职业证书，兼具用户体验设计能力、逻辑分析能力与视觉设计能力。</p>
           <p class="about-text">全流程 UX 技能与技术衔接：熟练掌握 Figma、用户调研、信息架构、交互原型与可用性测试等 UX 方法；具备 Vibe Coding、Python、JavaScript、p5.js、MATLAB 编程基础及 Blender 三维建模能力，能够理解技术实现逻辑，并与开发团队进行高效沟通与协作。</p>
         </div>
@@ -219,8 +233,8 @@
          widens the card, dims the image and fades in the name + tags.
          Pure CSS (.feature-row in style.css); 2x2 grid on phones. -->
     <div class="projects-page projects-page-featured">
-      <p class="page-eyebrow reveal">02 — Selected work · 作品集</p>
-      <h2 class="page-title reveal">精选项目</h2>
+      <p class="page-eyebrow">02 — Selected work · 作品集</p>
+      <h2 class="page-title">精选项目</h2>
       <ul class="feature-row">
         <li class="feature-card">
           <a href="projects/baidu-map.html">
@@ -262,8 +276,8 @@
     </div>
 
     <div class="projects-page projects-page-more">
-    <p class="page-eyebrow reveal">03 — More work</p>
-    <h2 class="page-title reveal">更多项目</h2>
+    <p class="page-eyebrow">03 — More work</p>
+    <h2 class="page-title">更多项目</h2>
     <!-- "更多项目" -- perspective carousel, a vanilla-JS port of VengeanceUI's
          PerspectiveCarousel (shadcn/React). Each card rotates on Y by
          (active - index) * rotationStep and inactive cards scale down;
@@ -280,7 +294,7 @@
             <button type="button" class="pc-hit" aria-label="文创设计">
               <img src="assets/covers/cover-mengyou.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
-            <a class="pc-label" href="projects/mengyou.html" tabindex="-1">文创设计<span aria-hidden="true"> →</span></a>
+            <a class="pc-label" href="projects/mengyou.html" tabindex="-1">文创设计</a>
           </div>
         </li>
         <li class="pc-slide" data-href="projects/soibon.html">
@@ -288,7 +302,7 @@
             <button type="button" class="pc-hit" aria-label="信息可视化、System Design">
               <img src="assets/covers/cover-infovis.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
-            <a class="pc-label" href="projects/soibon.html" tabindex="-1">信息可视化、System Design<span aria-hidden="true"> →</span></a>
+            <a class="pc-label" href="projects/soibon.html" tabindex="-1">信息可视化、System Design</a>
           </div>
         </li>
         <li class="pc-slide" data-href="projects/p5-sketch.html">
@@ -296,7 +310,7 @@
             <button type="button" class="pc-hit" aria-label="JavaScript 创意编程">
               <img src="assets/covers/cover-p5-sketch.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
-            <a class="pc-label" href="projects/p5-sketch.html" tabindex="-1">JavaScript 创意编程<span aria-hidden="true"> →</span></a>
+            <a class="pc-label" href="projects/p5-sketch.html" tabindex="-1">JavaScript 创意编程</a>
           </div>
         </li>
         <li class="pc-slide" data-href="projects/court-game.html">
@@ -304,7 +318,7 @@
             <button type="button" class="pc-hit" aria-label="Python 编程">
               <img src="assets/covers/cover-python.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
-            <a class="pc-label" href="projects/court-game.html" tabindex="-1">Python 编程<span aria-hidden="true"> →</span></a>
+            <a class="pc-label" href="projects/court-game.html" tabindex="-1">Python 编程</a>
           </div>
         </li>
         <li class="pc-slide" data-href="projects/matlab-audio.html">
@@ -312,7 +326,7 @@
             <button type="button" class="pc-hit" aria-label="MATLAB · 数字信号处理">
               <img src="assets/covers/cover-matlab-audio.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
-            <a class="pc-label" href="projects/matlab-audio.html" tabindex="-1">MATLAB · 数字信号处理<span aria-hidden="true"> →</span></a>
+            <a class="pc-label" href="projects/matlab-audio.html" tabindex="-1">MATLAB · 数字信号处理</a>
           </div>
         </li>
         </ul>
@@ -337,14 +351,59 @@
   </section>
 
   <section id="contact" class="section contact">
-    <p class="page-eyebrow reveal">04 — Contact</p>
-    <h2 class="page-title reveal">联系方式</h2>
-    <p class="contact-text reveal">欢迎通过以下方式联系我</p>
-    <div class="contact-links reveal">
-      <a href="mailto:vikowei2026@163.com" class="contact-link magnetic">📧 vikowei2026@163.com</a>
-      <a href="tel:18934381332" class="contact-link magnetic">📞 电话：18934381332</a>
-      <a href="#" class="contact-link magnetic">💬 微信：vikowei1618</a>
-    </div>
+    <p class="page-eyebrow">04 — Contact</p>
+    <h2 class="page-title">联系方式</h2>
+    <p class="contact-text">欢迎通过以下方式联系我</p>
+    <!-- Three contact cards with a PixelSwap reveal (vanilla port of React
+         Bits <PixelSwap />, js/pixel-swap.js): the front shows only the
+         kind (邮箱 / 电话 / 微信); hovering (or focusing, or a first tap on
+         touch) pixel-swaps to the back with the actual details. Email/phone
+         open the mail app/dialer; the WeChat card copies the ID. -->
+    <ul class="contact-cards">
+      <li class="contact-card">
+        <a href="mailto:vikowei2026@163.com" class="pixel-swap" aria-label="邮箱：vikowei2026@163.com，发送邮件" data-pixel-size="64" data-gap="0" data-pixel-radius="0" data-pixel-spin="0" data-pixel-scale="0.35" data-duration="1400" data-pixel-duration="450" data-pattern="random" data-randomness="0" data-fade="true" data-trigger="hover">
+          <span class="ps-layer ps-front" data-layer="0" aria-hidden="true">
+            <span class="contact-kind">Email</span>
+            <span class="contact-big">邮箱</span>
+            <span class="contact-hint">查看邮箱 <span aria-hidden="true">→</span></span>
+          </span>
+          <span class="ps-layer ps-back" data-layer="1" aria-hidden="true">
+            <span class="contact-kind">Email · 邮箱</span>
+            <span class="contact-value">vikowei2026@163.com</span>
+            <span class="contact-action">发送邮件 <span aria-hidden="true">↗</span></span>
+          </span>
+        </a>
+      </li>
+      <li class="contact-card">
+        <a href="tel:18934381332" class="pixel-swap" aria-label="电话：189 3438 1332，拨打电话" data-pixel-size="64" data-gap="0" data-pixel-radius="0" data-pixel-spin="0" data-pixel-scale="0.35" data-duration="1400" data-pixel-duration="450" data-pattern="random" data-randomness="0" data-fade="true" data-trigger="hover">
+          <span class="ps-layer ps-front" data-layer="0" aria-hidden="true">
+            <span class="contact-kind">Phone</span>
+            <span class="contact-big">电话</span>
+            <span class="contact-hint">查看电话 <span aria-hidden="true">→</span></span>
+          </span>
+          <span class="ps-layer ps-back" data-layer="1" aria-hidden="true">
+            <span class="contact-kind">Phone · 电话</span>
+            <span class="contact-value">189 3438 1332</span>
+            <span class="contact-action">拨打电话 <span aria-hidden="true">↗</span></span>
+          </span>
+        </a>
+      </li>
+      <li class="contact-card">
+        <button type="button" data-copy="vikowei1618" class="pixel-swap contact-copy" aria-label="微信：vikowei1618，点击复制" data-pixel-size="64" data-gap="0" data-pixel-radius="0" data-pixel-spin="0" data-pixel-scale="0.35" data-duration="1400" data-pixel-duration="450" data-pattern="random" data-randomness="0" data-fade="true" data-trigger="hover">
+          <span class="ps-layer ps-front" data-layer="0" aria-hidden="true">
+            <span class="contact-kind">WeChat</span>
+            <span class="contact-big">微信</span>
+            <span class="contact-hint">查看微信 <span aria-hidden="true">→</span></span>
+          </span>
+          <span class="ps-layer ps-back" data-layer="1" aria-hidden="true">
+            <span class="contact-kind">WeChat · 微信</span>
+            <span class="contact-value">vikowei1618</span>
+            <span class="contact-action"><span class="contact-copy-label">点击复制</span> <span aria-hidden="true">⧉</span></span>
+          </span>
+          <span class="contact-copied fold-sr" aria-live="polite"></span>
+        </button>
+      </li>
+    </ul>
   </section>
 
 </main>
@@ -356,6 +415,11 @@
 <script src="js/main.js?v=10"></script>
 <script src="js/splash-reveal.js?v=2"></script>
 <script src="js/page-snap.js?v=1"></script>
+<script src="js/gooey-nav.js?v=3"></script>
+<script src="js/text-pop.js?v=3"></script>
+<script src="js/pixel-swap.js?v=1"></script>
+<script src="js/contact.js?v=2"></script>
 <script src="js/perspective-carousel.js?v=4"></script>
+<script src="js/click-spark.js?v=1"></script>
 </body>
 </html>

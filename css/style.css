@@ -2636,3 +2636,472 @@ html.snap-pages #contact {
   scale: 1.15;
   transform-origin: right bottom;
 }
+
+/* Body copy leading: 1.7 → 1.85 (a touch more air for Chinese text),
+   same on every page that has body copy. */
+#about .about-text,
+#contact .contact-text {
+  line-height: 1.85;
+}
+
+/* ==========================================================================
+   Fold-in text (js/text-pop.js) — port of React Bits <FoldText />:
+   char split, top hinge, 0.65s per char, 45ms stagger, power3.out,
+   perspective 700px, crease shading 0.55. The crease is drawn by dimming
+   the glyph itself (brightness) rather than the original's multiply-blend
+   box, which would flash as a grey rectangle on these light pages.
+   Hidden states only apply once the script has run (html.fold-ready).
+   ========================================================================== */
+.fold-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.fold-seg {
+  display: inline-block;
+  perspective: 700px;
+  transform-style: preserve-3d;
+}
+.fold-piece {
+  display: inline-block;
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.fold-ready .pop-page .fold-piece {
+  opacity: 0;
+  transform: rotateX(-92deg);
+  filter: brightness(0.45); /* crease 0.55 */
+  transition:
+    transform 0.65s cubic-bezier(0.215, 0.61, 0.355, 1),
+    opacity 0.65s cubic-bezier(0.215, 0.61, 0.355, 1),
+    filter 0.65s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition-delay: calc(var(--fold-base, 120ms) + var(--k) * 45ms);
+}
+.fold-ready .pop-page.is-popped .fold-piece {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+.hero { --fold-base: 150ms; }
+
+/* Hero: the fold replaces the old slide-in of the three lines. */
+.fold-ready .hero-text .hero-eyebrow,
+.fold-ready .hero-text .hero-title,
+.fold-ready .hero-text .hero-link {
+  opacity: 1;
+  transform: none;
+}
+
+/* Eyebrow + body lines rise in around the fold. */
+.pop-ready .pop-line {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(360ms + var(--n-title, 4) * 45ms + var(--j, 0) * 90ms);
+}
+.pop-ready .pop-eyebrow {
+  transition-delay: 0ms;
+}
+.pop-ready .is-popped .pop-line {
+  opacity: 1;
+  transform: none;
+}
+
+/* Leaving a page resets instantly (no reverse animation). */
+.pop-ready .pop-page:not(.is-popped) .fold-piece,
+.pop-ready .pop-page:not(.is-popped) .pop-line {
+  transition-duration: 0s;
+  transition-delay: 0s;
+}
+
+/* ==========================================================================
+   联系方式: three cards in a row (same card language as 精选项目: radius,
+   soft surface, hover lift), centred in the space under the subtitle.
+   Label · large value · action hint. Hover tints the border and hint in
+   the page's own title colour. Stacks on phones. Heights follow the
+   window so the page (with the footer) still fits one screen.
+   ========================================================================== */
+#contact .contact-text {
+  margin-bottom: 0;
+}
+#contact .contact-cards {
+  list-style: none;
+  margin: auto 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+#contact .contact-card > a,
+#contact .contact-card > button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  min-height: clamp(128px, calc(34svh - 60px), 260px);
+  padding: clamp(16px, 3svh, 32px) clamp(20px, 2.2vw, 32px);
+  border: 1px solid color-mix(in srgb, var(--page-title) 18%, transparent);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(28, 26, 63, 0.04);
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+#contact .contact-kind {
+  font-family: var(--title-font);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--page-eyebrow);
+}
+#contact .contact-value {
+  font-family: var(--title-font);
+  font-size: clamp(1.25rem, min(2.1vw, 3.6svh), 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+#contact .contact-action {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--page-title);
+}
+@media (hover: hover) {
+  #contact .contact-card > a:hover,
+  #contact .contact-card > button:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.85);
+    border-color: color-mix(in srgb, var(--page-title) 45%, transparent);
+    box-shadow: 0 12px 32px color-mix(in srgb, var(--page-title) 18%, transparent);
+  }
+}
+#contact .contact-card > a:focus-visible,
+#contact .contact-card > button:focus-visible {
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  #contact .contact-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  #contact .contact-card > a,
+  #contact .contact-card > button {
+    min-height: 0;
+    gap: 8px;
+  }
+}
+/* Keep each value on one line (the email must not break mid-domain). */
+#contact .contact-value {
+  font-size: clamp(1.125rem, min(1.75vw, 3.4svh), 1.875rem);
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
+/* "Hello, I’m" is English: set it in a Latin face first. Noto Sans SC
+   draws ’ as a full-width CJK glyph, which left a gap ("I’ m"). */
+.hero-eyebrow {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, var(--title-font);
+}
+
+/* ==========================================================================
+   PixelSwap (js/pixel-swap.js) — port of React Bits <PixelSwap /> CSS.
+   ========================================================================== */
+.pixel-swap {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.ps-layer {
+  position: absolute;
+  inset: 0;
+}
+.ps-layer[data-visible="false"] {
+  visibility: hidden;
+}
+.ps-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.ps-pixel {
+  position: absolute;
+  overflow: hidden;
+  opacity: 0;
+  contain: paint;
+}
+.ps-pixel-content {
+  position: absolute;
+}
+
+/* 联系方式 cards as PixelSwap: front = light face with just the kind,
+   back = solid page-colour face with the details. Both faces are opaque
+   (the reveal clones the back into each pixel, so it can't be see-through).
+   White on #6435d0 is 6.6:1. The card keeps its size; faces fill it. */
+#contact .contact-card > .pixel-swap {
+  display: block;
+  padding: 0;
+  background: none;
+  min-height: clamp(128px, calc(34svh - 60px), 260px);
+}
+#contact .ps-layer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  padding: clamp(16px, 3svh, 32px) clamp(20px, 2.2vw, 32px);
+  border-radius: inherit;
+  text-align: left;
+}
+#contact .ps-front {
+  background: color-mix(in srgb, #ffffff 62%, var(--page-bg));
+}
+#contact .ps-back {
+  background: var(--page-title);
+  color: #fff;
+}
+#contact .ps-back .contact-kind,
+#contact .ps-back .contact-action {
+  color: rgba(255, 255, 255, 0.9);
+}
+#contact .contact-big {
+  font-family: var(--title-font);
+  font-size: clamp(1.5rem, min(2.6vw, 4.4svh), 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--page-title);
+}
+#contact .contact-hint {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--page-eyebrow);
+}
+@media (max-width: 760px) {
+  #contact .contact-card > .pixel-swap {
+    min-height: 112px;
+  }
+}
+
+/* ClickSpark (js/click-spark.js): full-viewport, click-through canvas. */
+.click-spark {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   GooeyNav (js/gooey-nav.js) — port of React Bits <GooeyNav /> CSS for a
+   LIGHT nav. The original fakes the goo with blur + contrast(100) over a
+   black backing and mix-blend-mode: lighten, which only works on dark
+   backgrounds and quantises colours to pure RGB; here the goo is an SVG
+   blur + alpha-threshold filter (#gooey-filter), so it sits on the light
+   nav and keeps the four page colours. Pill = site ink, active text white.
+   ========================================================================== */
+.gooey-nav {
+  --gooey-pill: #1c1a3f;
+  --gooey-color-1: #08806f;
+  --gooey-color-2: #cc1f63;
+  --gooey-color-3: #1a63c7;
+  --gooey-color-4: #6435d0;
+  --linear-ease: linear(0, 0.068, 0.19 2.7%, 0.804 8.1%, 1.037, 1.199 13.2%, 1.245, 1.27 15.8%, 1.274, 1.272 17.4%, 1.249 19.1%, 0.996 28%, 0.949, 0.928 33.3%, 0.926, 0.933 36.8%, 1.001 45.6%, 1.013, 1.019 50.8%, 1.018 54.4%, 1 63.1%, 0.995 68%, 1.001 85%, 1);
+  position: relative;
+  display: flex;
+}
+.gooey-nav .nav-links {
+  position: relative;
+  z-index: 3;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gooey-nav .nav-links li {
+  position: relative;
+  border-radius: 999px;
+}
+.gooey-nav .nav-links a {
+  display: inline-block;
+  padding: 0.4em 0.9em;
+  border-radius: 999px;
+}
+/* sharp pill behind the active item's own text */
+.gooey-nav .nav-links li::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 999px;
+  background: var(--gooey-pill);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.gooey-nav .nav-links li.is-active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+.gooey-nav .nav-links li.is-active a,
+.nav.is-solid .gooey-nav .nav-links li.is-active a {
+  color: #fff;
+  opacity: 1;
+}
+.gooey-nav .nav-links li.is-active a::after {
+  display: none; /* no brush underline under the pill */
+}
+.gooey-nav .nav-links a:focus-visible {
+  outline-offset: 2px;
+}
+
+.gooey-effect {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.gooey-nav.has-active .gooey-effect {
+  opacity: 1;
+}
+.gooey-text {
+  z-index: 4;
+  color: transparent; /* the real link text shows through; kept for parity */
+}
+.gooey-filter {
+  filter: url(#gooey-filter);
+}
+.gooey-filter::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--gooey-pill);
+  transform: scale(0);
+  opacity: 0;
+  z-index: -1;
+}
+.gooey-filter.is-active::after {
+  animation: gooey-pill 0.3s ease both;
+}
+@keyframes gooey-pill {
+  to { transform: scale(1); opacity: 1; }
+}
+
+.gooey-particle,
+.gooey-point {
+  display: block;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  transform-origin: center;
+}
+.gooey-particle {
+  --time: 5s;
+  position: absolute;
+  top: calc(50% - 8px);
+  left: calc(50% - 8px);
+  animation: gooey-particle calc(var(--time)) ease 1 -350ms;
+}
+.gooey-point {
+  background: var(--color);
+  opacity: 1;
+  animation: gooey-point calc(var(--time)) ease 1 -350ms;
+}
+@keyframes gooey-particle {
+  0% {
+    transform: rotate(0deg) translate(calc(var(--start-x)), calc(var(--start-y)));
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  70% {
+    transform: rotate(calc(var(--rotate) * 0.5)) translate(calc(var(--end-x) * 1.2), calc(var(--end-y) * 1.2));
+    opacity: 1;
+    animation-timing-function: ease;
+  }
+  85% {
+    transform: rotate(calc(var(--rotate) * 0.66)) translate(calc(var(--end-x)), calc(var(--end-y)));
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(calc(var(--rotate) * 1.2)) translate(calc(var(--end-x) * 0.5), calc(var(--end-y) * 0.5));
+    opacity: 1;
+  }
+}
+@keyframes gooey-point {
+  0% { transform: scale(0); opacity: 0; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  25% { transform: scale(calc(var(--scale) * 0.25)); }
+  38% { opacity: 1; }
+  65% { transform: scale(var(--scale)); opacity: 1; animation-timing-function: ease; }
+  85% { transform: scale(var(--scale)); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gooey-filter.is-active::after { animation: none; transform: scale(1); opacity: 1; }
+}
+
+/* GooeyNav burst on the hero "查看作品 →" link (js/gooey-nav.js). The pill
+   is the site accent (white text on it: 5.0:1) and fades after the burst. */
+.hero-link {
+  --gooey-pill: var(--accent);
+  --gooey-color-1: #08806f;
+  --gooey-color-2: #cc1f63;
+  --gooey-color-3: #1a63c7;
+  --gooey-color-4: #6435d0;
+  isolation: isolate;
+}
+.hero-link .gooey-burst {
+  inset: -6px -14px;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  opacity: 1;
+}
+.hero-link.is-bursting {
+  color: #fff;
+  transition: color 0.2s ease;
+}
+.hero-link.is-bursting::after {
+  opacity: 0; /* hide the underline while the pill is on */
+}
+.hero-link:not(.is-bursting) .gooey-burst::after {
+  transition: opacity 0.35s ease;
+}
+
+/* Nav links: no brush-stroke underline on hover (the gooey pill marks
+   the active item; hover is just a colour change). */
+.nav-links a::after,
+.nav-links a:hover::after {
+  display: none;
+}

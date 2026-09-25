@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101114" media="(prefers-color-scheme: dark)">
 <title>FamilyFlow | 作品集 · 韦旻昕</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/style.css?v=53">
-<link rel="stylesheet" href="../css/project.css?v=61">
+<link rel="stylesheet" href="../css/style.css?v=60">
+<link rel="stylesheet" href="../css/project.css?v=100">
 </head>
 <body class="proto-fonts">
+  <a class="skip-link" href="#main">跳到主要内容</a>
 
 <header class="nav">
   <div class="nav-inner">
@@ -26,7 +29,7 @@
   </div>
 </header>
 
-<main>
+<main id="main">
 
   <div class="case-header">
     <a href="../index.html#projects" class="back-link">← 返回作品集</a>
@@ -126,7 +129,7 @@
         </tbody>
       </table>
     </div>
-    <img class="case-banner-photo" src="../assets/familyflow/scenario-photo.jpg" alt="一家人在厨房用 FamilyFlow 查看当天日程与任务">
+    <img fetchpriority="high" width="1672" height="941" class="case-banner-photo" src="../assets/familyflow/scenario-photo.jpg" alt="一家人在厨房用 FamilyFlow 查看当天日程与任务">
   </section>
 
   <section class="case-section wide">
@@ -142,28 +145,28 @@
         <tbody>
           <tr>
             <td class="competitor-table-name"><div class="competitor-name-inner">
-              <img src="../assets/familyflow/logos/cozi.png?v=2" alt="Cozi Family Organizer logo">
+              <img loading="lazy" decoding="async" width="256" height="256" src="../assets/familyflow/logos/cozi.png?v=2" alt="Cozi Family Organizer logo">
               <span>Cozi Family Organizer</span>
             </div></td>
             <td>家庭场景定位清晰，日历、任务和购物清单集中在同一产品里，功能结构完整。</td>
           </tr>
           <tr>
             <td class="competitor-table-name"><div class="competitor-name-inner">
-              <img src="../assets/familyflow/logos/familywall.png?v=2" alt="FamilyWall logo">
+              <img loading="lazy" decoding="async" width="256" height="256" src="../assets/familyflow/logos/familywall.png?v=2" alt="FamilyWall logo">
               <span>FamilyWall</span>
             </div></td>
-            <td>围绕"家庭中心"的概念展开，把日程管理和家庭协作绑定在一起，鼓励全家共同参与。</td>
+            <td>围绕“家庭中心”的概念展开，把日程管理和家庭协作绑定在一起，鼓励全家共同参与。</td>
           </tr>
           <tr>
             <td class="competitor-table-name"><div class="competitor-name-inner">
-              <img src="../assets/familyflow/logos/timetree.png?v=2" alt="TimeTree logo">
+              <img loading="lazy" decoding="async" width="256" height="256" src="../assets/familyflow/logos/timetree.png?v=2" alt="TimeTree logo">
               <span>TimeTree</span>
             </div></td>
             <td>体验足够轻量，围绕具体日程展开沟通，减少了日程和聊天工具之间来回切换的成本。</td>
           </tr>
           <tr>
             <td class="competitor-table-name"><div class="competitor-name-inner">
-              <img src="../assets/familyflow/logos/apple-calendar.png?v=2" alt="Apple Calendar logo">
+              <img loading="lazy" decoding="async" width="256" height="256" src="../assets/familyflow/logos/apple-calendar.png?v=2" alt="Apple Calendar logo">
               <span>Apple Calendar</span>
             </div></td>
             <td>交互成熟简洁，创建和查看日程的效率很高，几乎没有额外的学习成本。</td>
@@ -193,7 +196,7 @@
       </ul>
       <div class="goal-visual" id="goalVisual">
         <div class="goal-visual-inner" id="goalVisualInner">
-          <img src="../assets/familyflow/hero-duo-mockup.png" alt="FamilyFlow 引导页与首页界面展示">
+          <img loading="lazy" decoding="async" width="1080" height="1096" src="../assets/familyflow/hero-duo-mockup.png" alt="FamilyFlow 引导页与首页界面展示">
         </div>
       </div>
     </div>
@@ -203,7 +206,7 @@
     <h2>设计实施</h2>
 
     <h3>设计策略</h3>
-    <p>围绕"信息集中—成员可视化—责任明确—变更同步—降低门槛"五个方向，把设计目标落到具体的产品结构上。</p>
+    <p>围绕“信息集中—成员可视化—责任明确—变更同步—降低门槛”五个方向，把设计目标落到具体的产品结构上。</p>
     <div class="strategy-flow">
       <div class="strategy-node">
         <span class="strategy-icon-circle">🗂️</span>
@@ -319,7 +322,7 @@
 <script>
   // "设计目标" phone mockup -- mouse-driven 3D tilt layered on top of the
   // CSS float animation (see .goal-visual-inner / @keyframes goal-float in
-  // project.css). The float animation lives on the <img> itself; this
+  // project.css). The float animation lives on the <img loading="lazy" decoding="async"> itself; this
   // script only ever touches the wrapping .goal-visual-inner, so the two
   // transforms compose instead of fighting over the same element.
   (function () {

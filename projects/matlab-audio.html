@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101114" media="(prefers-color-scheme: dark)">
 <title>Multi-Effect Audio Processor | 作品集 · 韦旻昕</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/style.css?v=53">
-<link rel="stylesheet" href="../css/project.css?v=61">
+<link rel="stylesheet" href="../css/style.css?v=60">
+<link rel="stylesheet" href="../css/project.css?v=100">
 </head>
 <body class="proto-fonts">
+  <a class="skip-link" href="#main">跳到主要内容</a>
 
 <header class="nav">
   <div class="nav-inner">
@@ -26,7 +29,7 @@
   </div>
 </header>
 
-<main>
+<main id="main">
 
   <div class="case-header">
     <a href="../index.html#projects" class="back-link">← 返回作品集</a>
@@ -65,7 +68,7 @@
       输入音频依次经过六个处理阶段：预处理归一化，将信号幅度缩放到 ±1.0；FIR 滤波/EQ，
       用 512 阶 fir1 设计低通或高通滤波器；反馈延迟，把延迟时间换算成采样点数
       （delaySamples = round(delayTime × fs)）后写入未来的采样位置；卷积混响，用白噪声
-      乘以指数衰减曲线生成一段"人工冲激响应"，再与原始信号做卷积；湿/干混合，按
+      乘以指数衰减曲线生成一段“人工冲激响应”，再与原始信号做卷积；湿/干混合，按
       output = (1 − mix) × dry + mix × wet 线性叠加处理前后的信号；最后再做一次归一化，
       避免削波。
     </p>
@@ -100,7 +103,7 @@ y = filter(b, 1, x);</code></pre>
     <h3>混响</h3>
     <p>
       混响不是调用现成的库函数，而是自己实现的简化卷积混响：用白噪声乘以一条
-      指数衰减曲线，模拟出一段"人工冲激响应"，再把它和输入信号做卷积，得到
+      指数衰减曲线，模拟出一段“人工冲激响应”，再把它和输入信号做卷积，得到
       拖尾的混响尾音：
     </p>
     <pre class="code-block"><code>decay_curve = factor_value .^ (-t / samples);   % 指数衰减曲线
@@ -116,7 +119,7 @@ outsig = conv(insig, decaying_noise);           % 卷积</code></pre>
       湿干比等参数，处理完成后可以直接对比处理前后的波形并播放/导出。
     </p>
     <div class="app-shot">
-      <img src="../assets/matlab-audio/app-screenshot.png" alt="Multi-Effect Audio Processor App Designer 界面截图">
+      <img fetchpriority="high" width="1385" height="1253" src="../assets/matlab-audio/app-screenshot.png" alt="Multi-Effect Audio Processor App Designer 界面截图">
     </div>
   </section>
 

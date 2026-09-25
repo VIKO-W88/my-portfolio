@@ -1,9 +1,58 @@
+/* ==========================================================================
+   Design tokens (Web Interface Guidelines pass, 2026-09-25)
+   --------------------------------------------------------------------------
+   Type scale  -- 9 steps on a 16px base. Every font-size in style.css and
+                  project.css maps onto one of these (was 37 ad-hoc values,
+                  several below 12px). 12px is the floor for any text.
+   Spacing     -- 4px grid. Every margin/padding/gap is a multiple of 4
+                  (1–2px hairlines excepted). Scale tokens below for new work.
+   Line-height -- headings 1.25, UI text 1.4, body copy 1.6–1.7 (CJK).
+   Weights     -- 400 / 500 / 600 / 700 only.
+   Color       -- every text/background pair meets WCAG AA (4.5:1 body,
+                  3:1 for ≥24px or ≥18.7px bold) in light AND dark mode.
+   ========================================================================== */
 :root {
+  --fs-xs: 0.75rem;   /* 12px  caption, tag, label        */
+  --fs-sm: 0.875rem;  /* 14px  secondary / meta text       */
+  --fs-base: 1rem;    /* 16px  body                        */
+  --fs-md: 1.125rem;  /* 18px  lead, card title            */
+  --fs-lg: 1.25rem;   /* 20px  h4                          */
+  --fs-xl: 1.5rem;    /* 24px  h3                          */
+  --fs-2xl: 1.875rem; /* 30px  h2                          */
+  --fs-3xl: 2.25rem;  /* 36px  section title               */
+  --fs-4xl: 3rem;     /* 48px  page title                  */
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  --lh-heading: 1.25;
+  --lh-ui: 1.4;
+  --lh-body: 1.6;
+
   --bg: #ffffff;
   --bg-alt: #f7f7f9;
   --text: #1a1a1a;
   --text-muted: #6b6b76;
-  --accent: #5369f8;
+  /* Was #5369f8 (4.43:1 on white -- just under AA). Same hue, one step
+     deeper: 5.02:1 on white, 4.69:1 on --bg-alt, and white text on it
+     passes too (buttons, numbered badges). */
+  --accent: #4a5ff0;
+  /* Decorative numerals ("01", "02"…) used to be --accent at 45% opacity
+     (1.8:1). This lighter solid tint keeps them visually secondary while
+     clearing the 3:1 large-text minimum. */
+  --accent-soft: #7182f2;
+  /* Accent that stays readable on an always-white surface (e.g. the white
+     CTA pill), regardless of theme. */
+  --accent-on-white: #4a5ff0;
   --accent-contrast: #ffffff;
   /* Quiet rule/underline color -- a soft, low-opacity tint of --accent used
      for secondary lines (the hero link's underline) so they read as a
@@ -47,6 +96,7 @@
   --text: #f0f0f2;
   --text-muted: #9a9aa4;
   --accent: #6d85ff;
+  --accent-soft: #4f63c9;
   --accent-contrast: #101114;
   --border: #26272c;
   --card-bg: #17181c;
@@ -60,6 +110,61 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Headings: tighter leading than body copy and balanced line breaks, so a
+   title never ends with one orphaned word/character. Zero-specificity
+   :where() so every existing component rule still wins. */
+:where(h1, h2, h3, h4, h5, h6) {
+  line-height: var(--lh-heading);
+  text-wrap: balance;
+}
+:where(p, li, figcaption, blockquote) {
+  text-wrap: pretty;
+}
+/* Images carry width/height attributes (reserves space, no layout shift);
+   keep their aspect ratio whenever CSS sizes only one dimension. */
+:where(img[width][height]) {
+  height: auto;
+}
+/* Tabular figures anywhere numbers sit in columns. */
+:where(table, .bm-stat-pct, .timeline-date) {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Visible keyboard focus on every interactive element (mouse clicks don't
+   trigger it -- :focus-visible only). */
+:where(a, button, [role="button"], input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Skip link: first tab stop on every page, hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 1000;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.skip-link:focus-visible {
+  top: 16px;
+}
+
+button, a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -69,8 +174,8 @@ body {
     "Microsoft YaHei", sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
-  transition: background 0.3s ease, color 0.3s ease;
+  line-height: var(--lh-body);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -150,7 +255,7 @@ ul {
   /* 600 -- Noto Sans SC's semibold cut reads closer to a wordmark at this
      size than its regular weight, which looked thin here. */
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: var(--fs-xl);
   /* Left edge locked to .hero-text's own left edge ("VIKO"), at every
      viewport width -- not just approximately, exactly, per feedback
      ("垂直线左对齐"). .hero-text is positioned inside .hero-inner, which
@@ -206,7 +311,7 @@ ul {
   position: relative;
   /* Slightly larger than before (was 0.95rem) -- still a quiet nav label,
      just a touch more present. */
-  font-size: 1.05rem;
+  font-size: var(--fs-md);
   /* Pulled onto the same Noto Sans SC used by the logo/hero/section
      titles -- these were previously unstyled (plain body system-sans),
      which is close to Noto Sans SC but not the same face, so "关于我" /
@@ -371,9 +476,9 @@ ul {
   /* 600 -- Noto Sans SC's semibold cut, now that the display face has a
      real weight axis instead of Permanent Marker's single cut. */
   font-weight: 600;
-  margin: 0 0 30px;
+  margin: 0 0 32px;
   letter-spacing: 0.06em;
-  font-size: 1.1rem;
+  font-size: var(--fs-md);
 }
 
 .hero-eyebrow::before {
@@ -396,27 +501,27 @@ ul {
   margin: 0 0 20px;
   /* 900 -- Noto Sans SC's black cut, for a wordmark this size; Permanent
      Marker had no bold of its own so this used to sit at 400. */
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--title-color);
 }
 
 .hero-tagline {
-  font-size: 1.1rem;
+  font-size: var(--fs-md);
   color: rgba(255, 255, 255, 0.88);
-  margin: 0 0 26px;
+  margin: 0 0 28px;
   line-height: 1.5;
 }
 
 .hero-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-family: var(--title-font);
   /* 600 -- matches .hero-eyebrow's weight now that Noto Sans SC gives us
      a real semibold cut instead of Permanent Marker's single weight. */
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: var(--fs-md);
   color: var(--accent);
   position: relative;
   border-bottom: none;
@@ -447,7 +552,7 @@ ul {
    weight stays exactly as at rest instead of the whole control lighting
    up, per the "not a button" direction. */
 .hero-link:hover {
-  gap: 11px;
+  gap: 12px;
 }
 
 /* Illustration fills the entire hero -- the main visual, not a column
@@ -742,10 +847,10 @@ ul {
 }
 
 .btn {
-  padding: 12px 26px;
+  padding: 12px 28px;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: var(--fs-base);
   border: 1px solid transparent;
   transition: transform 0.15s ease, opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
   display: inline-block;
@@ -818,7 +923,7 @@ ul {
 
 .intro-name {
   font-family: var(--name-font);
-  font-size: clamp(1.6rem, 5vw, 2.8rem);
+  font-size: clamp(var(--fs-xl), 5vw, var(--fs-4xl));
   font-weight: 600;
   letter-spacing: 0.02em;
   color: #fff;
@@ -945,7 +1050,7 @@ body.has-custom-cursor button {
 
 /* Sections */
 .section {
-  padding: 90px 24px;
+  padding: 92px 24px;
   max-width: var(--max-width);
   margin: 0 auto;
   scroll-margin-top: 84px;
@@ -964,7 +1069,7 @@ body.has-custom-cursor button {
 
 .section-title {
   font-family: var(--title-font);
-  font-size: 2.3rem;
+  font-size: var(--fs-3xl);
   /* 700 -- back to a real bold now that Noto Sans SC has its own bold
      cut (used to sit at 400 because the brush font had none, and a heavy
      weight there just triggered faux-bold). */
@@ -996,7 +1101,7 @@ body.has-custom-cursor button {
    it, per feedback ("整个Hero内容没有占满首屏...Hero高度calc(100vh-navbar高度)"). */
 .about-section {
   max-width: 1420px;
-  padding: 40px 70px 60px;
+  padding: 40px 72px 60px;
   min-height: calc(100vh - 69px);
   display: flex;
   align-items: center;
@@ -1020,7 +1125,7 @@ body.has-custom-cursor button {
   /* Nudged up and left per feedback ("文字区也往上移往左移") --
      supersedes the earlier downward nudge. */
   margin-top: -80px;
-  margin-left: -30px;
+  margin-left: -32px;
 }
 
 .about-eyebrow {
@@ -1034,7 +1139,7 @@ body.has-custom-cursor button {
   font-family: var(--title-font);
   font-weight: 600;
   letter-spacing: 0.06em;
-  font-size: 1.1rem;
+  font-size: var(--fs-md);
   margin: 0 0 16px;
 }
 
@@ -1054,20 +1159,20 @@ body.has-custom-cursor button {
      between title and body) was removed -- title and body need their
      own breathing room now. */
   font-family: var(--title-font);
-  font-size: 2.6rem;
+  font-size: var(--fs-3xl);
   font-weight: 700;
   margin: 0 0 28px;
   color: var(--title-color);
   letter-spacing: 0.02em;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 
 .about-subtitle {
-  font-size: 1.2rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   color: var(--text);
-  margin: 0 0 22px;
+  margin: 0 0 24px;
 }
 
 .about-body {
@@ -1076,13 +1181,13 @@ body.has-custom-cursor button {
 
 .about-text {
   color: var(--text-muted);
-  font-size: 1.05rem;
+  font-size: var(--fs-md);
   line-height: 1.7;
   margin: 0;
 }
 
 .about-text + .about-text {
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 .about-text strong {
@@ -1301,7 +1406,7 @@ body.has-custom-cursor button {
      content. Falls back to the shared .section's own padding/height. */
   .about-section {
     max-width: var(--max-width);
-    padding: 90px 24px;
+    padding: 92px 24px;
     min-height: 0;
     display: block;
   }
@@ -1378,14 +1483,14 @@ body.has-custom-cursor button {
 }
 
 .skill-card h3 {
-  margin: 0 0 10px;
-  font-size: 1.1rem;
+  margin: 0 0 12px;
+  font-size: var(--fs-md);
 }
 
 .skill-card p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: var(--fs-base);
 }
 
 /* Wider than the site's normal 1080px content column -- at that width
@@ -1397,6 +1502,41 @@ body.has-custom-cursor button {
   max-width: 1600px;
 }
 
+/* Sub-headings for the two carousels the projects row was split into
+   ("精选项目" / "更多项目"). First pass used an ad-hoc small gray label
+   (wrong font/color/size, no gap before the cards, per feedback) --
+   switched to the site's own established "eyebrow" pattern instead
+   (see .hero-eyebrow / .about-eyebrow above: accent-colored, semibold,
+   a short flanking rule), centered with a rule on each side since this
+   section is centered rather than a left-aligned text column like
+   those two, plus real margin-bottom so it doesn't sit flush against
+   the carousel below it. */
+.projects-group-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--accent);
+  font-family: var(--title-font);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-size: var(--fs-md);
+  margin: 0 0 20px;
+}
+
+.projects-group-title::before,
+.projects-group-title::after {
+  content: "";
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+.projects-group-title-more {
+  margin-top: 120px;
+}
+
 /* Projects — centered "coverflow" carousel: cards nearest the row's
    center are scaled up by main.js (--focus-scale custom property based on
    distance from center), tapering down sharply toward the edges (see
@@ -1405,10 +1545,10 @@ body.has-custom-cursor button {
 .projects-grid {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 24px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 34px max(24px, calc(50% - 150px)) 40px;
+  padding: 36px max(24px, calc(50% - 152px)) 40px;
   scroll-snap-type: x proximity;
   scroll-padding-inline: max(24px, calc(50% - 150px));
   cursor: grab;
@@ -1525,7 +1665,7 @@ body.has-custom-cursor button {
      scale 0.75 it pulls in 150px * 0.25 = 37.5px per side), so the row's
      22px gap reads as the same visual gap everywhere regardless of any
      card's current scale. */
-  margin-inline: calc((var(--focus-scale, 1) - 1) * 150px);
+  margin-inline: calc((var(--focus-scale, 1) - 1) * 152px);
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), margin 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
 }
 
@@ -1553,14 +1693,14 @@ body.has-custom-cursor button {
   right: 14px;
   bottom: 14px;
   z-index: 1;
-  padding: 11px 18px;
+  padding: 12px 20px;
   border-radius: 999px;
-  background: rgba(20, 20, 26, 0.55);
+  background: rgba(20, 20, 26, 0.72);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: #fff;
   font-weight: 700;
-  font-size: 0.98rem;
+  font-size: var(--fs-base);
   line-height: 1.3;
   text-align: center;
   pointer-events: none;
@@ -1599,7 +1739,7 @@ body.has-custom-cursor button {
 
 .placeholder-icon {
   font-size: 2.5rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--border);
   line-height: 1;
 }
@@ -1607,7 +1747,7 @@ body.has-custom-cursor button {
 .placeholder-label {
   color: var(--text-muted);
   font-weight: 700;
-  font-size: 0.98rem;
+  font-size: var(--fs-base);
 }
 
 /* Timeline */
@@ -1641,19 +1781,19 @@ body.has-custom-cursor button {
 .timeline-date {
   color: var(--accent);
   font-weight: 600;
-  font-size: 0.85rem;
-  margin-bottom: 6px;
+  font-size: var(--fs-sm);
+  margin-bottom: 8px;
 }
 
 .timeline-content h3 {
-  margin: 0 0 6px;
-  font-size: 1.05rem;
+  margin: 0 0 8px;
+  font-size: var(--fs-md);
 }
 
 .timeline-content p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: var(--fs-base);
 }
 
 /* Contact */
@@ -1668,18 +1808,18 @@ body.has-custom-cursor button {
 
 .contact-links {
   display: flex;
-  gap: 18px;
+  gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .contact-link {
-  padding: 12px 22px;
+  padding: 12px 24px;
   border: 1px solid var(--border);
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-size: var(--fs-sm);
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .contact-link:hover {
@@ -1693,7 +1833,7 @@ body.has-custom-cursor button {
   text-align: center;
   padding: 32px 24px;
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   border-top: 1px solid var(--border);
 }
 
@@ -1805,4 +1945,694 @@ body.has-custom-cursor button {
   .splash-reveal {
     display: none;
   }
+}
+
+/* ==========================================================================
+   "更多项目" perspective carousel (vanilla port of VengeanceUI
+   PerspectiveCarousel). Geometry comes from js/perspective-carousel.js via
+   --pc-w / --pc-rot / --pc-scale; the easing below stands in for the
+   original's framer-motion spring (bounce 0.14, 0.9s).
+   ========================================================================== */
+.pc {
+  --pc-ease: cubic-bezier(0.34, 1.18, 0.64, 1);
+  --pc-dur: 0.9s;
+  position: relative;
+  isolation: isolate;
+  height: calc(var(--pc-w, 300px) * 4 / 3 + 120px);
+  margin: 0 auto;
+  overflow: hidden;
+  outline-offset: 8px;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.pc-viewport {
+  position: absolute;
+  inset: 0 0 64px;
+  perspective: 1200px;
+}
+
+.pc-track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: transform var(--pc-dur) var(--pc-ease);
+}
+
+.pc-slide {
+  flex: 0 0 auto;
+  width: var(--pc-w, 300px);
+  perspective: 1200px;
+}
+
+.pc-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--pc-rot, 0deg)) scale(var(--pc-scale, 1));
+  transition: transform var(--pc-dur) var(--pc-ease);
+  will-change: transform;
+}
+
+.pc-hit {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(20, 20, 26, 0.18);
+  /* Cards turned past 90deg would show their mirrored back -- hide it. */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.pc-hit img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.pc-label {
+  color: var(--text);
+  font-family: var(--title-font);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  filter: blur(2px);
+  transition: opacity var(--pc-dur) var(--pc-ease), filter var(--pc-dur) var(--pc-ease), color 0.2s ease;
+}
+
+.pc-slide.is-active .pc-label {
+  opacity: 1;
+  filter: blur(0);
+}
+
+.pc-label:hover {
+  color: var(--accent);
+}
+
+.pc-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-alt) 80%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--text);
+  transform: translateX(-50%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.pc-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.pc-arrow:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+.pc-arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pc-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pc-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.3;
+  cursor: pointer;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.pc-dot[aria-current="true"] {
+  width: 28px;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-track,
+  .pc-card,
+  .pc-label {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* ==========================================================================
+   Projects as two full-screen "pages": 精选项目 and 更多项目 each fill the
+   viewport instead of stacking as two rows on one screen.
+   ========================================================================== */
+.projects-page {
+  min-height: calc(100svh - var(--nav-h, 69px)); /* viewport minus the fixed nav */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 0;
+  scroll-margin-top: 0;
+}
+
+.projects-group-title-more {
+  margin-top: 0;
+}
+
+.projects-page .projects-group-title {
+  margin-bottom: 40px;
+}
+
+/* 精选项目 -- four-card row after driftime.com. Wider than the 1080px text
+   column so the cards get room; the hovered card grows, the rest give way. */
+.projects-page-featured {
+  width: min(1440px, calc(100vw - 48px));
+  margin-left: calc(50% - min(720px, 50vw - 24px));
+}
+
+.feature-row {
+  --feature-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  display: flex;
+  gap: 16px;
+  height: clamp(240px, 40vh, 400px); /* 2/3 of the original 360/60vh/600 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-card {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-alt);
+  transition: flex-grow 0.6s var(--feature-ease);
+}
+
+.feature-card a {
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: #fff;
+}
+
+.feature-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 0.8s var(--feature-ease);
+}
+
+/* Dim + bottom gradient, shown on hover so the white text always clears
+   AA contrast whatever the artwork underneath. */
+.feature-card a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(10, 10, 14, 0.78), rgba(10, 10, 14, 0) 55%),
+    rgba(10, 10, 14, 0.28);
+  opacity: 0;
+  transition: opacity 0.5s var(--feature-ease);
+}
+
+.feature-meta {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px 16px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s var(--feature-ease), transform 0.5s var(--feature-ease);
+}
+
+.feature-name {
+  font-family: var(--title-font);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: var(--lh-heading);
+}
+
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feature-tags span {
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Active card: hover (pointer devices) or keyboard focus. */
+@media (hover: hover) {
+  .feature-card:hover {
+    flex-grow: 1.45;
+  }
+}
+.feature-card:focus-within {
+  flex-grow: 1.45;
+}
+.feature-card:hover img,
+.feature-card:focus-within img {
+  transform: scale(1);
+}
+.feature-card:hover a::after,
+.feature-card:focus-within a::after,
+.feature-card:hover .feature-meta,
+.feature-card:focus-within .feature-meta {
+  opacity: 1;
+  transform: none;
+}
+.feature-card a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* Touch screens have no hover: keep names visible. */
+@media (hover: none) {
+  .feature-card a::after,
+  .feature-meta {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Tablet/phone: 2x2 grid, names always visible. */
+@media (max-width: 760px) {
+  .projects-page-featured {
+    width: auto;
+    margin-left: 0;
+  }
+  .feature-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: auto;
+    gap: 12px;
+  }
+  .feature-card {
+    aspect-ratio: 9 / 8; /* 2/3 the height of the original 3:4 */
+  }
+  .feature-card a::after,
+  .feature-meta {
+    opacity: 1;
+    transform: none;
+  }
+  .feature-meta {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+  .feature-name {
+    font-size: var(--fs-sm);
+  }
+  .feature-tags {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-card,
+  .feature-card img,
+  .feature-card a::after,
+  .feature-meta {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* The two project "pages" handle their own vertical rhythm. */
+#projects {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+/* Heading rhythm, same on both project pages:
+     title -> subtitle   8px   (one heading group -- proximity)
+     heading -> content 48px   (--space-12)
+   The perspective carousel already has ~24px of built-in space above
+   its centered card, so its label only needs 24px of margin to land on
+   the same 48px. */
+.projects-page-featured .section-title {
+  margin-bottom: var(--space-2);
+}
+.projects-page .projects-group-title {
+  margin-bottom: var(--space-12);
+}
+.projects-page-more .projects-group-title {
+  margin-bottom: var(--space-6);
+}
+/* .pc centers itself with auto margins, which in a flex column shrink it
+   to its (absolutely positioned) content -- i.e. zero. Stretch it. */
+.projects-page .pc {
+  width: 100%;
+}
+
+/* ==========================================================================
+   Home page: four "pages" (关于我 / 精选项目 / 更多项目 / 联系方式)
+   --------------------------------------------------------------------------
+   Layout after driftime.com: each page is a full-viewport, full-bleed
+   colour field with a left-aligned display title. Everything below is
+   shared by all four, so no page can drift to a different size/position:
+     - same frame: left/right edge on the site's existing 7vw line (the
+       line .logo and .hero-text already sit on), same top offset
+     - same eyebrow (.page-eyebrow) and title (.page-title), one size each
+     - same eyebrow->title 12px, title->content 48px
+   Colours: four light fields, hues ≥36° apart (rose 335°, sky 206°,
+   lavender 252°, aqua 170°) so neighbouring pages never look alike. Text
+   is the same deep indigo on all four: 12.7–13.8:1 for titles, ≥6.2:1 for
+   secondary text, ≥4.9:1 for the accent -- AA everywhere. The fields are
+   the same in light and dark mode (they ARE the design); the theme toggle
+   still drives the nav, hero and footer.
+   ========================================================================== */
+#about,
+.projects-page-featured,
+.projects-page-more,
+#contact {
+  --page-gutter: max(24px, 7vw);
+  --text: #1c1a3f;
+  --text-muted: #4f4d66;
+  --title-color: #1c1a3f;
+  --accent: #3f4fd6;
+  --accent-soft: #6b76e0;
+  --border: color-mix(in srgb, #1c1a3f 16%, transparent);
+  --bg-alt: color-mix(in srgb, #ffffff 55%, var(--page-bg));
+  --card-bg: color-mix(in srgb, #ffffff 70%, var(--page-bg));
+  background: var(--page-bg);
+  color: var(--text);
+  /* full-bleed: break out of the centred .section column */
+  width: 100vw;
+  max-width: none;
+  margin: 0 0 0 calc(50% - 50vw);
+  min-height: calc(100svh - var(--nav-h, 69px));
+  padding: 96px var(--page-gutter) 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  text-align: left;
+}
+
+#about { --page-bg: #d2f1ec; }                 /* 湖水青 */
+.projects-page-featured { --page-bg: #f9dce8; }  /* 玫瑰粉 */
+.projects-page-more { --page-bg: #d4eafb; }      /* 天空蓝 */
+#contact { --page-bg: #e4defb; }                 /* 薰衣草紫 */
+
+/* The #projects wrapper just stacks its two pages. */
+#projects {
+  max-width: none;
+  padding: 0;
+}
+
+/* Shared eyebrow + title -- identical on all four pages. */
+.page-eyebrow {
+  margin: 0 0 12px;
+  color: var(--text-muted);
+  font-family: var(--title-font);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.page-title {
+  margin: 0 0 48px;
+  color: var(--text);
+  font-family: var(--title-font);
+  font-size: clamp(var(--fs-4xl), 6vw, 4.5rem); /* 48 → 72px, same on every page */
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+/* 关于我: drop the old centring/nudges so it sits on the shared frame. */
+#about .about-layout {
+  align-items: flex-start;
+  margin: 0;
+}
+#about .about-copy {
+  margin: 0;
+  text-align: left; /* an older mobile rule centred this page only */
+  align-items: flex-start;
+}
+#about .about-text {
+  color: var(--text);
+}
+
+/* 精选项目: the card row now spans the page frame. */
+.projects-page-featured .feature-row {
+  width: 100%;
+}
+
+/* 更多项目: label under the active card + controls pick up page colours. */
+.projects-page-more .pc-label {
+  color: var(--text);
+}
+
+/* 联系方式 */
+#contact .contact-text {
+  margin: -24px 0 24px; /* sits 24px under the title, like a subtitle */
+}
+#contact .contact-links {
+  justify-content: flex-start;
+}
+#contact .contact-link {
+  background: var(--card-bg);
+}
+
+@media (max-width: 760px) {
+  #about,
+  .projects-page-featured,
+  .projects-page-more,
+  #contact {
+    padding-top: 64px;
+    padding-bottom: 48px;
+  }
+  .page-title {
+    margin-bottom: 32px;
+  }
+}
+
+/* 作品集 pages: the title keeps its shared position (same as 关于我/联系方式);
+   the card module itself is centred in the space left below the title,
+   instead of hugging the title and leaving the lower half of the page
+   empty. Auto margins on a flex-column child split the free space. */
+.projects-page-featured .feature-row,
+.projects-page-more .pc {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.projects-page .page-title {
+  margin-bottom: 48px; /* minimum gap if the page is short */
+}
+
+/* Home page only (<html class="snap-pages">): when scrolling stops
+   between two pages, the browser settles on the nearest one, aligned
+   under the 69px fixed nav, never leaving a half-and-half view.
+   - mandatory on desktop/tablet: every stop lands on a page
+   - proximity on phones: pages there can be taller than the screen
+     (关于我's text + illustration), and mandatory snapping would make it
+     hard to read the middle of a long page
+   - the footer snaps to the bottom so the last page's end is reachable */
+html.snap-pages {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: var(--nav-h, 69px);
+}
+@media (max-width: 760px) {
+  html.snap-pages {
+    scroll-snap-type: y proximity;
+  }
+}
+html.snap-pages .hero,
+html.snap-pages #about,
+html.snap-pages .projects-page-featured,
+html.snap-pages .projects-page-more,
+html.snap-pages #contact {
+  scroll-snap-align: start;
+}
+/* Last stop = 联系方式 + footer together on one screen: the footer gets a
+   fixed height and 联系方式 gives up exactly that much, so the page and
+   the footer fill the viewport and the final snap lines up cleanly. */
+html.snap-pages .footer {
+  height: 96px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+html.snap-pages .footer p {
+  margin: 0;
+}
+html.snap-pages #contact {
+  min-height: calc(100svh - var(--nav-h, 69px) - 96px);
+}
+
+
+/* Snap targets align purely via html's scroll-padding-top (= the real nav
+   height). The .section rule's old scroll-margin-top: 84px was being
+   added on top, which made both snapping and nav-link jumps stop short
+   and show a strip of the previous page's colour. */
+html.snap-pages .hero,
+html.snap-pages #about,
+html.snap-pages #projects,
+html.snap-pages .projects-page,
+html.snap-pages #contact {
+  scroll-margin-top: 0;
+}
+
+/* One colour block per screen, on any window height: vertical padding
+   and the 精选项目 card row scale with the viewport height (same values on
+   all four pages, so titles still line up page to page), so no page is
+   ever taller than the screen and the next page's colour never shows. */
+#about,
+.projects-page-featured,
+.projects-page-more,
+#contact {
+  padding-top: clamp(32px, 10svh, 96px);
+  padding-bottom: clamp(24px, 7svh, 64px);
+}
+.page-title {
+  margin-bottom: clamp(24px, 5svh, 48px);
+}
+.projects-page-featured .feature-row {
+  /* space left after nav + padding + eyebrow + title ≈ 100svh - nav - 17svh - 140px */
+  height: clamp(160px, min(40vh, 100svh - var(--nav-h, 69px) - 22svh - 150px), 400px);
+}
+
+/* Body copy: one size on all four pages (关于我 was 18px, 联系方式 16px). */
+#about .about-text,
+#contact .contact-text {
+  font-size: var(--fs-base);
+  line-height: 1.7;
+}
+/* Medium-width desktops: give 关于我's text a wider column so it wraps
+   into fewer lines and the page still fits one screen. */
+@media (min-width: 901px) and (max-width: 1200px) {
+  #about .about-copy {
+    flex: 0 1 460px;
+  }
+  #about .about-layout {
+    gap: 48px;
+  }
+}
+/* Short windows: cap the illustration by height as well as width. */
+#about .about-scene {
+  max-height: calc(100svh - var(--nav-h, 69px) - 22svh - 100px);
+}
+/* Title scales with width AND height (short laptop windows), still one
+   shared value for all four pages. 72px max, 36px min. */
+.page-title {
+  font-size: clamp(2.25rem, min(6vw, 8svh), 4.5rem);
+}
+
+/* Title colour follows its page's colour block -- option E: a vivid,
+   saturated version of that page's own hue (not a near-black shade), so
+   each title reads as the page's colour turned up. Large bold titles need
+   3:1 (WCAG AA large text); all clear it. The eyebrow is small text, so
+   it uses a slightly deeper step of the same colour to reach ≥5:1.
+     关于我   aqua     title #08806f 4.1:1  eyebrow #076f61 5.1:1
+     精选项目 rose     title #cc1f63 4.2:1  eyebrow #b41b57 5.1:1
+     更多项目 sky      title #1a63c7 4.6:1  eyebrow #195ebd 5.0:1
+     联系方式 lavender title #6435d0 5.5:1  eyebrow #6435d0 5.5:1 */
+#about                  { --page-title: #08806f; --page-eyebrow: #076f61; }
+.projects-page-featured { --page-title: #cc1f63; --page-eyebrow: #b41b57; }
+.projects-page-more     { --page-title: #1a63c7; --page-eyebrow: #195ebd; }
+#contact                { --page-title: #6435d0; --page-eyebrow: #6435d0; }
+.page-title   { color: var(--page-title, var(--text)); }
+.page-eyebrow { color: var(--page-eyebrow, var(--text-muted)); }
+
+/* Title -> content gap, identical on all four pages (was 45–48px, read as
+   cramped under a 72px title). ≈ one title-height of air: 72px on a
+   900px-tall window, shrinking to 32px on short ones so pages still fit
+   one screen. 联系方式's subtitle no longer tucks up under the title --
+   it's content like 关于我's paragraphs, so it gets the same gap. */
+/* 900px-tall window → 72px; 570px → 32px; never above 80px. */
+.page-title,
+.projects-page .page-title {
+  margin-bottom: clamp(24px, calc(12svh - 36px), 80px);
+}
+#contact .contact-text {
+  margin: 0 0 24px;
+}
+
+/* 关于我 uses the same structure as the other pages: eyebrow + title sit
+   at the shared top position, and the content (text + illustration) is
+   one block centred in the space below it -- so the free space splits
+   evenly above and below instead of pooling at the bottom. Text and
+   illustration are centred on each other. */
+#about .about-layout {
+  /* Fill all the space under the title: text pinned top-left, the
+     illustration anchored bottom-right -- a diagonal composition that
+     uses the whole page instead of leaving the bottom empty. */
+  flex: 1 1 auto;
+  margin: 0;
+  align-items: stretch;
+  justify-content: space-between;
+}
+#about .about-copy {
+  align-self: flex-start;
+}
+#about .about-scene {
+  align-self: flex-end;
+  /* Scale by height too (keeps its 680:520 shape, never squashed), so
+     the page always fits one screen: ≈ the height left under the title. */
+  max-height: none;
+  max-width: min(760px, calc((62svh - var(--nav-h, 69px)) * 680 / 520));
+}
+
+/* 关于我 illustration: ~15% larger as one group, grown from its
+   bottom-right anchor (visual scale only -- the layout box, page height
+   and one-screen fit are unchanged; it grows into the empty space to the
+   upper-left, beside the title). */
+#about .about-scene {
+  scale: 1.15;
+  transform-origin: right bottom;
 }

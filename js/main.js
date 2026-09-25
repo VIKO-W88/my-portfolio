@@ -39,9 +39,11 @@ if (nav) {
 // closed-loop wrap so dragging past the last card cycles back to the
 // first (and back past the first cycles to the last) instead of
 // hitting a hard stop.
-const projectsGrid = document.querySelector(".projects-grid");
-
-if (projectsGrid) {
+// Split into two carousels ("精选项目" / "更多项目"), each with its own
+// prev/next buttons and closed-loop drag/coverflow behavior -- so this
+// whole setup is now a function called once per .projects-carousel
+// found on the page, instead of assuming a single global instance.
+function setupProjectsCarousel(projectsGrid, prevBtn, nextBtn) {
   // --- Closed-loop setup -------------------------------------------------
   // Clone the real card set a couple of times on either side of itself,
   // so there's always more (pixel-identical) content to scroll into.
@@ -266,9 +268,6 @@ if (projectsGrid) {
   // row scrolls, that first estimate can be a few px off; once scrolling
   // settles we re-measure and nudge the remainder. Works across the loop
   // clones, so it wraps endlessly like dragging does.
-  const prevBtn = document.getElementById("projectsPrev");
-  const nextBtn = document.getElementById("projectsNext");
-
   const cardCenterOffset = (card) => {
     const gridRect = projectsGrid.getBoundingClientRect();
     const r = card.getBoundingClientRect();
@@ -350,6 +349,14 @@ if (projectsGrid) {
     scheduleProjectFocus();
   }, 300);
 }
+
+document.querySelectorAll(".projects-carousel").forEach((carousel) => {
+  const grid = carousel.querySelector(".projects-grid");
+  if (!grid) return;
+  const prevBtn = carousel.querySelector(".projects-nav-prev");
+  const nextBtn = carousel.querySelector(".projects-nav-next");
+  setupProjectsCarousel(grid, prevBtn, nextBtn);
+});
 
 // Hero card — cursor-reactive 3D tilt + holographic sheen.
 const heroSection = document.querySelector(".hero");

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.col{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.l1{background:#1A1A18;color:#F4F4F2;border-radius:10px;padding:10px 12px;font-size:15px;font-weight:700;text-align:center}
+.l2{background:#fff;border:1.5px solid #222;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:500}
+.l3{background:#fff;border:1.5px solid #D4D4CF;border-radius:8px;padding:6px 10px;font-size:12px;color:#3A3A35;margin-left:14px}
+.vline{width:2px;height:22px;background:#222;margin:0 auto}
+.tg{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:9px;margin-left:6px;vertical-align:1px}
+.ins{background:#E0E7FF;color:#312E81}
+.act{background:#DCFCE7;color:#14532D}
+.emo{background:#FCE7F3;color:#831843}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1400px;height:1000px;box-sizing:border-box;padding:40px 48px;background:#F4F4F2;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">信息架构 · 悬浮标签栏「今日 / 摘要 / 伙伴」+ 独立录入按钮，「我的」从右上角头像进入（参考 Apple 健康、Oura）</div>
+      <h2 style="margin:6px 0 0;font-size:28px">三大功能分布在「今日 / 摘要 / 伙伴」，录入是全局动作</h2>
+    </div>
+    <div style="display:flex;gap:12px;font-size:12px;align-items:center">
+      <span><span class="tg ins" style="margin:0">数据洞察</span></span>
+      <span><span class="tg act" style="margin:0">行动引导</span></span>
+      <span><span class="tg emo" style="margin:0">情感陪伴</span></span>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;align-items:center">
+    <div style="background:#C2410C;color:#fff;border-radius:12px;padding:12px 28px;font-size:18px;font-weight:700">健康伙伴</div>
+    <div class="vline"></div>
+  </div>
+  <div style="height:2px;background:#222;margin:0 92px"></div>
+
+  <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;flex:1">
+    <div class="col">
+      <div class="vline" style="height:16px"></div>
+      <div class="l1" style="background:#fff;color:#1A1A18;border:2px dashed #222">首次引导</div>
+      <div class="l2">欢迎 · 领取种子 W01</div>
+      <div class="l2">分级授权 W02</div>
+      <div class="l3">基础：步数 / 睡眠</div>
+      <div class="l3">进阶：血糖 / 体重</div>
+      <div class="l3">AI 记忆开关</div>
+      <div class="l2">选择关注目标 W02</div>
+      <div class="l2">录入方式选择 W03</div>
+      <div style="font-size:11.5px;color:#55554F;line-height:1.6;margin-top:4px">仅首次出现；之后可在「我的」中修改</div>
+    </div>
+
+    <div class="col">
+      <div class="vline" style="height:16px"></div>
+      <div class="l1">今日</div>
+      <div class="l2">步步状态 <span class="tg emo">陪伴</span></div>
+      <div class="l2">3 天养成进度 <span class="tg act">引导</span></div>
+      <div class="l2">今日待录入 <span class="tg act">引导</span></div>
+      <div class="l3">睡眠 / 三餐 / 运动</div>
+      <div class="l2">洞察卡 <span class="tg ins">洞察</span></div>
+      <div class="l3">一句话解释</div>
+      <div class="l3">异常提醒（三级）</div>
+      <div class="l2">今日微行动 <span class="tg act">引导</span></div>
+    </div>
+
+    <div class="col">
+      <div class="vline" style="height:16px"></div>
+      <div class="l1">摘要</div>
+      <div class="l2">养成中（Day1–2）</div>
+      <div class="l3">已解锁维度预览</div>
+      <div class="l2">健康画像（Day3 后）<span class="tg ins">洞察</span></div>
+      <div class="l3">睡眠质量</div>
+      <div class="l3">饮食均衡度</div>
+      <div class="l3">运动活跃度</div>
+      <div class="l2">趋势与历史</div>
+      <div class="l2">分享画像卡 <span class="tg emo">陪伴</span></div>
+    </div>
+
+    <div class="col">
+      <div class="vline" style="height:16px"></div>
+      <div class="l1" style="background:#C2410C">＋ 录入</div>
+      <div class="l2">设备同步 W04</div>
+      <div class="l3">手表 / 手环 / 血糖仪 / 体脂秤</div>
+      <div class="l2">语音录入 W06</div>
+      <div class="l2">拍照识餐</div>
+      <div class="l2">手动输入</div>
+      <div class="l2">趣味问答 W05</div>
+      <div style="font-size:11.5px;color:#55554F;line-height:1.6;margin-top:4px">全局入口，任意页面可长按唤起语音</div>
+    </div>
+
+    <div class="col">
+      <div class="vline" style="height:16px"></div>
+      <div class="l1">伙伴</div>
+      <div class="l2">和步步对话（AI） <span class="tg emo">陪伴</span></div>
+      <div class="l3">由洞察卡带入上下文</div>
+      <div class="l2">步步小屋 / 装扮</div>
+      <div class="l2">成就与纪念卡</div>
+      <div class="l2">AI 语气：温柔 / 直接</div>
+    </div>
+
+    <div class="col">
+      <div class="vline" style="height:16px"></div>
+      <div class="l1" style="background:#fff;color:#1A1A18;border:2px solid #222">我的 · 头像入口</div>
+      <div class="l2">设备管理</div>
+      <div class="l2">数据与隐私</div>
+      <div class="l3">授权项开关</div>
+      <div class="l3">AI 记住的信息（可删）</div>
+      <div class="l3">导出 / 删除数据</div>
+      <div class="l2">提醒设置</div>
+      <div class="l3">频次 / 免打扰 / 异常提醒开关</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+    <div style="background:#fff;border:1.5px solid #222;border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.6;color:#3A3A35"><b style="color:#1A1A18">为什么录入是独立圆钮：</b>前 3 天的核心任务就是录入。参考 Oura 与 Lingo，把「+」从标签中拆出，放在拇指热区，长按直接语音。</div>
+    <div style="background:#fff;border:1.5px solid #222;border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.6;color:#3A3A35"><b style="color:#1A1A18">为什么「摘要」不在 Day3 才出现：</b>Day1 起就以「养成中」的形态可见，每天解锁一个维度，制造期待。</div>
+    <div style="background:#fff;border:1.5px solid #222;border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.6;color:#3A3A35"><b style="color:#1A1A18">异常提醒放在哪：</b>不做全屏弹窗，只出现在「今日」洞察卡位置，由用户点开；提醒强度可在「我的」中调整。</div>
+  </div>
+</div>
+</body>
+</html>

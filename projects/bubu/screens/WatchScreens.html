@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>WatchScreens</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.band{display:inline-flex;align-items:center;gap:8px;background:#1D4ED8;color:#fff;border-radius:16px;padding:4px 12px;font-size:13px;font-weight:700}
+.col{display:flex;flex-direction:column;gap:10px;align-items:center}
+.tl{align-self:stretch;display:flex;align-items:center;gap:8px}
+.tl .n{width:26px;height:26px;border-radius:50%;background:#1D4ED8;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tl .t{font-size:15px;font-weight:700}
+.dir{align-self:stretch;display:flex;align-items:center;justify-content:center;gap:6px;background:#DBEAFE;color:#1E3A8A;border-radius:10px;padding:5px 8px;font-size:12.5px;font-weight:700}
+.ptype{align-self:stretch;display:flex;justify-content:center;font-size:12px;color:#3A3A35}
+.ptype b{background:#1A1A18;color:#fff;border-radius:8px;padding:1px 8px;font-weight:600}
+.case{position:relative;width:300px;height:352px;border-radius:78px;background:#3A3A3C;display:flex;align-items:center;justify-content:center}
+.crown{position:absolute;right:-10px;top:96px;width:14px;height:44px;border-radius:5px;background:#48484A}
+.btnside{position:absolute;right:-6px;top:170px;width:8px;height:56px;border-radius:4px;background:#48484A}
+.wrap{width:270px;height:322px;border-radius:62px;overflow:hidden;background:#000}
+.scr{width:208px;height:248px;transform:scale(1.298);transform-origin:0 0;box-sizing:border-box;padding:0 12px 12px;color:#fff;display:flex;flex-direction:column;gap:6px;font-family:'Noto Sans SC',sans-serif}
+.nav{display:flex;align-items:center;gap:6px;height:36px;padding:8px 6px 0;flex:none}
+.back{flex:none;width:26px;height:26px;border-radius:13px;background:#2C2C2E;display:flex;align-items:center;justify-content:center}
+.ttl{font-size:17px;font-weight:600;flex:1;white-space:nowrap}
+.tm{font-size:15px;font-weight:600;flex:none}
+.sash{display:flex;align-items:center;gap:6px;height:36px;padding:8px 8px 0;flex:none}
+.ico{flex:none;width:20px;height:20px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+.t17{font-size:17px;line-height:22px}
+.t16{font-size:16px;line-height:21px}
+.t14{font-size:14px;line-height:19px;color:#AEAEB2;margin-top:2px}
+.wb{height:44px;border-radius:22px;border:none;background:#2C2C2E;color:#fff;font-size:16px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;width:100%;flex:none}
+.wbp{background:#fff;color:#000;font-weight:600}
+.cell{background:#1C1C1E;border-radius:14px;padding:8px 10px;display:flex;gap:8px;align-items:center}
+.ph{align-self:stretch;display:flex;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:8px 10px}
+.mp{flex:none;width:44px;height:88px;border-radius:10px;border:2.5px solid #1C1C1E;background:#F2F2F7;display:flex;align-items:center;justify-content:center}
+.pd{font-size:12px;line-height:1.5;color:#3A3A35}
+.pd b{color:#1A1A18}
+.ann{align-self:stretch;display:flex;flex-direction:column;gap:4px}
+.code{font-size:12px;font-weight:700;color:#1D4ED8;letter-spacing:1px}
+.ad{font-size:12.5px;line-height:1.6;color:#3A3A35}
+.hp{display:inline-block;font-size:11px;padding:1px 7px;border-radius:8px;background:#E9E9E5;color:#3A3A35;font-family:ui-monospace,Menlo,monospace}
+.lg{display:flex;gap:18px;align-items:center;font-size:12px;color:#3A3A35;flex-wrap:wrap}
+.lg span{display:flex;align-items:center;gap:6px}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:2400px;height:1000px;box-sizing:border-box;padding:28px 44px;background:#E8EEF8;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <span class="band">04-B · 手机联动场景 · 依附手机事件触发</span>
+      <h2 style="margin:10px 0 0;font-size:28px">按一天的时间顺序：每个场景标明数据流向与 watchOS 页面类型</h2>
+    </div>
+    <div style="font-size:12px;color:#55554F;text-align:right;line-height:1.6">原 WA1 表盘入口 → 04-A 的 WH0；原 WA5 睡前提醒 → WI4</div>
+  </div>
+  <div class="lg">
+    <b style="color:#1A1A18">watchOS 页面结构：</b>
+    <span><b style="background:#1A1A18;color:#fff;border-radius:6px;padding:0 6px">App 页</b>顶部导航栏 = 返回 / 标题（左）+ 时间（右），内容在下，主按钮全宽 44 pt</span>
+    <span><b style="background:#1A1A18;color:#fff;border-radius:6px;padding:0 6px">详细通知</b>顶部 = App 图标 + App 名 + 时间，正文与自定义内容，操作按钮，最底部系统「关闭」</span>
+    <span>顶部一行左右各内缩，避开屏幕圆角</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px;flex:1">
+
+    <div class="col">
+      <div class="tl"><span class="n">1</span><span class="t">07:30 起床</span></div>
+      <div class="dir">手表 → 手机 · 睡眠数据</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr">
+        <div class="nav"><span class="back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16"/></svg></span><span class="ttl">步步</span><span class="tm">7:30</span></div>
+        <div style="display:flex;justify-content:center"><svg width="84" height="84" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#000" stroke="#fff" stroke-width="3"/><circle cx="47" cy="80" r="4" fill="#fff"/><circle cx="73" cy="80" r="4" fill="#fff"/><ellipse cx="60" cy="92" rx="5" ry="4" fill="none" stroke="#fff" stroke-width="3"/><path d="M12 64 l12 -8M108 64 l-12 -8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M60 46 V28" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
+        <div style="text-align:center"><div class="t17" style="font-weight:600">早安，睡了 6 时 40 分</div><div class="t14">睡眠养分已送到 · 1/3</div></div>
+        <div class="t14" style="text-align:center;margin-top:auto">已同步到手机</div>
+      </div></div></div>
+      <div class="ptype"><b>App 页 · WH1 晨间状态</b></div>
+      <div class="ph"><div class="mp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C1C1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></div><div class="pd"><b>手机 W07：</b>打开时睡眠卡已更新，步步同样在伸懒腰</div></div>
+      <div class="ann"><div class="code">L1 · 晨间同步</div><div class="ad">醒来后汇总睡眠，步步伸懒腰 <span class="hp">.directionUp</span>。不推送通知，用户抬腕或打开 App 时看到。</div></div>
+    </div>
+
+    <div class="col">
+      <div class="tl"><span class="n">2</span><span class="t">12:31 午饭</span></div>
+      <div class="dir">手表 → 手机 → 手表 · 饮食解析</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr">
+        <div class="nav"><span class="back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">记一餐</span><span class="tm">12:31</span></div>
+        <div class="t14">你说：中午吃了一碗牛肉面</div>
+        <div class="cell">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M3 11h18a9 9 0 0 1-18 0z"/></svg>
+          <div style="flex:1"><div class="t16" style="font-weight:600">午餐 · 牛肉面</div><div class="t14">已识别 · 均衡度一般</div></div>
+        </div>
+        <div style="margin-top:auto;display:flex;gap:8px"><button class="wb" style="flex:1;width:auto">修改</button><button class="wb wbp" style="flex:1;width:auto">记录</button></div>
+      </div></div></div>
+      <div class="ptype"><b>App 页 · WI1 二级页</b></div>
+      <div class="ph"><div class="mp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C1C1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></div><div class="pd"><b>手机后台：</b>AI 把一句话拆成菜品并回传，手机无需点亮</div></div>
+      <div class="ann"><div class="code">L2 · 抬腕记一餐</div><div class="ad">导航栏有返回、标题和时间；屏幕不滚动，所以两个短文字按钮可以并排。点「记录」写入 <span class="hp">.success</span>；手机不在身边时只记为「一餐」。</div></div>
+    </div>
+
+    <div class="col">
+      <div class="tl"><span class="n">3</span><span class="t">18:40 跑步结束</span></div>
+      <div class="dir">手表 → 手机 · 运动养分</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr" style="gap:5px">
+        <div class="sash"><span class="ico"><svg width="14" height="14" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 40 C86 40 98 62 98 78 C98 98 82 108 60 108 C38 108 22 98 22 78 C22 62 34 40 60 40 Z" fill="#000"/></svg></span><span style="font-size:14px;font-weight:600;flex:1">健康伙伴</span><span class="t14" style="color:#fff">现在</span></div>
+        <div class="t17" style="font-weight:600;margin-top:4px">步步吃到运动养分啦</div>
+        <div class="t14">跑步 5.2 公里 · 今日 2/3</div>
+        <button class="wb wbp" style="margin-top:auto">在手机上看看</button>
+        <button class="wb">关闭</button>
+      </div></div></div>
+      <div class="ptype"><b>详细通知（简短通知后展开）</b></div>
+      <div class="ph"><div class="mp"><svg width="26" height="26" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#fff" stroke="#1C1C1E" stroke-width="6"/></svg></div><div class="pd"><b>手机：</b>点「在手机上看看」后，步步从屏幕顶部「落地」，运动卡已更新</div></div>
+      <div class="ann"><div class="code">L3 · 运动完成</div><div class="ad">简短通知只显示 App 图标、名称和一句标题；继续看则展开为左图的详细通知。训练汇总后才推送 <span class="hp">.success</span>。</div></div>
+    </div>
+
+    <div class="col">
+      <div class="tl"><span class="n">4</span><span class="t">20:10 养分收齐</span></div>
+      <div class="dir">云端 → 手机 + 手表 · 同时庆祝</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr" style="gap:5px">
+        <div class="sash"><span class="ico"><svg width="14" height="14" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 40 C86 40 98 62 98 78 C98 98 82 108 60 108 C38 108 22 98 22 78 C22 62 34 40 60 40 Z" fill="#000"/></svg></span><span style="font-size:14px;font-weight:600;flex:1">健康伙伴</span><span class="t14" style="color:#fff">现在</span></div>
+        <div style="display:flex;justify-content:center"><svg width="48" height="48" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#000" stroke="#fff" stroke-width="3"/><path d="M44 80 Q47 76 50 80M70 80 Q73 76 76 80" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M52 90 Q60 98 68 90" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M60 46 V24" stroke="#fff" stroke-width="3"/><path d="M60 30 C70 18 84 20 86 28 C76 34 66 34 60 30 Z" fill="#000" stroke="#fff" stroke-width="3"/><path d="M60 34 C50 22 36 24 34 32 C44 38 54 38 60 34 Z" fill="#000" stroke="#fff" stroke-width="3"/></svg></div>
+        <div style="text-align:center"><div class="t17" style="font-weight:600">今天的养分收齐啦</div><div class="t14">长出第 2 片叶子 · 3/3</div></div>
+        <button class="wb wbp" style="margin-top:auto">记录今天的心情</button>
+        <button class="wb">关闭</button>
+      </div></div></div>
+      <div class="ptype"><b>详细通知 · 抬腕时在 App 内则直接播放动画</b></div>
+      <div class="ph"><div class="mp" style="background:#8E8E93"><span style="width:34px;height:40px;border-radius:6px;background:#fff;margin-top:36px"></span></div><div class="pd"><b>手机 W08：</b>同一时刻弹出鼓励浮层，两端步步长出同一片叶子</div></div>
+      <div class="ann"><div class="code">L4 · 同时庆祝</div><div class="ad">云端判断后同时下发，两端 <span class="hp">.success</span>。主操作进入表冠心情记录 WI2，与手机 W08 的滑杆写入同一数据。</div></div>
+    </div>
+
+    <div class="col">
+      <div class="tl"><span class="n">5</span><span class="t">第 3 天 21:00 孵化</span></div>
+      <div class="dir">手机 → 手表 · 同步心跳</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr">
+        <div class="nav"><span class="ttl" style="padding-left:6px">一起孵化</span><span class="tm">21:00</span></div>
+        <div style="display:flex;justify-content:center"><svg width="124" height="124" viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="62" fill="none" stroke="#3A3A3C" stroke-width="7"/><circle cx="70" cy="70" r="62" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-dasharray="260 130" transform="rotate(-90 70 70)"/><path d="M70 30 C96 30 106 60 106 78 C106 100 90 112 70 112 C50 112 34 100 34 78 C34 60 44 30 70 30 Z" fill="#000" stroke="#fff" stroke-width="3"/><path d="M58 52 l6 8 -4 6 6 6M84 66 l-4 6 6 4" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="text-align:center"><div class="t17" style="font-weight:600">感受步步的心跳</div><div class="t14">请在手机上继续按住 · 66%</div></div>
+      </div></div></div>
+      <div class="ptype"><b>App 页 · 由手机唤起，自动亮屏</b></div>
+      <div class="ph"><div class="mp" style="background:#1C1C1E"><span style="width:24px;height:24px;border-radius:50%;border:3px solid #fff"></span></div><div class="pd"><b>手机 W10：</b>用户按住花苞，手表同步显示进度</div></div>
+      <div class="ann"><div class="code">L5 · 一起孵化</div><div class="ad">无按钮页：操作在手机上完成，手表只负责感受。<span class="hp">.click</span> 节律逐渐加快，孵化瞬间两端 <span class="hp">.success</span>，随后 WH1 与表盘换成成形的步步。</div></div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

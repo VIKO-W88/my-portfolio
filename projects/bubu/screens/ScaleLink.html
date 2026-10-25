@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>ScaleLink</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..600,0..1,0&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;display:inline-block}
+.k{font-family:'Outfit','Noto Sans SC',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5D6A64}
+.sec{font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:300;font-size:22px;margin:0;color:#1B2420;display:flex;align-items:baseline;gap:10px}
+.sec b{font-family:'Outfit',sans-serif;font-weight:200;font-size:28px;color:#8EA299}
+.num{font-family:'Outfit',sans-serif}
+.nd{position:relative;border-radius:20px;padding:16px;background:rgba(255,255,255,.6);display:flex;flex-direction:column;gap:8px;min-width:0}
+.nd .ic{width:40px;height:40px;border-radius:12px;background:#1B2420;color:#CFF27E;display:flex;align-items:center;justify-content:center}
+.nd .ic .ms{font-size:22px}
+.nd b{font-size:16px;font-weight:500}
+.nd p{margin:0;font-size:13px;line-height:20px;color:#33413A}
+.nd .on{align-self:flex-start;height:24px;padding:0 10px;border-radius:12px;background:#C9D3CF;font-size:12px;display:flex;align-items:center;color:#1B2420}
+.ar{flex:none;align-self:center;color:#6F8A7E}
+.ar .ms{font-size:26px}
+.ru{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid #C5CEC9}
+.ru .ms{font-size:24px;color:#4E6B4F;margin-top:2px}
+.ru b{display:block;font-size:15px;font-weight:500;margin-bottom:2px}
+.ru span{font-size:13px;line-height:20px;color:#33413A}
+.bub{border-radius:18px 18px 18px 6px;padding:10px 14px;background:#FFFFFF;font-size:14px;line-height:21px;color:#1B2420;box-shadow:0 1px 2px rgba(27,36,32,.06)}
+.lb{font-size:12px;color:#5D6A64;margin:0 0 6px 2px}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1800px;height:1000px;box-sizing:border-box;padding:40px 48px;background:#DCE1DE;font-family:'Noto Sans SC',sans-serif;color:#1B2420;display:flex;flex-direction:column;gap:26px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">04 · Smart scale · 体脂秤联动</div>
+      <div style="font-weight:300;font-size:30px;line-height:40px;margin-top:6px">上秤就记好：不用打开 App，也不用盯着数字焦虑</div>
+    </div>
+    <div style="font-size:13px;line-height:20px;color:#3B4A43;text-align:right;max-width:560px">体重和体脂不单独打分，只作为「饮食」维度的辅助信号，<br>影响步步的体态。对应高保真 HF10 称重同步。</div>
+  </div>
+
+  <div>
+    <h2 class="sec"><b>01</b>联动流程</h2>
+    <div style="margin-top:14px;display:flex;gap:10px;align-items:stretch">
+      <div class="nd" style="flex:1"><span class="ic"><span class="ms">monitor_weight</span></span><b>1 · 上秤</b><p>光脚站上，<span class="num">3</span> 秒测出体重和体脂（生物电阻抗）。</p><span class="on">秤</span></div>
+      <span class="ar"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="nd" style="flex:1"><span class="ic"><span class="ms">group</span></span><b>2 · 识别是谁</b><p>按历史体重 ±<span class="num">3</span>kg 匹配家人；对不上时手机问一句「这是你吗？」</p><span class="on">秤 + 手机</span></div>
+      <span class="ar"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="nd" style="flex:1"><span class="ic"><span class="ms">bluetooth</span></span><b>3 · 后台同步</b><p>蓝牙低功耗广播，手机在后台接收，不用解锁、不用打开 App。</p><span class="on">手机后台</span></div>
+      <span class="ar"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="nd" style="flex:1"><span class="ic"><span class="ms">auto_graph</span></span><b>4 · 算 7 日趋势</b><p>只用 7 日均线判断变化；单次波动超过 <span class="num">2</span>kg 视为异常值，不计入。</p><span class="on">手机</span></div>
+      <span class="ar"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="nd" style="flex:1"><span class="ic"><span class="ms">favorite</span></span><b>5 · 步步回应</b><p>体态曲线微调（±<span class="num">5%</span>）；早晨打开时看到一句话，手表不推送。</p><span class="on">App + 手表表盘</span></div>
+    </div>
+  </div>
+
+  <div style="flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 420px;gap:32px;min-height:0">
+    <div>
+      <h2 class="sec"><b>02</b>规则</h2>
+      <div style="margin-top:6px">
+        <div class="ru"><span class="ms">visibility_off</span><div><b>默认只看变化，不显示体重数字</b><span>首次连接时让用户选择；关闭后数字只在「设置 → 体重」里能看到。降低 Z 世代的体重焦虑。</span></div></div>
+        <div class="ru"><span class="ms">group</span><div><b>家庭共用一台秤</b><span>每人一个档案，识别不确定时不写入，等手机确认；减少重复购买设备。</span></div></div>
+        <div class="ru"><span class="ms">lock</span><div><b>数据最少化</b><span>体脂、阻抗只存手机本地；上传云端的只有 7 日趋势方向（升 / 平 / 降）。</span></div></div>
+        <div class="ru" style="border-bottom:none"><span class="ms">notifications_paused</span><div><b>不打扰</b><span>称重本身不推送通知；只有连续 <span class="num">2</span> 周同向变化超过 <span class="num">2</span>kg，才在摘要里温和提一句。</span></div></div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="sec"><b>03</b>步步怎么说（不评判身材）</h2>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:14px">
+        <div><div class="lb">7 日趋势下降</div><div class="bub">最近吃得更均衡，身体轻快了一点。不用急，保持就好。</div></div>
+        <div><div class="lb">7 日趋势上升</div><div class="bub">体重有一点波动很正常，可能是水分或睡得少。今晚早点休息？</div></div>
+        <div><div class="lb">基本持平</div><div class="bub">很稳！稳定比数字更重要。</div></div>
+        <div><div class="lb">识别不确定</div><div class="bub">刚刚有人上秤啦，是你吗？<span style="margin-left:8px;font-weight:500;text-decoration:underline">是我</span><span style="margin-left:10px;color:#5D6A64;text-decoration:underline">不是</span></div></div>
+      </div>
+      <div style="margin-top:14px;font-size:12px;line-height:18px;color:#5D6A64">文案规则：不出现「胖 / 瘦 / 减肥」；不和他人比较；每句都给一个可做的小动作或不给建议。</div>
+    </div>
+
+    <div>
+      <h2 class="sec"><b>04</b>设备形态</h2>
+      <div style="margin-top:14px;position:relative;height:480px;border-radius:26px;background:linear-gradient(180deg,#C9D3CF,#A9B8B2);overflow:hidden">
+        <div aria-hidden="true" style="position:absolute;left:50%;top:45%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:56px;background:linear-gradient(150deg,rgba(255,255,255,.92),rgba(236,242,238,.8));box-shadow:0 30px 40px -18px rgba(27,36,32,.45),inset 0 0 0 1px rgba(255,255,255,.9);transform:perspective(700px) rotateX(48deg)">
+          <span style="position:absolute;left:36px;top:40px;width:70px;height:110px;border-radius:30px;background:rgba(169,184,178,.35)"></span>
+          <span style="position:absolute;right:36px;top:40px;width:70px;height:110px;border-radius:30px;background:rgba(169,184,178,.35)"></span>
+          <span style="position:absolute;left:50%;bottom:44px;width:120px;height:44px;margin-left:-60px;border-radius:14px;background:#141A17;color:#CFF27E;font-size:15px;display:flex;align-items:center;justify-content:center">已同步</span>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;top:20px;display:flex;justify-content:space-between;font-size:13px;color:#1B2420"><span>秤面只显示「已同步」</span><span style="color:#3B4A43">不显示数字</span></div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;border-radius:16px;padding:10px 14px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.75);font-size:13px;line-height:20px;color:#26322C">接入方式：Apple 健康（体重、体脂率）/ Health Connect；也支持主流品牌秤直连蓝牙。</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

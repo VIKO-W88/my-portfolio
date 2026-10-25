@@ -619,51 +619,95 @@ if (introOverlay) {
   }
 }
 
-// Custom cursor — a lagging ring + a tight dot (mouse/trackpad only).
+// Custom cursor — an inverting blob (mouse/trackpad only).
+// A white circle with mix-blend-mode: difference trails the pointer, so it
+// shows as dark on the light pages and as the complementary colour over
+// coloured type and artwork. It stretches along its direction of travel
+// when moving fast and grows over links and buttons.
 const supportsFinePointer = window.matchMedia(
   "(hover: hover) and (pointer: fine)"
 ).matches;
 
-if (supportsFinePointer && !prefersReducedMotion) {
+if (supportsFinePointer) {
   document.body.classList.add("has-custom-cursor");
 
-  const cursorDot = document.createElement("div");
-  cursorDot.className = "cursor-dot";
-  const cursorRing = document.createElement("div");
-  cursorRing.className = "cursor-ring";
-  document.body.append(cursorDot, cursorRing);
+  const blob = document.createElement("div");
+  blob.className = "cursor-blob";
+  blob.setAttribute("aria-hidden", "true");
+  document.body.append(blob);
 
-  let ringX = window.innerWidth / 2;
-  let ringY = window.innerHeight / 2;
-  let targetX = ringX;
-  let targetY = ringY;
+  let x = window.innerWidth / 2, y = window.innerHeight / 2;
+  let tx = x, ty = y;
+  let size = 1, targetSize = 1;
+  let shown = false;
 
   window.addEventListener("mousemove", (e) => {
-    targetX = e.clientX;
-    targetY = e.clientY;
-    cursorDot.style.transform = `translate(${targetX}px, ${targetY}px) translate(-50%, -50%)`;
+    tx = e.clientX;
+    ty = e.clientY;
+    if (!shown) { x = tx; y = ty; shown = true; blob.classList.add("is-visible"); }
   });
+  document.addEventListener("mouseleave", () => blob.classList.remove("is-visible"));
+  document.addEventListener("mouseenter", () => { if (shown) blob.classList.add("is-visible"); });
 
-  document.addEventListener("mouseover", (e) => {
-    if (e.target.closest("a, button, .magnetic")) {
-      cursorRing.classList.add("is-hovering");
-    }
-  });
-
-  document.addEventListener("mouseout", (e) => {
-    if (e.target.closest("a, button, .magnetic")) {
-      cursorRing.classList.remove("is-hovering");
-    }
-  });
-
-  // Ease the ring toward the pointer for a soft "lagging" trail feel.
-  function animateRing() {
-    ringX += (targetX - ringX) * 0.18;
-    ringY += (targetY - ringY) * 0.18;
-    cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-    requestAnimationFrame(animateRing);
+  // How big the blob gets over what's under the pointer. Many hero
+  // illustrations are pointer-events: none (they "dodge" the cursor), so
+  // objects are found by position, not by mouseover events.
+  const ZONES = [
+    // [selector, scale] -- first match wins. Over anything clickable the
+    // blob shrinks to a small dot so it never covers the control.
+    ["button, [role='button'], input, select, textarea, label, summary, a:not(.feature-card a):not(.pc-slide a), .magnetic, .contact-card, .pc-label, .pc-nav, [class*='carousel'] button", 0.3],
+    [".hero-title, .page-title, .case-title, .projects-group-title, h1, h2", 3.6],
+    [".hero-char, .hero-portal, .about-scene img, .feature-card, .pc-slide", 3],
+  ];
+  let zoneEls = [];
+  function collectZones() {
+    zoneEls = ZONES.map(([sel, scale]) => [Array.from(document.querySelectorAll(sel)), scale]);
   }
-  requestAnimationFrame(animateRing);
+  collectZones();
+  window.addEventListener("load", collectZones);
+  window.addEventListener("resize", collectZones);
+
+  function hits(el, px, py) {
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) return false;
+    // Trim the transparent margin most cut-out illustrations have.
+    const ix = el.tagName === "IMG" ? r.width * 0.12 : 0;
+    const iy = el.tagName === "IMG" ? r.height * 0.08 : 0;
+    return px >= r.left + ix && px <= r.right - ix && py >= r.top + iy && py <= r.bottom - iy;
+  }
+  // Hit-testing reads layout, so it only runs inside the animation frame,
+  // before the blob is written, and only when the pointer or page moved.
+  let hitDirty = false, hitFrame = 0;
+  function updateTargetSize() {
+    targetSize = 1;
+    for (const [els, scale] of zoneEls) {
+      for (const el of els) {
+        if (hits(el, tx, ty)) { targetSize = scale; return; }
+      }
+    }
+  }
+  window.addEventListener("mousemove", () => { hitDirty = true; }, { passive: true });
+  window.addEventListener("scroll", () => { if (shown) hitDirty = true; }, { passive: true });
+
+  window.addEventListener("mousedown", () => { blob.classList.add("is-down"); });
+  window.addEventListener("mouseup", () => { blob.classList.remove("is-down"); });
+
+  const follow = prefersReducedMotion ? 1 : 0.2;
+  function animateBlob() {
+    if (hitDirty && ++hitFrame % 3 === 0) { hitDirty = false; updateTargetSize(); }
+    const dx = tx - x, dy = ty - y;
+    x += dx * follow;
+    y += dy * follow;
+    size += (targetSize - size) * 0.18;
+    // Squash and stretch: the faster it travels, the longer the ellipse.
+    const speed = prefersReducedMotion ? 0 : Math.min(Math.hypot(dx, dy) / 140, 0.45);
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    blob.style.transform =
+      `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${angle}deg) ` +
+      `scale(${size * (1 + speed)}, ${size * (1 - speed * 0.6)})`;
+    requestAnimationFrame(animateBlob);
+  }
+  requestAnimationFrame(animateBlob);
 }
 
 // Hero character animations wake up shortly after the page paints

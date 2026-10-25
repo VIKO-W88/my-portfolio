@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#E3E8E5">
+<title>健康伙伴 Bubu | 作品集 · 韦旻昕</title>
+<meta name="description" content="健康伙伴 Bubu 交互设计方案：3 天，养成你的健康分身。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1B2420; --ink-2:#3B4A43; --ink-3:#5D6A64;
+  --mist:#E3E8E5; --mist-2:#D7DFDA; --lime:#CFF27E; --moss:#4E6B4F;
+  --glass:rgba(255,255,255,.62); --glass-line:rgba(255,255,255,.8);
+  --gutter:clamp(16px,3.2vw,56px);
+  --sh:min(66vh,720px);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --sans:'Noto Sans SC',system-ui,-apple-system,'PingFang SC',sans-serif;
+  --num:'Outfit','Noto Sans SC',sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{margin:0;background:var(--mist);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+h1,h2,h3,p{margin:0}
+.wrap{width:min(1440px,100% - var(--gutter)*2);margin-inline:auto}
+.skip{position:absolute;left:-999px;top:8px;z-index:100;background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px}
+.skip:focus{left:8px}
+.eyebrow{font-family:var(--num);font-size:13px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase}
+.lead{font-size:clamp(15px,1.2vw,18px);color:var(--ink-2);line-height:1.75;max-width:640px}
+[data-words] .w{display:inline-block}
+a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+/* nav */
+.nav{position:fixed;inset:16px var(--gutter) auto;z-index:50;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.nav a{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:22px;text-decoration:none;font-size:14px;font-weight:500;background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)}
+.nav a:hover{background:rgba(255,255,255,.9)}
+.nav .logo{font-family:var(--num)}
+
+/* side dots (Velox) */
+.dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:6px}
+.dots a{position:relative;display:block;width:24px;height:24px;border-radius:50%}
+.dots a::before{content:"";position:absolute;inset:8px;border-radius:50%;border:1.5px solid var(--ink-3);transition:all .3s var(--ease)}
+.dots a.on::before{inset:5px;background:var(--ink);border-color:var(--ink)}
+.dots span{position:absolute;right:30px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:12px;padding:4px 10px;border-radius:12px;background:var(--ink);color:#fff;opacity:0;pointer-events:none;transition:opacity .2s}
+.dots a:hover span,.dots a:focus-visible span{opacity:1}
+
+/* hero: the P01 cover as the centre object, Velox-style */
+.hero{position:relative;height:100svh;overflow:hidden;background:linear-gradient(180deg,#E8EBE9 0%,#DFE4E1 100%)}
+.cover{position:absolute;inset:0;overflow:hidden}
+.cover iframe{position:absolute;left:0;top:0;width:1587px;height:1123px;border:0;pointer-events:none}
+.veil{position:absolute;inset:0;background:radial-gradient(80% 70% at 50% 50%,#EEF1EF 0%,#E3E8E5 100%);opacity:0;pointer-events:none}
+.hero-copy{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;padding:0 var(--gutter);pointer-events:none}
+.hero-copy h1{font-size:clamp(48px,8vw,128px);line-height:1.05;font-weight:300;letter-spacing:-.02em}
+.hero-copy h1 .w{opacity:0}
+.hero-copy .lead{margin:0 auto;opacity:0}
+.hint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);font-family:var(--num);font-size:12px;letter-spacing:.2em;color:var(--ink-3)}
+
+/* features (Velox grid) */
+.features{padding:clamp(100px,12vw,180px) 0}
+.feat-head{text-align:center;max-width:820px;margin:0 auto}
+.feat-head h2{font-size:clamp(34px,4.6vw,64px);line-height:1.15;font-weight:300;margin-top:12px}
+.feat-head .lead{margin:18px auto 0}
+.bubu-float{width:110px;height:110px;margin:0 auto 18px;display:block}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:56px}
+.card{grid-column:span 4;padding:28px 26px;border-radius:24px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9);display:flex;flex-direction:column;gap:10px;min-height:200px;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -30px rgba(27,36,32,.4)}
+.card.p{grid-column:span 3;min-height:170px}
+.card .k{font-family:var(--num);font-size:12px;letter-spacing:.14em;color:var(--ink-3)}
+.card h3{font-size:21px;font-weight:500;line-height:1.35}
+.card p{font-size:15px;color:var(--ink-2);line-height:1.7}
+.card.dark{background:var(--ink);color:#EEF3F0;border-color:var(--ink)}
+.card.dark p{color:#B9C6BF}
+.card.dark .k{color:var(--lime)}
+
+/* chapters: pinned horizontal showcase (Velox) */
+.chapter{position:relative;overflow:hidden}
+.chapter:nth-of-type(even){background:var(--mist-2)}
+.pin{min-height:100svh;display:flex;flex-direction:column;justify-content:center;gap:28px;padding:96px 0 56px}
+.ch-head{display:flex;align-items:flex-end;gap:24px}
+.ch-num{flex:none;font-family:'Outfit',sans-serif;font-weight:200;font-size:clamp(56px,7vw,112px);line-height:.85;color:var(--ink-3)}
+.ch-head h2{font-size:clamp(26px,3vw,44px);font-weight:400;line-height:1.2}
+.ch-head .lead{margin-top:8px;font-size:15px}
+.ch-count{margin-left:auto;flex:none;font-family:var(--num);font-size:13px;color:var(--ink-3);padding-bottom:6px}
+.track{display:flex;gap:28px;padding:0 var(--gutter);width:max-content}
+.slide{flex:none;display:flex;flex-direction:column;gap:14px}
+.ab-frame{position:relative;height:var(--sh);width:calc(var(--sh) * var(--w) / var(--h));border-radius:18px;overflow:hidden;background:rgba(255,255,255,.4);box-shadow:0 30px 60px -40px rgba(27,36,32,.45)}
+.ab-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.slide-cap{display:flex;align-items:baseline;gap:12px;max-width:calc(var(--sh) * var(--w) / var(--h))}
+.slide-cap .n{font-family:var(--num);font-size:13px;color:var(--moss)}
+.slide-cap h3{font-size:17px;font-weight:500;flex:1;min-width:0}
+.slide-cap a{flex:none;font-family:var(--num);font-size:12px;color:var(--ink-3);text-decoration:none}
+.slide-cap a:hover{color:var(--ink);text-decoration:underline}
+.progress{position:relative;margin:0 var(--gutter);height:2px;background:rgba(27,36,32,.12);border-radius:1px}
+.progress i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--ink);border-radius:1px}
+
+/* numbers (Velox counters) */
+.numbers{padding:clamp(100px,12vw,160px) 0}
+.numbers h2{font-size:clamp(34px,4.6vw,64px);font-weight:300;text-align:center}
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:56px}
+.num{text-align:center;padding:32px 20px;border-radius:24px;background:rgba(255,255,255,.55)}
+.num b{display:block;font-family:'Outfit',sans-serif;font-weight:200;font-size:clamp(56px,7vw,104px);line-height:1;letter-spacing:-.02em}
+.num>span{display:block;margin-top:10px;font-size:15px;color:var(--ink-2)}
+
+/* CTA */
+.cta{text-align:center;padding:clamp(110px,14vw,190px) 0;background:var(--ink);color:#EEF3F0}
+.cta h2{font-size:clamp(36px,5vw,72px);font-weight:300}
+.cta .lead{margin:18px auto 0;color:#B9C6BF}
+.btns{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:40px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:58px;padding:0 30px;border-radius:29px;font-size:16px;font-weight:500;text-decoration:none;will-change:transform}
+.btn-lime{background:var(--lime);color:var(--ink)}
+.btn-ghost{border:1px solid rgba(255,255,255,.35);color:#fff}
+footer{padding:26px var(--gutter);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;color:#9FB0A9;background:var(--ink);border-top:1px solid rgba(255,255,255,.08)}
+
+@media (max-width:1000px){
+  .card,.card.p{grid-column:span 6}
+  .nums{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:899px){
+  :root{--sh:min(58vh,560px)}
+  .track{width:auto;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;-webkit-overflow-scrolling:touch}
+  .slide{scroll-snap-align:start}
+  .progress,.dots{display:none}
+  .ch-head{flex-wrap:wrap}
+  .ch-count{margin-left:0}
+  .hero-copy h1 .w,.hero-copy .lead{opacity:1}
+  .hero-copy{background:linear-gradient(180deg,rgba(227,232,229,0) 40%,rgba(227,232,229,.9) 100%);justify-content:flex-end;padding-bottom:64px}
+  .hero-copy h1{font-size:40px}
+}
+@media (max-width:640px){
+  .card,.card.p{grid-column:1 / -1}
+  .nav .logo{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-copy h1 .w,.hero-copy .lead{opacity:1}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="nav">
+  <a href="../index.html#projects" aria-label="返回作品集">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>返回作品集
+  </a>
+  <a class="logo" href="../index.html">韦旻昕</a>
+</header>
+
+<nav class="dots" aria-label="章节导航">
+    <a href="#hero" aria-label="封面"><span>封面</span></a>
+    <a href="#features" aria-label="00 项目简报"><span>00 项目简报</span></a>
+    <a href="#research" aria-label="01 需求拆解 · 用户研究"><span>01 需求拆解 · 用户研究</span></a>
+    <a href="#competitors" aria-label="01 竞品拆解 · App Store 实际界面"><span>01 竞品拆解 · App Store 实际界面</span></a>
+    <a href="#ia" aria-label="02 信息架构与任务流"><span>02 信息架构与任务流</span></a>
+    <a href="#wireframes" aria-label="03 线框图 · 低保真"><span>03 线框图 · 低保真</span></a>
+    <a href="#watch" aria-label="04 智能手表联动"><span>04 智能手表联动</span></a>
+    <a href="#hifi" aria-label="05 高保真 · 雾林毛玻璃"><span>05 高保真 · 雾林毛玻璃</span></a>
+    <a href="#rationale" aria-label="06 方案论述"><span>06 方案论述</span></a>
+    <a href="#numbers" aria-label="数字"><span>数字</span></a>
+</nav>
+
+<main id="main">
+
+<!-- Hero: the P01 cover is the centre object; on scroll it tilts back and the headline builds over it -->
+<section class="hero" id="hero" data-chapter="封面">
+  <div class="cover" id="cover">
+    <iframe src="bubu/screens/P01-Cover.html" title="项目封面：健康伙伴 Bubu 交互设计方案" tabindex="-1" scrolling="no"></iframe>
+  </div>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="hero-copy">
+    <h1 data-words>3 天，养成|你的健康分身</h1>
+    <p class="lead">用户首次打开获得一颗「健康种子」——IP 步步。3 天里每一次录入都是给步步的养分，第 3 天步步「孵化成形」，它的样子就是用户的健康画像。</p>
+  </div>
+  <div class="hint" aria-hidden="true">SCROLL ↓</div>
+</section>
+
+<!-- 00 Brief: Velox feature grid, copy from the canvas brief (Main) -->
+<section class="features" id="features" data-chapter="00 项目简报">
+  <div class="wrap">
+    <div class="feat-head">
+      <img class="bubu-float" src="bubu/img/bubu.png" alt="" width="110" height="110">
+      <p class="eyebrow">00 · 项目简报与设计策略</p>
+      <h2 data-words>3 天，养成你的健康分身</h2>
+      <p class="lead">睡眠让它光晕柔和，饮食让它饱满，运动让它有活力。</p>
+    </div>
+    <div class="grid">
+      <div class="card dark"><span class="k">功能 · 数据洞察</span><h3>步步的形态 = 画像</h3><p>三类数据映射为 IP 的光晕、体态、活力；洞察卡用一句人话解释「为什么」。</p></div>
+      <div class="card dark"><span class="k">功能 · 行动引导</span><h3>一天只给一件小事</h3><p>AI 从数据里挑出最容易做到的一个微行动，用「步步想要…」的口吻提出，可跳过不惩罚。</p></div>
+      <div class="card dark"><span class="k">功能 · 情感陪伴</span><h3>它在等你，不在管你</h3><p>完成录入时步步回应；异常时步步先「表现」出来，再由用户决定要不要了解。</p></div>
+      <div class="card p"><span class="k">原则 1</span><h3>低门槛</h3><p>首日录入 ≤ 3 分钟；能同步不手填，能说不打字。</p></div>
+      <div class="card p"><span class="k">原则 2</span><h3>不制造焦虑</h3><p>异常走三级轻量策略，不用红色、不用「危险」，不做诊断。</p></div>
+      <div class="card p"><span class="k">原则 3</span><h3>有期待的 3 天</h3><p>每天可见步步的变化，Day3 有仪式感的揭晓。</p></div>
+      <div class="card p"><span class="k">原则 4</span><h3>用户掌控数据</h3><p>分级授权、随时可关、可查看 AI 依据。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="research" data-chapter="01 需求拆解 · 用户研究">
+  <div class="pin">
+    <header class="ch-head wrap">
+      <span class="ch-num">01</span>
+      <div><h2 data-words>需求拆解 · 用户研究</h2><p class="lead">从项目简报、竞品对比到用户画像与 3 天旅程。</p></div>
+      <span class="ch-count">4 张设计稿</span>
+    </header>
+    <div class="track">
+      <article class="slide" style="--w:1200;--h:800" data-w="1200">
+        <div class="ab-frame"><iframe data-src="bubu/screens/Main.html" title="00 项目简报与设计策略" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">01</span><h3>00 项目简报与设计策略</h3><a href="bubu/screens/Main.html" target="_blank" rel="noopener" aria-label="打开原尺寸：00 项目简报与设计策略">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1800;--h:880" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/Competitor.html" title="01 竞品分析 · 对比矩阵" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">02</span><h3>01 竞品分析 · 对比矩阵</h3><a href="bubu/screens/Competitor.html" target="_blank" rel="noopener" aria-label="打开原尺寸：01 竞品分析 · 对比矩阵">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1200;--h:800" data-w="1200">
+        <div class="ab-frame"><iframe data-src="bubu/screens/Persona.html" title="01 用户画像" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">03</span><h3>01 用户画像</h3><a href="bubu/screens/Persona.html" target="_blank" rel="noopener" aria-label="打开原尺寸：01 用户画像">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1800;--h:800" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/Journey.html" title="01 3天用户旅程图" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">04</span><h3>01 3天用户旅程图</h3><a href="bubu/screens/Journey.html" target="_blank" rel="noopener" aria-label="打开原尺寸：01 3天用户旅程图">原尺寸 ↗</a></div>
+      </article>
+    </div>
+    <div class="progress" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<section class="chapter" id="competitors" data-chapter="01 竞品拆解 · App Store 实际界面">
+  <div class="pin">
+    <header class="ch-head wrap">
+      <span class="ch-num">01</span>
+      <div><h2 data-words>竞品拆解 · App Store 实际界面</h2><p class="lead">五款健康与陪伴类 App 的真实界面拆解，提炼可借鉴的模式。</p></div>
+      <span class="ch-count">6 张设计稿</span>
+    </header>
+    <div class="track">
+      <article class="slide" style="--w:1040;--h:880" data-w="1040">
+        <div class="ab-frame"><iframe data-src="bubu/screens/CompApple.html" title="竞品拆解 · Apple 健康" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">01</span><h3>竞品拆解 · Apple 健康</h3><a href="bubu/screens/CompApple.html" target="_blank" rel="noopener" aria-label="打开原尺寸：竞品拆解 · Apple 健康">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1040;--h:880" data-w="1040">
+        <div class="ab-frame"><iframe data-src="bubu/screens/CompOura.html" title="竞品拆解 · Oura" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">02</span><h3>竞品拆解 · Oura</h3><a href="bubu/screens/CompOura.html" target="_blank" rel="noopener" aria-label="打开原尺寸：竞品拆解 · Oura">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1040;--h:880" data-w="1040">
+        <div class="ab-frame"><iframe data-src="bubu/screens/CompFinch.html" title="竞品拆解 · Finch" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">03</span><h3>竞品拆解 · Finch</h3><a href="bubu/screens/CompFinch.html" target="_blank" rel="noopener" aria-label="打开原尺寸：竞品拆解 · Finch">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1040;--h:880" data-w="1040">
+        <div class="ab-frame"><iframe data-src="bubu/screens/CompLingo.html" title="竞品拆解 · Lingo" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">04</span><h3>竞品拆解 · Lingo</h3><a href="bubu/screens/CompLingo.html" target="_blank" rel="noopener" aria-label="打开原尺寸：竞品拆解 · Lingo">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1040;--h:880" data-w="1040">
+        <div class="ab-frame"><iframe data-src="bubu/screens/CompHuawei.html" title="竞品拆解 · 华为运动健康" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">05</span><h3>竞品拆解 · 华为运动健康</h3><a href="bubu/screens/CompHuawei.html" target="_blank" rel="noopener" aria-label="打开原尺寸：竞品拆解 · 华为运动健康">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1200;--h:880" data-w="1200">
+        <div class="ab-frame"><iframe data-src="bubu/screens/Patterns.html" title="设计模式提炼 → 本方案" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">06</span><h3>设计模式提炼 → 本方案</h3><a href="bubu/screens/Patterns.html" target="_blank" rel="noopener" aria-label="打开原尺寸：设计模式提炼 → 本方案">原尺寸 ↗</a></div>
+      </article>
+    </div>
+    <div class="progress" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<section class="chapter" id="ia" data-chapter="02 信息架构与任务流">
+  <div class="pin">
+    <header class="ch-head wrap">
+      <span class="ch-num">02</span>
+      <div><h2 data-words>信息架构与任务流</h2><p class="lead">三个 Tab、录入路径与 3 天全流程。</p></div>
+      <span class="ch-count">2 张设计稿</span>
+    </header>
+    <div class="track">
+      <article class="slide" style="--w:1400;--h:1000" data-w="1400">
+        <div class="ab-frame"><iframe data-src="bubu/screens/IA.html" title="02 信息架构" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">01</span><h3>02 信息架构</h3><a href="bubu/screens/IA.html" target="_blank" rel="noopener" aria-label="打开原尺寸：02 信息架构">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:2200;--h:1000" data-w="2200">
+        <div class="ab-frame"><iframe data-src="bubu/screens/Flow.html" title="02 全流程任务流" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">02</span><h3>02 全流程任务流</h3><a href="bubu/screens/Flow.html" target="_blank" rel="noopener" aria-label="打开原尺寸：02 全流程任务流">原尺寸 ↗</a></div>
+      </article>
+    </div>
+    <div class="progress" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<section class="chapter" id="wireframes" data-chapter="03 线框图 · 低保真">
+  <div class="pin">
+    <header class="ch-head wrap">
+      <span class="ch-num">03</span>
+      <div><h2 data-words>线框图 · 低保真</h2><p class="lead">首次打开 → 选择录入方式 → 3 天录入 → 生成健康画像，按 iOS HIG 绘制并逐条标注。</p></div>
+      <span class="ch-count">11 张设计稿</span>
+    </header>
+    <div class="track">
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W01-Welcome.html" title="W01 欢迎 · 领取种子" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">01</span><h3>W01 欢迎 · 领取种子</h3><a href="bubu/screens/W01-Welcome.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W01 欢迎 · 领取种子">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W02-Permission.html" title="W02 按需授权 · 关注目标" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">02</span><h3>W02 按需授权 · 关注目标</h3><a href="bubu/screens/W02-Permission.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W02 按需授权 · 关注目标">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W03-InputChoice.html" title="W03 录入方式选择" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">03</span><h3>W03 录入方式选择</h3><a href="bubu/screens/W03-InputChoice.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W03 录入方式选择">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W04-DeviceSync.html" title="W04 设备同步" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">04</span><h3>W04 设备同步</h3><a href="bubu/screens/W04-DeviceSync.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W04 设备同步">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W05-Quiz.html" title="W05 趣味问答" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">05</span><h3>W05 趣味问答</h3><a href="bubu/screens/W05-Quiz.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W05 趣味问答">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W06-Voice.html" title="W06 语音/拍照录入" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">06</span><h3>W06 语音/拍照录入</h3><a href="bubu/screens/W06-Voice.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W06 语音/拍照录入">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W07-Home.html" title="W07 今日首页（Day1–3）" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">07</span><h3>W07 今日首页（Day1–3）</h3><a href="bubu/screens/W07-Home.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W07 今日首页（Day1–3）">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W08-Encourage.html" title="W08 当日完成 · 鼓励浮层" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">08</span><h3>W08 当日完成 · 鼓励浮层</h3><a href="bubu/screens/W08-Encourage.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W08 当日完成 · 鼓励浮层">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W09-Abnormal.html" title="W09 异常引导 · 血糖偏高" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">09</span><h3>W09 异常引导 · 血糖偏高</h3><a href="bubu/screens/W09-Abnormal.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W09 异常引导 · 血糖偏高">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W10-Hatch.html" title="W10 Day3 孵化仪式" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">10</span><h3>W10 Day3 孵化仪式</h3><a href="bubu/screens/W10-Hatch.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W10 Day3 孵化仪式">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:940;--h:1000" data-w="940">
+        <div class="ab-frame"><iframe data-src="bubu/screens/W11-Portrait.html" title="W11 健康画像" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">11</span><h3>W11 健康画像</h3><a href="bubu/screens/W11-Portrait.html" target="_blank" rel="noopener" aria-label="打开原尺寸：W11 健康画像">原尺寸 ↗</a></div>
+      </article>
+    </div>
+    <div class="progress" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<section class="chapter" id="watch" data-chapter="04 智能手表联动">
+  <div class="pin">
+    <header class="ch-head wrap">
+      <span class="ch-num">04</span>
+      <div><h2 data-words>智能手表联动</h2><p class="lead">逻辑、情感、任务流与 watchOS / Wear OS 规范；手表自身交互与按一天时间顺序的手机联动场景。</p></div>
+      <span class="ch-count">9 张设计稿</span>
+    </header>
+    <div class="track">
+      <article class="slide" style="--w:1600;--h:1000" data-w="1600">
+        <div class="ab-frame"><iframe data-src="bubu/screens/WatchLogic.html" title="04 手表联动逻辑" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">01</span><h3>04 手表联动逻辑</h3><a href="bubu/screens/WatchLogic.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04 手表联动逻辑">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1200;--h:1000" data-w="1200">
+        <div class="ab-frame"><iframe data-src="bubu/screens/WatchEmotion.html" title="04 共同情感连接" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">02</span><h3>04 共同情感连接</h3><a href="bubu/screens/WatchEmotion.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04 共同情感连接">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1600;--h:1000" data-w="1600">
+        <div class="ab-frame"><iframe data-src="bubu/screens/WatchFlow.html" title="04 手表端任务流" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">03</span><h3>04 手表端任务流</h3><a href="bubu/screens/WatchFlow.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04 手表端任务流">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1600;--h:1000" data-w="1600">
+        <div class="ab-frame"><iframe data-src="bubu/screens/WatchSpec.html" title="04 手表设计规范 · watchOS" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">04</span><h3>04 手表设计规范 · watchOS</h3><a href="bubu/screens/WatchSpec.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04 手表设计规范 · watchOS">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1600;--h:1000" data-w="1600">
+        <div class="ab-frame"><iframe data-src="bubu/screens/WearSpec.html" title="04 手表设计规范 · Wear OS" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">05</span><h3>04 手表设计规范 · Wear OS</h3><a href="bubu/screens/WearSpec.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04 手表设计规范 · Wear OS">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:2400;--h:1000" data-w="2400">
+        <div class="ab-frame"><iframe data-src="bubu/screens/WatchHome.html" title="04-A ① 入口 → 首页三页" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">06</span><h3>04-A ① 入口 → 首页三页</h3><a href="bubu/screens/WatchHome.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04-A ① 入口 → 首页三页">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:2000;--h:1000" data-w="2000">
+        <div class="ab-frame"><iframe data-src="bubu/screens/WatchInteract.html" title="04-A ② 二级任务与交互规则" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">07</span><h3>04-A ② 二级任务与交互规则</h3><a href="bubu/screens/WatchInteract.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04-A ② 二级任务与交互规则">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:2400;--h:1000" data-w="2400">
+        <div class="ab-frame"><iframe data-src="bubu/screens/WatchScreens.html" title="04-B 手机联动场景（按一天时间顺序）" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">08</span><h3>04-B 手机联动场景（按一天时间顺序）</h3><a href="bubu/screens/WatchScreens.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04-B 手机联动场景（按一天时间顺序）">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1800;--h:1000" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/ScaleLink.html" title="04 体脂秤联动" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">09</span><h3>04 体脂秤联动</h3><a href="bubu/screens/ScaleLink.html" target="_blank" rel="noopener" aria-label="打开原尺寸：04 体脂秤联动">原尺寸 ↗</a></div>
+      </article>
+    </div>
+    <div class="progress" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<section class="chapter" id="hifi" data-chapter="05 高保真 · 雾林毛玻璃">
+  <div class="pin">
+    <header class="ch-head wrap">
+      <span class="ch-num">05</span>
+      <div><h2 data-words>高保真 · 雾林毛玻璃</h2><p class="lead">视觉规范、手机关键屏、手表高保真与动效分镜。</p></div>
+      <span class="ch-count">12 张设计稿</span>
+    </header>
+    <div class="track">
+      <article class="slide" style="--w:1800;--h:1100" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HFSpec.html" title="05 高保真视觉规范" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">01</span><h3>05 高保真视觉规范</h3><a href="bubu/screens/HFSpec.html" target="_blank" rel="noopener" aria-label="打开原尺寸：05 高保真视觉规范">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:441;--h:900" data-w="441">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HF01-Welcome.html" title="HF01 欢迎 · 领取种子" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">02</span><h3>HF01 欢迎 · 领取种子</h3><a href="bubu/screens/HF01-Welcome.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF01 欢迎 · 领取种子">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:441;--h:900" data-w="441">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HF02-Home.html" title="HF02 今日首页" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">03</span><h3>HF02 今日首页</h3><a href="bubu/screens/HF02-Home.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF02 今日首页">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:441;--h:900" data-w="441">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HF03-Voice.html" title="HF03 语音记录饮食" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">04</span><h3>HF03 语音记录饮食</h3><a href="bubu/screens/HF03-Voice.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF03 语音记录饮食">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:441;--h:900" data-w="441">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HF04-Encourage.html" title="HF04 鼓励浮层" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">05</span><h3>HF04 鼓励浮层</h3><a href="bubu/screens/HF04-Encourage.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF04 鼓励浮层">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:441;--h:900" data-w="441">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HF05-Abnormal.html" title="HF05 异常引导" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">06</span><h3>HF05 异常引导</h3><a href="bubu/screens/HF05-Abnormal.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF05 异常引导">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:441;--h:900" data-w="441">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HF06-Hatch.html" title="HF06 孵化仪式" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">07</span><h3>HF06 孵化仪式</h3><a href="bubu/screens/HF06-Hatch.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF06 孵化仪式">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:441;--h:900" data-w="441">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HF07-Portrait.html" title="HF07 健康摘要（健康画像）" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">08</span><h3>HF07 健康摘要（健康画像）</h3><a href="bubu/screens/HF07-Portrait.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF07 健康摘要（健康画像）">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:441;--h:900" data-w="441">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HF10-Scale.html" title="HF10 体脂秤同步" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">09</span><h3>HF10 体脂秤同步</h3><a href="bubu/screens/HF10-Scale.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF10 体脂秤同步">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1600;--h:960" data-w="1600">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HFWatch.html" title="HW 手表高保真" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">10</span><h3>HW 手表高保真</h3><a href="bubu/screens/HFWatch.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HW 手表高保真">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1800;--h:1000" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HFMotion.html" title="HF08 动态健康画像" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">11</span><h3>HF08 动态健康画像</h3><a href="bubu/screens/HFMotion.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF08 动态健康画像">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1800;--h:1000" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/HFCelebrate.html" title="HF09 孵化庆祝动效分镜" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">12</span><h3>HF09 孵化庆祝动效分镜</h3><a href="bubu/screens/HFCelebrate.html" target="_blank" rel="noopener" aria-label="打开原尺寸：HF09 孵化庆祝动效分镜">原尺寸 ↗</a></div>
+      </article>
+    </div>
+    <div class="progress" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<section class="chapter" id="rationale" data-chapter="06 方案论述">
+  <div class="pin">
+    <header class="ch-head wrap">
+      <span class="ch-num">06</span>
+      <div><h2 data-words>方案论述</h2><p class="lead">AI 应用、低碳设计、关键决策与可用性测试。</p></div>
+      <span class="ch-count">3 张设计稿</span>
+    </header>
+    <div class="track">
+      <article class="slide" style="--w:1800;--h:1000" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/R1-AI.html" title="06 方案论述 · AI 应用" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">01</span><h3>06 方案论述 · AI 应用</h3><a href="bubu/screens/R1-AI.html" target="_blank" rel="noopener" aria-label="打开原尺寸：06 方案论述 · AI 应用">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1800;--h:1000" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/R2-LowCarbon.html" title="06 方案论述 · 低碳设计" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">02</span><h3>06 方案论述 · 低碳设计</h3><a href="bubu/screens/R2-LowCarbon.html" target="_blank" rel="noopener" aria-label="打开原尺寸：06 方案论述 · 低碳设计">原尺寸 ↗</a></div>
+      </article>
+      <article class="slide" style="--w:1800;--h:1000" data-w="1800">
+        <div class="ab-frame"><iframe data-src="bubu/screens/R3-Decisions.html" title="06 方案论述 · 关键决策与可用性测试" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="slide-cap"><span class="n">03</span><h3>06 方案论述 · 关键决策与可用性测试</h3><a href="bubu/screens/R3-Decisions.html" target="_blank" rel="noopener" aria-label="打开原尺寸：06 方案论述 · 关键决策与可用性测试">原尺寸 ↗</a></div>
+      </article>
+    </div>
+    <div class="progress" aria-hidden="true"><i></i></div>
+  </div>
+</section>
+
+<!-- Numbers (Velox counters) -->
+<section class="numbers" id="numbers" data-chapter="数字">
+  <div class="wrap">
+    <h2 data-words>3 天，3 类养分，2 端联动</h2>
+    <div class="nums">
+      <div class="num"><b data-count="3">3</b><span>天养成</span></div>
+      <div class="num"><b data-count="3">3</b><span>类养分</span></div>
+      <div class="num"><b data-count="2">2</b><span>端联动</span></div>
+      <div class="num"><b data-count="47">47</b><span>张设计稿</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="more">
+  <div class="wrap">
+    <h2 data-words>步步在等你</h2>
+    <p class="lead">完整的设计画布与 43 页 PDF 方案。</p>
+    <div class="btns">
+      <a class="btn btn-lime" data-magnet href="https://claude.ai/artifact/Au4Fm3tFjSgGDr4yo753FH" target="_blank" rel="noopener">打开设计画布 ↗</a>
+      <a class="btn btn-ghost" data-magnet href="../index.html#projects">返回作品集</a>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer><span>健康伙伴 Bubu · 交互设计方案</span><span>© 韦旻昕 VIKO WEI</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  // Artboards render at their original pixel size, scaled to fit the frame.
+  var cover=document.getElementById('cover');
+  function zoomTo(f,z){
+    f._z=z;
+    try{ var d=f.contentDocument; if(d&&d.documentElement){ d.documentElement.style.zoom=z; d.documentElement.style.overflow='hidden'; } }catch(e){}
+  }
+  document.querySelectorAll('.cover iframe, .ab-frame iframe').forEach(function(f){ f.addEventListener('load',function(){ if(f._z) zoomTo(f,f._z); }); });
+  // Banner: blow the cover up as far as the screen allows. Its content sits
+  // between y=40 and y=1020 of the 1587x1123 artboard; the plain margins
+  // around it may crop, the content never does.
+  function fitCover(){
+    var f=cover.querySelector('iframe'), vw=cover.clientWidth, vh=cover.clientHeight, top=64;
+    var z=Math.min(vw/1587,(vh-top-16)/980);
+    f.style.width=(1587*z)+'px'; f.style.height=(1123*z)+'px';
+    f.style.left=((vw-1587*z)/2)+'px';
+    f.style.top=(top+((vh-top)-980*z)/2-40*z)+'px';
+    zoomTo(f,z);
+  }
+  function fit(fr){ var h=+getComputedStyle(fr.parentNode).getPropertyValue('--h'); zoomTo(fr.querySelector('iframe'), fr.clientHeight/h); }
+  var frames=[].slice.call(document.querySelectorAll('.ab-frame'));
+  if('ResizeObserver' in window){
+    var ro=new ResizeObserver(function(es){es.forEach(function(e){ e.target===cover?fitCover():fit(e.target); });});
+    frames.forEach(function(fr){ro.observe(fr);}); ro.observe(cover);
+  } else { fitCover(); frames.forEach(fit); }
+
+  var lazy=[].slice.call(document.querySelectorAll('iframe[data-src]'));
+  function load(f){ if(!f.src){ f.src=f.getAttribute('data-src'); } }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ load(e.target); io.unobserve(e.target);} });},{rootMargin:'1200px 2400px'});
+    lazy.forEach(function(f){io.observe(f);});
+  } else { lazy.forEach(load); }
+
+  // Split headings into words (Chinese: into characters) for the reveals.
+  document.querySelectorAll('[data-words]').forEach(function(el){
+    var t=el.textContent; el.textContent='';
+    Array.from(t).forEach(function(c){
+      if(c==='|'){ el.appendChild(document.createElement('br')); return; }
+      if(c===' '){ el.appendChild(document.createTextNode(' ')); return; }
+      var s=document.createElement('span'); s.className='w'; s.textContent=c; el.appendChild(s);
+    });
+  });
+
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  var lenis;
+  if(window.Lenis){
+    lenis=new Lenis({lerp:.1});
+    lenis.on('scroll',ScrollTrigger.update);
+    gsap.ticker.add(function(t){lenis.raf(t*1000);});
+    gsap.ticker.lagSmoothing(0);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href')); if(t&&lenis){e.preventDefault(); lenis.scrollTo(t);} });
+  });
+
+  var mm=gsap.matchMedia();
+
+  // Hero (Velox): pinned; the cover tilts back like the polyhedron while the headline builds over it.
+  mm.add('(min-width: 900px)',function(){
+    var tl=gsap.timeline({scrollTrigger:{trigger:'#hero',start:'top top',end:'+=150%',pin:true,scrub:1}});
+    tl.to(cover,{scale:.62,rotationX:28,rotationZ:-10,y:function(){return -window.innerHeight*.06;},transformPerspective:1600,ease:'none',duration:.5},0)
+      .to(cover,{opacity:0,ease:'none',duration:.2},.3)
+      .to('.hint',{opacity:0,duration:.1},0)
+      .to('.veil',{opacity:1,ease:'none',duration:.2},.3)
+      .fromTo('.hero-copy h1 .w',{opacity:0,yPercent:40},{opacity:1,yPercent:0,stagger:.03,ease:'none',duration:.15},.5)
+      .to('.hero-copy .lead',{opacity:1,ease:'none',duration:.15},.85);
+  });
+
+  // Feature heading: words light up with scroll; cards rise in a stagger.
+  gsap.utils.toArray('.feat-head h2, .numbers h2, .cta h2').forEach(function(h){
+    gsap.fromTo(h.querySelectorAll('.w'),{opacity:.12,yPercent:30},{opacity:1,yPercent:0,stagger:.05,ease:'none',scrollTrigger:{trigger:h,start:'top 85%',end:'top 45%',scrub:true}});
+  });
+  ScrollTrigger.batch('.card',{start:'top 90%',once:true,onEnter:function(b){gsap.fromTo(b,{opacity:0,y:60},{opacity:1,y:0,duration:1,ease:'expo.out',stagger:.08});}});
+  gsap.set('.card',{opacity:0});
+  gsap.to('.bubu-float',{y:-12,duration:2.2,repeat:-1,yoyo:true,ease:'sine.inOut'});
+
+  // Chapters (Velox showcase): pin, then scroll the artboards sideways.
+  mm.add('(min-width: 900px)',function(){
+    gsap.utils.toArray('.chapter').forEach(function(ch){
+      var track=ch.querySelector('.track'), bar=ch.querySelector('.progress i');
+      var dist=function(){return Math.max(0,track.scrollWidth-document.documentElement.clientWidth);};
+      ch.querySelectorAll('iframe[data-src]').forEach(load);
+      var tl=gsap.timeline({scrollTrigger:{trigger:ch,start:'top top',end:function(){return '+='+Math.max(dist(),window.innerHeight*.6);},pin:ch.querySelector('.pin'),scrub:1,invalidateOnRefresh:true,anticipatePin:1,
+        onUpdate:function(st){bar.style.width=(st.progress*100)+'%';}}});
+      tl.to(track,{x:function(){return -dist();},ease:'none'},0);
+      gsap.fromTo(ch.querySelectorAll('.ch-head h2 .w'),{opacity:.1,yPercent:40},{opacity:1,yPercent:0,stagger:.04,ease:'none',scrollTrigger:{trigger:ch,start:'top 80%',end:'top 20%',scrub:true}});
+      gsap.fromTo(ch.querySelector('.ch-num'),{xPercent:-40,opacity:0},{xPercent:0,opacity:1,ease:'none',scrollTrigger:{trigger:ch,start:'top 85%',end:'top 35%',scrub:true}});
+    });
+  });
+
+  // Side dots follow the current chapter.
+  var dots=[].slice.call(document.querySelectorAll('.dots a'));
+  dots.forEach(function(d){
+    var sec=document.querySelector(d.getAttribute('href')); if(!sec) return;
+    ScrollTrigger.create({trigger:sec,start:'top 50%',end:'bottom 50%',onToggle:function(st){ if(st.isActive){dots.forEach(function(x){x.classList.remove('on');}); d.classList.add('on');} }});
+  });
+
+  // Counters.
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var end=+el.getAttribute('data-count'), o={v:0}; el.textContent='0';
+    ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:function(){gsap.to(o,{v:end,duration:1.6,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(o.v);}});}});
+  });
+
+  // Magnetic buttons.
+  if(window.matchMedia('(hover: hover)').matches){
+    document.querySelectorAll('[data-magnet]').forEach(function(b){
+      var xTo=gsap.quickTo(b,'x',{duration:.5,ease:'power3'}), yTo=gsap.quickTo(b,'y',{duration:.5,ease:'power3'});
+      b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect(); xTo((e.clientX-r.left-r.width/2)*.35); yTo((e.clientY-r.top-r.height/2)*.35);});
+      b.addEventListener('mouseleave',function(){xTo(0);yTo(0);});
+    });
+  }
+  window.addEventListener('load',function(){ScrollTrigger.refresh();});
+})();
+</script>
+</body>
+</html>

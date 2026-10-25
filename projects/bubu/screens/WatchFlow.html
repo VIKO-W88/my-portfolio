@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>WatchFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.lane{display:flex;gap:14px;align-items:stretch;background:#fff;border:1.5px solid #D4D4CF;border-radius:16px;padding:14px}
+.ll{flex:none;width:150px;display:flex;flex-direction:column;justify-content:center;gap:4px;border-right:1.5px solid #D4D4CF;padding-right:12px}
+.row{display:flex;align-items:center;gap:8px;flex:1;flex-wrap:nowrap}
+.nd{flex:none;background:#fff;border:1.5px solid #222;border-radius:10px;padding:7px 9px;font-size:12px;line-height:1.45;text-align:center;min-width:84px}
+.nd b{display:block;font-size:10.5px;color:#9A3412}
+.wn{flex:none;background:#1C1C1E;color:#fff;border-radius:12px;padding:7px 9px;font-size:12px;line-height:1.45;text-align:center;min-width:84px}
+.wn b{display:block;font-size:10.5px;color:#FDBA74}
+.dc{flex:none;background:#FFFBEB;border:1.5px dashed #222;border-radius:10px;padding:7px 9px;font-size:12px;text-align:center}
+.st{flex:none;background:#E9E9E5;border-radius:20px;padding:7px 12px;font-size:12px;font-weight:700}
+.ar{flex:none;font-size:16px;color:#222}
+.br{display:flex;flex-direction:column;gap:6px}
+.bi{display:flex;align-items:center;gap:6px}
+.y{flex:none;font-size:11px;color:#55554F;width:22px;text-align:right}
+.hp{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;background:#DBEAFE;color:#1E3A8A;margin-top:3px}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1600px;height:1000px;box-sizing:border-box;padding:36px 44px;background:#F4F4F2;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">手表联动 · 手表端任务流</div>
+      <h2 style="margin:6px 0 0;font-size:28px">每次抬腕 5 秒内完成：看一眼、说一句、点一下</h2>
+    </div>
+    <div style="display:flex;gap:14px;font-size:12px;align-items:center">
+      <span class="wn" style="min-width:0;padding:3px 8px;font-size:11px">手表页面</span>
+      <span class="nd" style="min-width:0;padding:3px 8px;font-size:11px">手机 / 云端</span>
+      <span class="dc" style="padding:3px 8px;font-size:11px">判断</span>
+      <span class="hp" style="margin:0">触感</span>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="ll"><span style="align-self:flex-start;font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;background:#1A1A18;color:#fff">04-A 自身交互</span><div style="font-size:16px;font-weight:700">A 抬腕看步步</div><div style="font-size:12px;color:#55554F">每天多次 · 主路径</div></div>
+    <div class="row">
+      <div class="wn"><b>WA1</b>表盘复杂功能<br>步步 + 进度环</div><span class="ar">→</span>
+      <div class="wn"><b>WA2</b>步步主页<br>养分 2/3</div><span class="ar">→</span>
+      <div class="dc">还缺<br>哪项？</div><span class="ar">→</span>
+      <div class="br">
+        <div class="bi"><span class="y">饮食</span><div class="wn"><b>WA4</b>按麦克风说一句</div><span class="ar">→</span><div class="nd">手机 AI 解析</div><span class="ar">→</span><div class="wn"><b>WA4</b>确认卡<br>好 / 改</div><span class="ar">→</span><div class="nd">写入，养分 3/3<span class="hp">.success</span></div></div>
+        <div class="bi"><span class="y">无</span><div class="wn">步步：今天都吃饱啦</div><span class="ar">→</span><div class="st">放下手腕</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="ll"><span style="align-self:flex-start;font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;background:#1D4ED8;color:#fff">04-B 联动</span><div style="font-size:16px;font-weight:700">B 运动完成</div><div style="font-size:12px;color:#55554F">体能训练结束后</div></div>
+    <div class="row">
+      <div class="st">训练结束</div><span class="ar">→</span>
+      <div class="nd">系统训练汇总<br>（不打断）</div><span class="ar">→</span>
+      <div class="wn"><b>WA3 简短通知</b>步步吃到运动养分<span class="hp">.success</span></div><span class="ar">→</span>
+      <div class="dc">继续<br>看？</div><span class="ar">→</span>
+      <div class="br">
+        <div class="bi"><span class="y">是</span><div class="wn"><b>WA3 详细通知</b>步步动画 + 活力 +1</div><span class="ar">→</span><div class="wn">在手机上看看</div><span class="ar">→</span><div class="nd">手机打开，步步「落地」</div></div>
+        <div class="bi"><span class="y">否</span><div class="nd">表盘进度自动刷新</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="ll"><span style="align-self:flex-start;font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;background:#1A1A18;color:#fff">04-A 自身交互</span><div style="font-size:16px;font-weight:700">C 睡前轻提醒</div><div style="font-size:12px;color:#55554F">目标含「睡得更好」</div></div>
+    <div class="row">
+      <div class="st">21:30</div><span class="ar">→</span>
+      <div class="dc">睡眠专注<br>已开启？</div><span class="ar">→</span>
+      <div class="br">
+        <div class="bi"><span class="y">是</span><div class="nd">不推送，表盘步步静默入睡</div></div>
+        <div class="bi"><span class="y">否</span><div class="wn"><b>WA5</b>步步困了<br>一起早点睡？<span class="hp">.notification</span></div><span class="ar">→</span><div class="dc">选择</div><span class="ar">→</span><div class="wn">好：步步盖被子<br>晚点：30 分钟后不再提醒</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="ll"><span style="align-self:flex-start;font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;background:#1D4ED8;color:#fff">04-B 联动</span><div style="font-size:16px;font-weight:700">D Day3 孵化</div><div style="font-size:12px;color:#55554F">与手机共同完成</div></div>
+    <div class="row">
+      <div class="nd">手机 W10<br>按住花苞</div><span class="ar">→</span>
+      <div class="wn"><b>WA6</b>手表亮屏<br>心跳逐渐加快<span class="hp">.click 节律</span></div><span class="ar">→</span>
+      <div class="dc">按满<br>2 秒？</div><span class="ar">→</span>
+      <div class="br">
+        <div class="bi"><span class="y">是</span><div class="wn"><b>WA6</b>步步成形<span class="hp">.success</span></div><span class="ar">→</span><div class="nd">表盘复杂功能换成成形步步</div></div>
+        <div class="bi"><span class="y">否</span><div class="nd">松手，两端心跳一起停止</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane" style="background:#F9F9F7">
+    <div class="ll"><span style="align-self:flex-start;font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;background:#8E8E93;color:#fff">仅手机</span><div style="font-size:16px;font-weight:700">E 异常（不上手表）</div><div style="font-size:12px;color:#55554F">血糖 L1–L3</div></div>
+    <div class="row">
+      <div class="nd">云端判断 L1 / L2</div><span class="ar">→</span>
+      <div class="nd">只在手机今日页出现</div><span class="ar">→</span>
+      <div class="dc">L3？</div><span class="ar">→</span>
+      <div class="wn">通知「打开手机查看」<br>不显示数值</div>
+      <div style="flex:1;font-size:12px;color:#55554F;line-height:1.6;padding-left:12px;border-left:1.5px dashed #D4D4CF;margin-left:8px">手腕是半公开的位置，也是最容易「被一个数字吓到」的地方。健康敏感信息只在手机上展开。</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

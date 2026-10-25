@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>HFMotion</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..600,0..1,0&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;display:inline-block}
+.msf{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+.k{font-family:'Outfit','Noto Sans SC',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5D6A64}
+.sec{font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:300;font-size:22px;margin:0;color:#1B2420;display:flex;align-items:baseline;gap:10px}
+.sec b{font-family:'Outfit',sans-serif;font-weight:200;font-size:28px;color:#8EA299}
+.gi{background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.75);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2)}
+.mt{display:grid;grid-template-columns:118px 150px minmax(0,1fr) 196px 150px;align-items:center;column-gap:16px;padding:12px 16px;border-bottom:1px solid #C5CEC9;font-size:13px;line-height:20px;color:#26322C}
+.mt.h{font-size:12px;color:#5D6A64;padding-top:0}
+.dn{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:#1B2420}
+.dn .ms{font-size:20px}
+.num{font-family:'Outfit',sans-serif}
+.mx{display:grid;grid-template-columns:118px repeat(3,minmax(0,1fr));gap:10px;align-items:stretch}
+.cell{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.55);border-radius:16px;padding:8px 12px 8px 8px;min-width:0}
+.mini{position:relative;flex:none;width:76px;height:76px;border-radius:14px;background:radial-gradient(circle at 50% 60%,#C9D3CF,#8EA299);overflow:hidden}
+.mini img{position:absolute;left:18px;top:20px;width:40px;height:40px}
+.mini .h{position:absolute;left:50%;top:52%;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(157,185,232,.95) 0%,rgba(157,185,232,.35) 55%,rgba(157,185,232,0) 72%)}
+.mini .p{position:absolute;width:5px;height:5px;border-radius:50%;background:#CFF27E;box-shadow:0 0 6px #CFF27E}
+.ct{font-size:13px;line-height:19px;color:#26322C;min-width:0}
+.ct b{display:block;font-size:14px;font-weight:500;color:#1B2420}
+.ia{border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.55)}
+.ia .t{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500}
+.ia .t .ms{font-size:20px;color:#4E6B4F}
+.ia .d{font-size:13px;line-height:20px;color:#33413A}
+.tag{position:absolute;height:30px;padding:0 12px;border-radius:15px;display:flex;align-items:center;gap:6px;font-size:13px;color:#1B2420;white-space:nowrap}
+@keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(.92);opacity:.6}40%{transform:translate(-50%,-50%) scale(1.04);opacity:1}50%{transform:translate(-50%,-50%) scale(1.04);opacity:1}}
+@keyframes orbit{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes squash{0%,70%,100%{transform:translate(-50%,0) scale(1,1)}78%{transform:translate(-50%,0) scale(1.08,.9)}86%{transform:translate(-50%,0) scale(.95,1.06)}93%{transform:translate(-50%,0) scale(1.02,.98)}}
+.halo{animation:breathe 4s ease-in-out infinite}
+.orb{animation:orbit 9s linear infinite}
+.body{animation:squash 3.2s cubic-bezier(.3,.7,.4,1) infinite}
+@media (prefers-reduced-motion:reduce){.halo,.orb,.body{animation:none}}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1800px;height:1000px;box-sizing:border-box;padding:40px 48px;background:#DCE1DE;font-family:'Noto Sans SC',sans-serif;color:#1B2420;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">05 · Motion · 动态健康画像</div>
+      <div style="font-weight:300;font-size:30px;line-height:40px;margin-top:6px">画像会呼吸：步步的身体就是你 3 天的数据</div>
+    </div>
+    <div style="font-size:13px;line-height:20px;color:#3B4A43;text-align:right;max-width:520px">对应高保真 HF07 健康摘要。用「拟物 IP + 浮岛 3D 场景 + 持续动效」代替雷达图，<br>一眼看出哪一项需要关照，数值放在卡片里作为第二层信息。</div>
+  </div>
+
+  <div style="flex:1;display:grid;grid-template-columns:520px minmax(0,1fr);gap:32px;min-height:0">
+
+    <!-- 动态画像 -->
+    <div style="position:relative;border-radius:28px;overflow:hidden;background:linear-gradient(180deg,#D3DCD7 0%,#A9B8B2 46%,#6F8A7E 100%)">
+      <svg aria-hidden="true" width="520" height="260" viewBox="0 0 520 260" style="position:absolute;left:0;bottom:0"><path d="M0 120 C90 80 160 110 250 84 C350 56 430 96 520 70 V260 H0Z" fill="#5E7A6E" opacity=".55"/><path d="M0 190 C110 160 210 188 320 166 C420 146 470 168 520 158 V260 H0Z" fill="#4A6458" opacity=".6"/></svg>
+      <div aria-hidden="true" style="position:absolute;left:110px;top:430px;width:300px;height:120px;border-radius:50%;background:radial-gradient(ellipse at 50% 30%,#6E8A62,#3F5A47 70%);box-shadow:0 30px 40px -10px rgba(20,30,25,.4)"></div>
+
+      <div class="halo" aria-hidden="true" style="position:absolute;left:260px;top:330px;width:330px;height:330px;border-radius:50%;background:radial-gradient(circle,rgba(157,185,232,.85) 0%,rgba(157,185,232,.35) 48%,rgba(157,185,232,0) 70%)"></div>
+      <div class="orb" aria-hidden="true" style="position:absolute;left:260px;top:340px;width:300px;height:300px">
+        <span style="position:absolute;left:146px;top:-4px;width:9px;height:9px;border-radius:50%;background:#CFF27E;box-shadow:0 0 12px 2px #CFF27E"></span>
+        <span style="position:absolute;left:290px;top:140px;width:7px;height:7px;border-radius:50%;background:#CFF27E;box-shadow:0 0 10px 2px #CFF27E"></span>
+        <span style="position:absolute;left:250px;top:248px;width:8px;height:8px;border-radius:50%;background:#CFF27E;box-shadow:0 0 12px 2px #CFF27E"></span>
+        <span style="position:absolute;left:40px;top:250px;width:6px;height:6px;border-radius:50%;background:#CFF27E;box-shadow:0 0 10px 2px #CFF27E"></span>
+        <span style="position:absolute;left:-4px;top:120px;width:8px;height:8px;border-radius:50%;background:#CFF27E;box-shadow:0 0 12px 2px #CFF27E"></span>
+        <span style="position:absolute;left:52px;top:28px;width:6px;height:6px;border-radius:50%;background:#CFF27E;box-shadow:0 0 10px 2px #CFF27E"></span>
+        <span style="position:absolute;left:226px;top:30px;width:5px;height:5px;border-radius:50%;background:#CFF27E;box-shadow:0 0 8px 2px #CFF27E"></span>
+        <span style="position:absolute;left:150px;top:296px;width:6px;height:6px;border-radius:50%;background:#CFF27E;box-shadow:0 0 10px 2px #CFF27E"></span>
+      </div>
+      <img class="body" src="../img/bubu.png" alt="步步：身体饱满、光晕呼吸、活力粒子环绕" style="position:absolute;left:260px;top:236px;width:200px;height:200px;transform:translate(-50%,0);transform-origin:50% 100%;filter:drop-shadow(0 18px 18px rgba(20,30,25,.25))">
+
+      <span class="tag gi" style="left:24px;top:24px"><span class="ms" style="font-size:16px;color:#4C6FAE">bedtime</span>光晕 = 睡眠 · 呼吸 4s</span>
+      <span class="tag gi" style="right:24px;top:76px"><span class="ms" style="font-size:16px;color:#8B5E1F">restaurant</span>体态 = 饮食 · Q 弹</span>
+      <span class="tag gi" style="left:24px;top:128px"><span class="ms" style="font-size:16px;color:#4E6B4F">directions_walk</span>粒子 = 运动 · 环绕</span>
+
+      <div class="gi" style="position:absolute;left:20px;right:20px;bottom:20px;border-radius:22px;padding:14px 16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+        <div><div style="font-size:12px;color:#3B4A43">睡眠 · 3 天均值</div><div style="font-size:17px;font-weight:500"><span class="num">6.3</span> 小时</div><div style="font-size:12px;color:#8B5E1F">光晕偏小 · 需要关照</div></div>
+        <div><div style="font-size:12px;color:#3B4A43">饮食 · 均衡度</div><div style="font-size:17px;font-weight:500"><span class="num">3</span> / 5</div><div style="font-size:12px;color:#3B4A43">体态正常 · 还不错</div></div>
+        <div><div style="font-size:12px;color:#3B4A43">运动 · 活动时长</div><div style="font-size:17px;font-weight:500"><span class="num">42</span> 分钟/天</div><div style="font-size:12px;color:#4E6B4F">8 颗粒子 · 很棒</div></div>
+      </div>
+    </div>
+
+    <!-- 右侧 -->
+    <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
+      <div>
+        <h2 class="sec"><b>01</b>数据 → 视觉参数 → 动效</h2>
+        <div style="margin-top:12px">
+          <div class="mt h"><span>维度</span><span>视觉载体</span><span>数据如何驱动参数</span><span>动效</span><span>时长 / 曲线</span></div>
+          <div class="mt"><span class="dn"><span class="ms msf" style="color:#4C6FAE">bedtime</span>睡眠</span><span>雾蓝光晕</span><span>时长 <span class="num">4–9h</span> → 光晕半径 <span class="num">60–100%</span>；深睡占比 → 亮度</span><span>呼吸缩放 <span class="num">0.92 ↔ 1.04</span></span><span><span class="num">4s</span> 循环 · ease-in-out</span></div>
+          <div class="mt"><span class="dn"><span class="ms msf" style="color:#8B5E1F">restaurant</span>饮食</span><span>身体体态 + 叶片</span><span>均衡度 <span class="num">1–5</span> → 身形饱满度、叶片舒展角 <span class="num">10°–35°</span>；碳水偏多时身体略下沉</span><span>记录后挤压回弹（squash &amp; stretch）</span><span><span class="num">320ms</span> · 弹簧回弹</span></div>
+          <div class="mt"><span class="dn"><span class="ms msf" style="color:#4E6B4F">directions_walk</span>运动</span><span>青柠活力粒子</span><span>活动时长 <span class="num">0–60</span> 分钟 → 粒子 <span class="num">0–24</span> 颗；步数 → 环绕速度</span><span>粒子环绕；达标时爆发一次</span><span>一圈 <span class="num">12s → 6s</span> · linear；爆发 <span class="num">600ms</span></span></div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="sec"><b>02</b>三档状态（同一套参数，不用红色）</h2>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+          <div class="mx" style="font-size:12px;color:#5D6A64"><span></span><span>需要关照（琥珀提示）</span><span>还不错</span><span>很棒</span></div>
+          <div class="mx">
+            <span class="dn"><span class="ms msf" style="color:#4C6FAE">bedtime</span>睡眠</span>
+            <div class="cell"><span class="mini"><span class="h" style="width:44px;height:44px;opacity:.5"></span><img src="../img/bubu.png" alt=""></span><span class="ct"><b>光晕小而暗</b>&lt; <span class="num">6h</span>，呼吸放慢</span></div>
+            <div class="cell"><span class="mini"><span class="h" style="width:62px;height:62px;opacity:.75"></span><img src="../img/bubu.png" alt=""></span><span class="ct"><b>光晕包住身体</b><span class="num">6–7h</span></span></div>
+            <div class="cell"><span class="mini"><span class="h" style="width:80px;height:80px;opacity:1"></span><img src="../img/bubu.png" alt=""></span><span class="ct"><b>光晕饱满明亮</b>≥ <span class="num">7h</span></span></div>
+          </div>
+          <div class="mx">
+            <span class="dn"><span class="ms msf" style="color:#8B5E1F">restaurant</span>饮食</span>
+            <div class="cell"><span class="mini"><img src="../img/bubu.png" alt="" style="transform:scale(1.08,.86);transform-origin:50% 100%;top:24px"></span><span class="ct"><b>身体下沉、叶片收拢</b>均衡度 <span class="num">1–2</span></span></div>
+            <div class="cell"><span class="mini"><img src="../img/bubu.png" alt=""></span><span class="ct"><b>体态自然</b>均衡度 <span class="num">3</span></span></div>
+            <div class="cell"><span class="mini"><img src="../img/bubu.png" alt="" style="transform:scale(.96,1.08);transform-origin:50% 100%;top:16px"></span><span class="ct"><b>挺拔、叶片舒展</b>均衡度 <span class="num">4–5</span></span></div>
+          </div>
+          <div class="mx">
+            <span class="dn"><span class="ms msf" style="color:#4E6B4F">directions_walk</span>运动</span>
+            <div class="cell"><span class="mini"><img src="../img/bubu.png" alt=""><span class="p" style="left:14px;top:22px"></span><span class="p" style="left:58px;top:54px"></span></span><span class="ct"><b>2 颗粒子，转得慢</b>&lt; <span class="num">20</span> 分钟</span></div>
+            <div class="cell"><span class="mini"><img src="../img/bubu.png" alt=""><span class="p" style="left:12px;top:20px"></span><span class="p" style="left:60px;top:18px"></span><span class="p" style="left:62px;top:52px"></span><span class="p" style="left:10px;top:54px"></span><span class="p" style="left:36px;top:8px"></span></span><span class="ct"><b>5 颗粒子</b><span class="num">20–40</span> 分钟</span></div>
+            <div class="cell"><span class="mini"><img src="../img/bubu.png" alt=""><span class="p" style="left:12px;top:20px"></span><span class="p" style="left:60px;top:18px"></span><span class="p" style="left:62px;top:52px"></span><span class="p" style="left:10px;top:54px"></span><span class="p" style="left:36px;top:8px"></span><span class="p" style="left:36px;top:64px"></span><span class="p" style="left:6px;top:36px"></span><span class="p" style="left:66px;top:36px"></span></span><span class="ct"><b>8 颗粒子，转得快</b>≥ <span class="num">40</span> 分钟</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="sec"><b>03</b>交互与降级</h2>
+        <div style="margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+          <div class="ia"><div class="t"><span class="ms">touch_app</span>点按聚焦</div><div class="d">点某个维度，其余两项降到 30% 透明度，下方卡片展开 3 天趋势。</div></div>
+          <div class="ia"><div class="t"><span class="ms">screen_rotation_alt</span>倾斜视差</div><div class="d">陀螺仪 ±6°，浮岛与光晕分层位移，形成 3D 景深。</div></div>
+          <div class="ia"><div class="t"><span class="ms">tune</span>减弱动态效果</div><div class="d">跟随系统设置：停止呼吸与粒子，改为静态形态 + 数值标签。</div></div>
+          <div class="ia"><div class="t"><span class="ms">battery_saver</span>低电量模式</div><div class="d">粒子上限 24 → 8 颗，动画 60 → 30fps，离开页面即暂停。</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

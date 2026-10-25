@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>HFWatch</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&amp;family=Noto+Sans+SC:wght@300;400;500&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..600,0..1,0&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;display:inline-block}
+.msf{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+.col{display:flex;flex-direction:column;align-items:center;gap:18px;width:340px}
+.case{position:relative;width:340px;height:400px;border-radius:92px;background:linear-gradient(160deg,#4A504C,#1E2421 55%,#2E3431);display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px -20px rgba(20,26,23,.5),inset 0 0 0 1.5px rgba(255,255,255,.18)}
+.crown{position:absolute;right:-12px;top:104px;width:16px;height:52px;border-radius:6px;background:linear-gradient(90deg,#2E3431,#5A605C)}
+.side{position:absolute;right:-7px;top:190px;width:9px;height:64px;border-radius:4px;background:#3A403C}
+.wrap{width:312px;height:372px;border-radius:78px;overflow:hidden;background:#000}
+/* 46mm 逻辑画布 208×248pt，按 1.5 倍显示 */
+.scr{position:relative;width:208px;height:248px;transform:scale(1.5);transform-origin:0 0;overflow:hidden;background:#000;color:#F4F7F5;font-family:'Noto Sans SC',sans-serif}
+/* watchOS 10 顶部工具栏：左右按钮 32pt 圆，时间居中 */
+.tb{position:absolute;top:8px;left:14px;right:14px;height:32px;display:flex;justify-content:space-between;align-items:center}
+.tbb{width:32px;height:32px;border-radius:16px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;border:none;color:#F4F7F5;padding:0}
+.tm{font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;color:#F4F7F5}
+.nut{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:13px;line-height:16px;color:#C9D3CF}
+.nut .o{width:30px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center;background:#1C2420}
+.nut .on{box-shadow:inset 0 0 0 2px currentColor}
+.btn{position:absolute;left:14px;right:14px;height:40px;border-radius:20px;border:none;font-family:inherit;font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:4px;padding:0}
+.cap{display:flex;flex-direction:column;gap:8px;width:330px}
+.cap b{font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:500;font-size:17px;color:#1B2420;text-align:center}
+.cap .d{font-size:13px;line-height:20px;color:#3B4A43;text-align:center}
+.spec{display:grid;grid-template-columns:72px 1fr;row-gap:4px;column-gap:8px;font-size:12px;line-height:17px;color:#3B4A43;background:rgba(255,255,255,.55);border-radius:14px;padding:10px 12px}
+.spec dt{color:#5D6A64}
+.spec dd{margin:0;color:#1B2420}
+/* 规范标注层 */
+.z{position:absolute;box-sizing:border-box}
+.zl{position:absolute;font-family:'Outfit',sans-serif;font-size:8px;line-height:9px;color:#FF7AB8;white-space:nowrap}
+</style>
+<style>html,body{background:transparent!important;margin:0;overflow:hidden}</style>
+</head>
+<body>
+
+<div style="width:1600px;height:960px;box-sizing:border-box;padding:40px 44px;background:#DCE1DE;font-family:'Noto Sans SC',sans-serif;display:flex;flex-direction:column;gap:30px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div style="font-family:'Outfit',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5D6A64">Apple Watch · 46mm · 208 × 248 pt · 按 1.5 倍显示</div>
+      <div style="font-weight:300;font-size:30px;color:#1B2420;margin-top:6px">手表高保真：同一只步步，同一种夜林</div>
+    </div>
+    <div style="display:flex;gap:8px;font-size:12px;color:#1B2420">
+      <span style="background:rgba(255,255,255,.6);border-radius:12px;padding:5px 10px">纯黑底 · OLED 省电</span>
+      <span style="background:rgba(255,255,255,.6);border-radius:12px;padding:5px 10px">文字不压图</span>
+      <span style="background:rgba(255,255,255,.6);border-radius:12px;padding:5px 10px">最小字号 13pt</span>
+      <span style="background:rgba(255,255,255,.6);border-radius:12px;padding:5px 10px">点击区 ≥ 32pt</span>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between">
+
+    <!-- 规范标注 -->
+    <div class="col">
+      <div class="case"><span class="crown"></span><span class="side"></span><div class="wrap"><div class="scr">
+        <div class="z" style="left:0;right:0;top:0;height:42px;background:rgba(255,122,184,.16);border-bottom:1px dashed #FF7AB8"></div>
+        <span class="zl" style="left:50%;top:44px;transform:translateX(-50%);margin-top:-14px;display:none">工具栏区 0–42</span><span class="zl" style="left:50%;top:6px;transform:translateX(-50%)">工具栏 0–42</span>
+        <div class="z" style="left:0;top:0;bottom:0;width:12px;background:rgba(255,122,184,.28)"></div>
+        <div class="z" style="right:0;top:0;bottom:0;width:12px;background:rgba(255,122,184,.28)"></div>
+        <span class="zl" style="left:2px;top:150px">12</span>
+        <span class="zl" style="right:2px;top:150px">12</span>
+        <div class="z" style="left:12px;right:12px;top:42px;bottom:44px;border:1px dashed #9DB9E8"></div>
+        <span class="zl" style="left:16px;top:46px;color:#9DB9E8">内容区 184 × 162</span>
+        <span class="zl" style="left:50%;top:120px;transform:translateX(-50%);color:rgba(255,255,255,.55)">屏幕圆角 r 52（虚线）</span>
+        <div class="z" style="left:0;right:0;bottom:0;height:44px;background:rgba(207,242,126,.16);border-top:1px dashed #CFF27E"></div>
+        <span class="zl" style="left:50%;top:194px;transform:translateX(-50%);color:#CFF27E">底部操作区 204–248</span>
+        <div class="z" style="left:14px;top:8px;width:32px;height:32px;border:1px solid #FF7AB8;border-radius:16px"></div>
+        <div class="z" style="right:14px;top:8px;width:32px;height:32px;border:1px solid #FF7AB8;border-radius:16px"></div>
+        <span class="zl" style="left:50px;top:20px">32pt</span>
+        <div class="z" style="left:14px;right:14px;bottom:8px;height:36px;border:1px solid #CFF27E;border-radius:18px"></div>
+        <span class="zl" style="left:50%;bottom:21px;transform:translateX(-50%);color:#CFF27E">按钮 14 边距 · 底 8</span>
+        <svg class="z" style="left:0;top:0" width="208" height="248" aria-hidden="true"><path d="M52 0.5 H156 M0.5 52 V196 M207.5 52 V196" stroke="none"/><rect x="0.5" y="0.5" width="207" height="247" rx="52" fill="none" stroke="rgba(255,255,255,.35)" stroke-dasharray="2 3"/></svg>
+      </div></div></div>
+      <div class="cap"><b>布局网格 · 三屏共用</b>
+        <dl class="spec">
+          <dt>顶部工具栏</dt><dd>左右 32pt 圆按钮，时间居中（watchOS 10）</dd>
+          <dt>左右边距</dt><dd>12pt；圆角处按钮内收到 14pt</dd>
+          <dt>内容区</dt><dd>y 42–204，IP 与文字分区，不叠放</dd>
+          <dt>底部操作</dt><dd>单个主按钮 36–40pt，距底 8pt</dd>
+          <dt>字号</dt><dd>标题 17 · 正文 15 · 辅助 13（Large 档）</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- HW1 首页 -->
+    <div class="col">
+      <div class="case"><span class="crown"></span><span class="side"></span><div class="wrap"><div class="scr" style="background:radial-gradient(circle at 50% 40%,#1A2620,#000 72%)">
+        <div class="tb"><button class="tbb" aria-label="本周"><span class="ms" style="font-size:18px">calendar_month</span></button><span class="tm">10:09</span><button class="tbb" aria-label="语音记录"><span class="ms" style="font-size:18px">mic</span></button></div>
+        <div style="position:absolute;left:50%;top:44px;margin-left:-48px;width:96px;height:96px;border-radius:48px;overflow:hidden;box-shadow:0 0 0 1px rgba(207,242,126,.25),0 0 24px rgba(207,242,126,.18)">
+          <img src="../img/watch-face.jpg" alt="夜林小岛上的步步" style="width:96px;height:115px;object-fit:cover;margin-top:-10px">
+        </div>
+        <div style="position:absolute;left:12px;right:12px;top:146px;text-align:center;font-size:17px;line-height:22px;font-weight:500">长叶中 <span style="font-family:'Outfit',sans-serif;font-weight:400;color:#CFF27E">2/3</span></div>
+        <div style="position:absolute;left:12px;right:12px;top:174px;display:flex;justify-content:center;gap:18px">
+          <div class="nut"><span class="o on" style="color:#9DB9E8"><span class="ms msf" style="font-size:17px">bedtime</span></span>睡眠</div>
+          <div class="nut"><span class="o" style="color:#F2C98A;border:1px dashed rgba(242,201,138,.6)"><span class="ms" style="font-size:17px">restaurant</span></span>饮食</div>
+          <div class="nut"><span class="o on" style="color:#CFF27E"><span class="ms msf" style="font-size:17px">directions_walk</span></span>运动</div>
+        </div>
+        <div style="position:absolute;right:4px;top:100px;display:flex;flex-direction:column;gap:3px" aria-hidden="true"><span style="width:4px;height:10px;border-radius:2px;background:#F4F7F5"></span><span style="width:4px;height:4px;border-radius:2px;background:rgba(255,255,255,.35)"></span><span style="width:4px;height:4px;border-radius:2px;background:rgba(255,255,255,.35)"></span></div>
+      </div></div></div>
+      <div class="cap"><b>HW1 首页 · 步步</b>
+        <div class="d">IP 收在 96pt 圆窗里，状态文字放在纯黑底上。实线圈表示「已收」，虚线圈表示「还差」。转动表冠可翻到「今日养分」「3 天养成」两页。</div>
+        <dl class="spec">
+          <dt>工具栏</dt><dd>本周 · 10:09 · 语音</dd>
+          <dt>标题</dt><dd>Headline 17 / 22</dd>
+          <dt>养分</dt><dd>30pt 圆 + 13pt 文字，间距 18</dd>
+          <dt>页码</dt><dd>右缘竖向，距边 4pt</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- HW2 通知 -->
+    <div class="col">
+      <div class="case"><span class="crown"></span><span class="side"></span><div class="wrap"><div class="scr">
+        <div style="position:absolute;left:20px;right:20px;top:12px;height:24px;display:flex;align-items:center;gap:6px">
+          <span style="width:22px;height:22px;border-radius:11px;background:#2A3A2E;display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="../img/bubu.png" alt="" style="width:18px;height:18px"></span>
+          <span style="font-size:13px;font-weight:500;flex:1">健康伙伴</span><span style="font-size:13px;color:rgba(244,247,245,.65)">现在</span>
+        </div>
+        <div style="position:absolute;left:12px;right:12px;top:42px;height:72px;border-radius:16px;overflow:hidden;background:radial-gradient(circle at 50% 60%,#3B5A2E,#14201A 70%);display:flex;align-items:center;justify-content:center">
+          <img src="../img/bubu.png" alt="开心的步步" style="width:60px;height:60px;filter:drop-shadow(0 0 10px rgba(207,242,126,.45))">
+          <span style="position:absolute;left:18px;top:16px;width:4px;height:4px;border-radius:2px;background:#CFF27E;box-shadow:0 0 6px #CFF27E"></span><span style="position:absolute;right:26px;top:24px;width:3px;height:3px;border-radius:2px;background:#CFF27E;box-shadow:0 0 6px #CFF27E"></span><span style="position:absolute;right:44px;bottom:12px;width:3px;height:3px;border-radius:2px;background:#CFF27E;box-shadow:0 0 6px #CFF27E"></span>
+        </div>
+        <div style="position:absolute;left:12px;right:12px;top:122px;font-size:17px;line-height:22px;font-weight:500">步步吃到运动养分啦</div>
+        <div style="position:absolute;left:12px;right:12px;top:146px;font-size:15px;line-height:20px;color:#C9D3CF">跑步 <span style="font-family:'Outfit',sans-serif">5.2</span> 公里 · 今日 <span style="color:#CFF27E;font-family:'Outfit',sans-serif">3/3</span></div>
+        <button class="btn" style="top:174px;background:#CFF27E;color:#1B2420">在手机上查看</button>
+        <span style="position:absolute;right:3px;top:70px;width:3px;height:56px;border-radius:2px;background:rgba(255,255,255,.18)" aria-hidden="true"><span style="position:absolute;left:0;top:0;width:3px;height:30px;border-radius:2px;background:rgba(255,255,255,.7)"></span></span>
+      </div></div></div>
+      <div class="cap"><b>HW2 运动完成 · 长通知</b>
+        <div class="d">训练结束后才推送，不打断运动过程。插图放在独立的卡片里，标题和说明放在黑底上；往下滚动（右侧滚动条）是系统「关闭」按钮，不放进首屏。</div>
+        <dl class="spec">
+          <dt>头部</dt><dd>App 图标 22 + 名称 + 时间 13</dd>
+          <dt>插图卡</dt><dd>184 × 72，圆角 16</dd>
+          <dt>文字</dt><dd>标题 17 · 正文 15</dd>
+          <dt>触感</dt><dd>.success</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- WI2 心情 -->
+    <div class="col">
+      <div class="case"><span class="crown"></span><span class="side"></span><div class="wrap"><div class="scr" style="background:radial-gradient(circle at 50% 38%,#1E2C23,#000 70%)">
+        <div class="tb"><button class="tbb" aria-label="返回"><span class="ms" style="font-size:16px">arrow_back_ios_new</span></button><span class="tm">21:05</span><span style="width:32px"></span></div>
+        <div style="position:absolute;left:12px;right:12px;top:40px;text-align:center;font-size:15px;line-height:20px;font-weight:500">今天感觉怎么样</div>
+        <img src="../img/bubu.png" alt="步步微笑" style="position:absolute;left:50%;top:64px;margin-left:-36px;width:72px;height:72px">
+        <div style="position:absolute;left:12px;right:12px;top:140px;text-align:center;font-size:17px;line-height:22px">还不错</div>
+        <div style="position:absolute;left:34px;right:34px;top:170px;display:flex;justify-content:space-between;align-items:center" role="img" aria-label="心情 4 级中的第 3 级">
+          <span style="width:16px;height:6px;border-radius:3px;background:#CFF27E"></span><span style="width:16px;height:6px;border-radius:3px;background:#CFF27E"></span><span style="width:24px;height:10px;border-radius:5px;background:#CFF27E;box-shadow:0 0 8px rgba(207,242,126,.7)"></span><span style="width:16px;height:6px;border-radius:3px;background:rgba(255,255,255,.2)"></span><span style="width:16px;height:6px;border-radius:3px;background:rgba(255,255,255,.2)"></span>
+        </div>
+        <div style="position:absolute;left:12px;right:12px;top:182px;text-align:center;font-size:13px;line-height:16px;color:rgba(244,247,245,.7)">转动表冠调节</div>
+        <button class="btn" style="top:204px;height:36px;border-radius:18px;background:#CFF27E;color:#1B2420">记下</button>
+        <span style="position:absolute;right:2px;top:92px;width:3px;height:40px;border-radius:2px;background:rgba(255,255,255,.18)" aria-hidden="true"><span style="position:absolute;left:0;top:12px;width:3px;height:14px;border-radius:2px;background:#CFF27E"></span></span>
+      </div></div></div>
+      <div class="cap"><b>WI2 记录心情 · 手表独立任务</b>
+        <div class="d">手机不在身边也能完成。转动表冠调节心情，步步的表情跟着变，每过一档轻震一次。记下的心情和手机鼓励浮层存在同一份数据里。</div>
+        <dl class="spec">
+          <dt>标题</dt><dd>15 / 20，放在工具栏下方</dd>
+          <dt>IP</dt><dd>72pt，居中</dd>
+          <dt>刻度</dt><dd>5 档，当前档放大 + 光晕</dd>
+          <dt>主按钮</dt><dd>36pt，边距 14，距底 8</dd>
+        </dl>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

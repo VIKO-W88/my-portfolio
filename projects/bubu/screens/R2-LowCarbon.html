@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>R2-LowCarbon</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..600,0..1,0&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;display:inline-block}
+.k{font-family:'Outfit','Noto Sans SC',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5D6A64}
+.sec{font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:300;font-size:22px;margin:0;color:#1B2420;display:flex;align-items:baseline;gap:10px}
+.sec b{font-family:'Outfit',sans-serif;font-weight:200;font-size:28px;color:#8EA299}
+.num{font-family:'Outfit',sans-serif}
+.half{border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.it{display:grid;grid-template-columns:44px minmax(0,1fr) 150px;gap:14px;align-items:start;padding:12px 0;border-bottom:1px solid rgba(27,36,32,.1)}
+.it:last-child{border-bottom:none}
+.half>div:last-child{flex:1;display:flex;flex-direction:column}
+.it{flex:1;align-content:center;padding:12px 0}
+.it .ic{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center}
+.it .ic .ms{font-size:24px}
+.it b{display:block;font-size:16px;font-weight:500;line-height:22px;margin-bottom:2px}
+.it span.d{font-size:13px;line-height:20px;color:#33413A}
+.it .gain{font-size:12px;line-height:18px;color:#4E6B4F;padding-top:2px}
+.it .gain b{font-size:12px;font-weight:500;margin:0;color:#1B2420}
+.dk .it{border-bottom-color:rgba(255,255,255,.12)}
+.dk .it span.d{color:#C9D3CF}
+.dk .it b{color:#F4F7F5}
+.dk .it .gain{color:#CFF27E}
+.dk .it .gain b{color:#F4F7F5}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1800px;height:1000px;box-sizing:border-box;padding:40px 48px;background:#DCE1DE;font-family:'Noto Sans SC',sans-serif;color:#1B2420;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">06 · Rationale · 低碳设计</div>
+      <div style="font-weight:300;font-size:30px;line-height:40px;margin-top:6px">低碳从两头做：产品自己少耗电，也让用户的好习惯顺手更低碳</div>
+    </div>
+    <div style="font-size:13px;line-height:20px;color:#3B4A43;text-align:right;max-width:560px">每一条低碳设计同时对用户有直接好处（更省电、更少打扰、更快），<br>不靠说教、碳积分或排行榜推动。</div>
+  </div>
+
+  <div style="flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;min-height:0">
+    <div class="half dk" style="background:radial-gradient(circle at 80% 0%,#2A3A2E,#141A17 70%);color:#F4F7F5">
+      <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'Outfit',sans-serif;font-weight:200;font-size:44px;line-height:44px;color:#CFF27E">A</span><div><div style="font-size:20px;font-weight:500">数字低碳 · 产品少耗能</div><div style="font-size:13px;color:#A9B8B2">屏幕、计算、传输、存储四处减负</div></div></div>
+      <div>
+        <div class="it"><span class="ic" style="background:rgba(207,242,126,.14);color:#CFF27E"><span class="ms">dark_mode</span></span><div><b>夜林深色为主场景</b><span class="d">手表与夜间页面用纯黑 / 深绿底，OLED 屏上深色像素几乎不发光，越暗越省电。</span></div><div class="gain"><b>用户收益</b><br>夜里不刺眼，续航更长</div></div>
+        <div class="it"><span class="ic" style="background:rgba(207,242,126,.14);color:#CFF27E"><span class="ms">watch</span></span><div><b>手表先算，手机少亮屏</b><span class="d">睡眠、步数在手表汇总后再同步；联动场景只在训练结束、养分收齐时唤醒手机。</span></div><div class="gain"><b>用户收益</b><br>不被频繁打断</div></div>
+        <div class="it"><span class="ic" style="background:rgba(207,242,126,.14);color:#CFF27E"><span class="ms">psychology</span></span><div><b>端侧 AI 优先</b><span class="d">语音转文字、简单分类在设备本地完成；云端大模型只处理照片识别等难例，减少推理与上传。</span></div><div class="gain"><b>用户收益</b><br>更快、更私密</div></div>
+        <div class="it"><span class="ic" style="background:rgba(207,242,126,.14);color:#CFF27E"><span class="ms">notifications_paused</span></span><div><b>合并推送</b><span class="d">每天主动推送 ≤ <span class="num">2</span> 条；称重、步数等不实时推送，集中在摘要里呈现。</span></div><div class="gain"><b>用户收益</b><br>少打扰</div></div>
+        <div class="it"><span class="ic" style="background:rgba(207,242,126,.14);color:#CFF27E"><span class="ms">cloud</span></span><div><b>轻资源、少存储</b><span class="d">场景插画按需加载并缓存；超过 <span class="num">90</span> 天的明细自动汇总成周数据，只保留必要字段。</span></div><div class="gain"><b>用户收益</b><br>省流量、App 更小</div></div>
+      </div>
+    </div>
+
+    <div class="half" style="background:rgba(255,255,255,.62)">
+      <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'Outfit',sans-serif;font-weight:200;font-size:44px;line-height:44px;color:#4E6B4F">B</span><div><div style="font-size:20px;font-weight:500">行为低碳 · 好习惯顺手更低碳</div><div style="font-size:13px;color:#5D6A64">健康目标和低碳目标在这些地方是同一件事</div></div></div>
+      <div>
+        <div class="it"><span class="ic" style="background:#E3EADF;color:#4E6B4F"><span class="ms">directions_walk</span></span><div><b>短途步行 = 运动养分</b><span class="d">步步在午饭前建议「走路去吃饭」，步行和骑行直接计入运动养分，不需要额外打卡。</span></div><div class="gain"><b>健康收益</b><br>完成每日活动目标</div></div>
+        <div class="it"><span class="ic" style="background:#E3EADF;color:#4E6B4F"><span class="ms">eco</span></span><div><b>多蔬菜 = 均衡度更高</b><span class="d">饮食均衡度对蔬菜、全谷物、植物蛋白给正向加分；只在记录后轻提一句，不说教。</span></div><div class="gain"><b>健康收益</b><br>饮食更均衡</div></div>
+        <div class="it"><span class="ic" style="background:#E3EADF;color:#4E6B4F"><span class="ms">forest</span></span><div><b>绿色足迹可视化</b><span class="d">每周把「步行替代的短途」画成浮岛上新长出的小树，是情感回报而不是积分。</span></div><div class="gain"><b>情感收益</b><br>看得见的成长</div></div>
+        <div class="it"><span class="ic" style="background:#E3EADF;color:#4E6B4F"><span class="ms">group</span></span><div><b>一台设备全家用</b><span class="d">体脂秤多人识别、手表数据可迁移到新设备，减少重复购买硬件。</span></div><div class="gain"><b>经济收益</b><br>少花钱</div></div>
+        <div class="it"><span class="ic" style="background:#E3EADF;color:#4E6B4F"><span class="ms">bedtime</span></span><div><b>早睡也是低碳</b><span class="d">「提早 15 分钟放下手机」计划同时减少夜间屏幕使用，和睡眠养分一起出现。</span></div><div class="gain"><b>健康收益</b><br>睡得更好</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-radius:20px;background:#1B2420;color:#F4F7F5;padding:16px 22px;display:flex;align-items:center;gap:16px">
+    <span class="ms" style="font-size:26px;color:#CFF27E">energy_savings_leaf</span>
+    <span style="font-size:15px;line-height:22px">设计原则：低碳不额外增加任务。用户只要照常记录健康，产品就在背后少耗一点电；用户每多走一段路、多吃一份蔬菜，健康和低碳会同时变好。</span>
+  </div>
+</div>
+</body>
+</html>

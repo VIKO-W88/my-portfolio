@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>WatchLogic</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.dev{background:#fff;border:2px solid #1A1A18;border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.dt{font-size:18px;font-weight:700}
+.dd{font-size:12.5px;line-height:1.6;color:#3A3A35}
+.ar{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11.5px;color:#55554F;text-align:center}
+.tb{display:grid;grid-template-columns:150px 90px 1.1fr 1fr 1fr 110px;border-top:2px solid #1A1A18}
+.tb div{padding:7px 9px;border-bottom:1px solid #D4D4CF;font-size:12px;line-height:1.5;color:#3A3A35}
+.th{font-weight:700;color:#1A1A18 !important;background:#E9E9E5}
+.ev{font-weight:700;color:#1A1A18 !important}
+.rule{background:#fff;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.6;color:#3A3A35}
+.rule b{color:#1A1A18}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1600px;height:1000px;box-sizing:border-box;padding:36px 44px;background:#F4F4F2;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:16px">
+  <div>
+    <div class="k">手表联动 · 联动逻辑</div>
+    <h2 style="margin:6px 0 0;font-size:28px">云端保存唯一的步步，手表负责「采集 + 即时反馈」，手机负责「理解 + 深度录入」</h2>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 120px 1fr 120px 1fr;gap:0;align-items:stretch">
+    <div class="dev">
+      <div class="dt">手表 · 随身</div>
+      <div class="dd"><b>采集：</b>睡眠、步数、体能训练、心率（系统健康数据）</div>
+      <div class="dd"><b>即时反馈：</b>表盘复杂功能显示步步与养分进度；录入成功时震动</div>
+      <div class="dd"><b>极简录入：</b>抬腕语音一句话；一行最多两个文字按钮</div>
+      <div class="dd"><b>不做：</b>不显示血糖数值、不展示长文本洞察</div>
+    </div>
+    <div class="ar"><span>健康数据同步</span><span style="font-size:20px;color:#1A1A18">⇄</span><span>前台实时消息</span></div>
+    <div class="dev">
+      <div class="dt">手机 · 理解</div>
+      <div class="dd"><b>完整录入：</b>语音、拍照、手动，AI 解析饮食</div>
+      <div class="dd"><b>洞察与画像：</b>一句话洞察、异常引导三级策略、健康画像</div>
+      <div class="dd"><b>AI 对话：</b>问问步步</div>
+      <div class="dd"><b>设置：</b>设备管理、手表提醒开关、隐私</div>
+    </div>
+    <div class="ar"><span>事件上报</span><span style="font-size:20px;color:#1A1A18">⇄</span><span>状态下发</span></div>
+    <div class="dev" style="border-style:dashed">
+      <div class="dt">云端 · 步步状态</div>
+      <div class="dd"><b>唯一数据源：</b>步步的形态、养分、情绪都以云端为准</div>
+      <div class="dd"><b>规则判断：</b>当日是否收齐、是否升级形态、是否触发异常分级</div>
+      <div class="dd"><b>下发：</b>同一事件同时推送到两端，保证两端看到同一只步步</div>
+    </div>
+  </div>
+
+  <div class="tb">
+    <div class="th">联动事件</div><div class="th">发起端</div><div class="th">同步路径</div><div class="th">手机表现</div><div class="th">手表表现</div><div class="th">时效目标</div>
+    <div class="ev">① 晨间睡眠同步</div><div>手表</div><div>手表采集 → 系统健康数据 → 手机计算养分 → 云端</div><div>睡眠卡更新，步步「醒来」</div><div>表盘步步睁眼，养分 1/3</div><div>手机首次打开时</div>
+    <div class="ev">② 体能训练结束</div><div>手表</div><div>手机在前台：实时消息；否则走健康数据后台同步</div><div>运动卡更新，步步活力增加</div><div>训练汇总后弹出「步步吃到运动养分」，成功震动</div><div>前台约 5 秒内</div>
+    <div class="ev">③ 抬腕语音记饮食</div><div>手表</div><div>手表转写 → 手机 AI 解析 → 回传确认卡</div><div>饮食卡写入</div><div>确认卡「好 / 改」，确认后震动</div><div>手机可达时实时</div>
+    <div class="ev">④ 手机录入饮食</div><div>手机</div><div>手机 → 云端 → 手表复杂功能刷新</div><div>W06 保存</div><div>养分进度 2/3 → 3/3</div><div>下次刷新时</div>
+    <div class="ev">⑤ 当日养分收齐</div><div>云端</div><div>云端判断后同时下发两端</div><div>鼓励浮层 W08</div><div>步步长叶动画 + 成功震动</div><div>两端同一时刻</div>
+    <div class="ev">⑥ Day3 孵化</div><div>手机</div><div>手机长按开始 → 实时消息驱动手表</div><div>孵化仪式 W10</div><div>同步「心跳」震动，孵化后表盘换成成形步步</div><div>按压期间实时</div>
+    <div class="ev">⑦ 血糖异常 L1–L3</div><div>云端</div><div>只下发到手机</div><div>W09 三级引导</div><div>不显示；L3 仅推送「打开手机查看」，无数值</div><div>—</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+    <div class="rule"><b>冲突处理：</b>步步状态以云端为准；每个事件带唯一 ID 去重，同一次运动不会被两端各算一次。</div>
+    <div class="rule"><b>离线：</b>手机不在身边时，手表把录入存在本地，步步先「预吃」并显示待同步标记，连接后补传。</div>
+    <div class="rule"><b>时间：</b>以数据采集时间为准，跨零点的睡眠归入醒来那一天。</div>
+    <div class="rule"><b>隐私：</b>手表只显示形态和进度，不显示血糖、体重等敏感数值，避免抬腕被旁人看到。</div>
+  </div>
+</div>
+</body>
+</html>

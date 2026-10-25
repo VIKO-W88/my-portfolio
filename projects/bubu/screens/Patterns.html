@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>Patterns</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.tb{display:grid;grid-template-columns:200px 150px minmax(0,1fr) 90px;border-top:1.5px solid #222}
+.tb div{padding:8px 10px;border-bottom:1px solid #D4D4CF;font-size:12.5px;line-height:1.5;color:#3A3A35}
+.th{font-weight:700;color:#1A1A18 !important;font-size:12px !important;background:#E9E9E5}
+.pg{font-weight:700;color:#9A3412 !important}
+.sp{display:grid;grid-template-columns:130px minmax(0,1fr) minmax(0,1fr);border-top:1.5px solid #222}
+.sp div{padding:6px 10px;border-bottom:1px solid #D4D4CF;font-size:12px;line-height:1.45;color:#3A3A35}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1200px;height:880px;box-sizing:border-box;padding:36px 44px;background:#F4F4F2;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:16px">
+  <div>
+    <div class="k">从竞品到方案 · 设计模式与规范基线</div>
+    <h2 style="margin:6px 0 0;font-size:26px">8 个可复用模式，以及线框图遵循的平台规范</h2>
+  </div>
+  <div style="display:flex;gap:24px;flex:1">
+    <div style="flex:1.7;display:flex;flex-direction:column;gap:8px">
+      <div class="tb">
+        <div class="th">设计模式</div><div class="th">来源</div><div class="th">在「健康伙伴」中的做法</div><div class="th">页面</div>
+        <div>按需授权，一屏一件事</div><div>Lingo</div><div>首次只请求睡眠与运动；血糖在第一次录入时才请求</div><div class="pg">W02</div>
+        <div>角色占据上半屏</div><div>Finch</div><div>步步场景占首屏约 40%，形态随天数变化</div><div class="pg">W01 W07</div>
+        <div>统一的数据卡结构</div><div>Apple 健康</div><div>图标 + 标签 + 时间 / 结果 + 迷你图，未完成项直接显示录入按钮</div><div class="pg">W07</div>
+        <div>一句话洞察标题</div><div>Oura、Lingo、华为</div><div>洞察卡标题是完整句子，说明「是什么 + 为什么」</div><div class="pg">W07 W11</div>
+        <div>洞察直达 AI 对话</div><div>Oura Advisor</div><div>洞察卡与异常详情都带「问问步步」入口，并带入上下文</div><div class="pg">W07 W09</div>
+        <div>光谱与参考区间</div><div>Oura、Lingo</div><div>血糖用健康范围带 + 当前位置 + 参考句，不用红色和「异常」字样</div><div class="pg">W09</div>
+        <div>底部弹层式庆祝</div><div>Finch</div><div>彩带 + 步步破框动作 + 白色弹层，一个主按钮</div><div class="pg">W08</div>
+        <div>连续量表记录情绪</div><div>Apple 健康</div><div>滑杆选择心情，步步表情实时变化，滑过刻度时轻触感</div><div class="pg">W08</div>
+      </div>
+      <div style="font-size:12px;color:#55554F;line-height:1.6">刻意不借鉴：华为首页的人群排名（「超过 99% 的人」）、Oura 的数字分数主导、拍照记饮食类的热量数字。三者都会放大比较与焦虑。</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+      <div style="font-size:15px;font-weight:700">规范基线（线框图按 iOS 绘制）</div>
+      <div class="sp">
+        <div class="th"></div><div class="th">iOS（Apple HIG · iOS 27 UI Kit）</div><div class="th">Android（Material 3 / RN Paper）</div>
+        <div>画布</div><div>393 × 852 pt</div><div>412 × 915 dp</div>
+        <div>页边距</div><div>16 pt</div><div>16 dp，8 dp 栅格</div>
+        <div>最小点击区</div><div>44 × 44 pt</div><div>48 × 48 dp</div>
+        <div>大标题</div><div>34 pt Bold</div><div>Headline Large 32 sp</div>
+        <div>正文</div><div>17 pt Regular</div><div>Body Large 16 sp</div>
+        <div>辅助文字</div><div>15 / 13 pt</div><div>Body Medium 14 / Label 12 sp</div>
+        <div>底部导航</div><div>悬浮标签栏，独立「+」按钮</div><div>Navigation Bar 80 dp + FAB</div>
+        <div>弹层</div><div>Sheet，顶部抓手</div><div>Modal Bottom Sheet</div>
+        <div>卡片圆角</div><div>20 pt（系统卡片）</div><div>12 dp（Medium 形状）</div>
+      </div>
+      <div style="font-size:12px;color:#55554F;line-height:1.6">Android 端用 Material 3 组件对应替换；交互逻辑与页面结构两端一致。</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

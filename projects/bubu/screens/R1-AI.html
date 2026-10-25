@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>R1-AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..600,0..1,0&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;display:inline-block}
+.k{font-family:'Outfit','Noto Sans SC',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5D6A64}
+.sec{font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:300;font-size:22px;margin:0;color:#1B2420;display:flex;align-items:baseline;gap:10px}
+.sec b{font-family:'Outfit',sans-serif;font-weight:200;font-size:28px;color:#8EA299}
+.num{font-family:'Outfit',sans-serif}
+.ca{border-radius:22px;background:rgba(255,255,255,.62);padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.ca .hd{display:flex;align-items:center;gap:12px}
+.ca .ic{flex:none;width:44px;height:44px;border-radius:14px;background:#1B2420;color:#CFF27E;display:flex;align-items:center;justify-content:center}
+.ca .ic .ms{font-size:24px}
+.ca .tt{font-size:18px;font-weight:500;line-height:24px}
+.ca .wh{font-size:12px;color:#5D6A64}
+.ca .io{display:grid;grid-template-columns:44px minmax(0,1fr);row-gap:6px;font-size:13px;line-height:20px;color:#26322C}
+.ca .io dt{color:#5D6A64}
+.ca .io dd{margin:0}
+.ca .bd{border-top:1px solid #D2DAD6;padding-top:10px;font-size:13px;line-height:20px;color:#33413A}
+.ca .bd b{color:#1B2420;font-weight:500}
+.pr{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border-radius:18px;background:#1B2420;color:#F4F7F5}
+.pr b{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500}
+.pr b .ms{font-size:20px;color:#CFF27E}
+.pr span{font-size:13px;line-height:20px;color:#C9D3CF}
+.fl{flex:1;border-radius:16px;padding:12px 14px;background:rgba(255,255,255,.62);display:flex;flex-direction:column;gap:4px;min-width:0}
+.fl b{font-size:14px;font-weight:500}
+.fl span{font-size:12px;line-height:18px;color:#33413A}
+.fl i{font-style:normal;align-self:flex-start;height:22px;padding:0 8px;border-radius:11px;font-size:11px;display:flex;align-items:center;background:#C9D3CF}
+.arw{flex:none;align-self:center;color:#6F8A7E}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1800px;height:1000px;box-sizing:border-box;padding:40px 48px;background:#DCE1DE;font-family:'Noto Sans SC',sans-serif;color:#1B2420;display:flex;flex-direction:column;gap:26px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">06 · Rationale · AI 应用</div>
+      <div style="font-weight:300;font-size:30px;line-height:40px;margin-top:6px">AI 帮用户「少做一点」，但不替用户做健康判断</div>
+    </div>
+    <div style="font-size:13px;line-height:20px;color:#3B4A43;text-align:right;max-width:600px">用户画像和竞品分析里，Z 世代放弃健康记录的痛点集中在「记录太麻烦、看不懂数据」。<br>所以 AI 只放在两处：把输入变轻，把数据讲成人话；判断标准仍由规则和用户掌握。</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+    <div class="ca">
+      <div class="hd"><span class="ic"><span class="ms">mic</span></span><div><div class="tt">多模态理解</div><div class="wh">W06 · HF03 · 手表 WI1</div></div></div>
+      <dl class="io"><dt>输入</dt><dd>一句话 / 一张餐食照片</dd><dt>输出</dt><dd>拆成多条结构化记录（餐次、菜品、均衡度）</dd></dl>
+      <div class="bd"><b>边界：</b>识别不确定的条目标「需要你确认」，每条都能直接编辑；不估算精确卡路里，只给均衡度，避免假精确。</div>
+    </div>
+    <div class="ca">
+      <div class="hd"><span class="ic"><span class="ms">insights</span></span><div><div class="tt">健康画像生成</div><div class="wh">HF07 · HF08</div></div></div>
+      <dl class="io"><dt>输入</dt><dd>3 天睡眠、饮食、运动数据</dd><dt>输出</dt><dd>三维状态 + 一句「步步说」+ 一个最小行动</dd></dl>
+      <div class="bd"><b>边界：</b>评分由固定规则计算，可解释、可复现；大模型只负责把结论写成口语，不改变分数。</div>
+    </div>
+    <div class="ca">
+      <div class="hd"><span class="ic"><span class="ms">water_drop</span></span><div><div class="tt">异常识别与分级引导</div><div class="wh">W09 · HF05</div></div></div>
+      <dl class="io"><dt>输入</dt><dd>空腹血糖等指标 + 当天行为</dd><dt>输出</dt><dd>分级提醒 + 可能相关的生活因素</dd></dl>
+      <div class="bd"><b>边界：</b>参考范围按临床常用标准（空腹 <span class="num">3.9–6.1</span> mmol/L）；连续 <span class="num">3</span> 天偏高 → 轻提醒；持续一周或单次 ≥ <span class="num">7.0</span> → 建议检查。始终标注「这不是诊断」。</div>
+    </div>
+    <div class="ca">
+      <div class="hd"><span class="ic"><span class="ms">forum</span></span><div><div class="tt">步步的个性化陪伴</div><div class="wh">HF04 · 伙伴 Tab · 手表</div></div></div>
+      <dl class="io"><dt>输入</dt><dd>打开时间、完成情况、心情记录</dd><dt>输出</dt><dd>提醒时机与语气</dd></dl>
+      <div class="bd"><b>边界：</b>每天主动提醒不超过 <span class="num">2</span> 条；连续 <span class="num">2</span> 次忽略就自动降频；语气只温和鼓励，不制造焦虑或愧疚。</div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="sec"><b>01</b>数据怎么流动</h2>
+    <div style="margin-top:12px;display:flex;gap:10px;align-items:stretch">
+      <div class="fl"><b>采集</b><span>手表心率 / 睡眠 / 步数，手机语音与照片，体脂秤</span><i>设备端</i></div>
+      <span class="arw"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="fl"><b>端侧处理</b><span>语音转文字、睡眠分期、步数汇总在本地完成</span><i>手机 / 手表</i></div>
+      <span class="arw"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="fl"><b>脱敏后上云</b><span>只上传文字和图片特征，不上传原始录音与身份信息</span><i>云端模型</i></div>
+      <span class="arw"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="fl"><b>规则校验</b><span>健康阈值、分级规则先过一遍，再决定 AI 能说什么</span><i>规则引擎</i></div>
+      <span class="arw"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="fl"><b>步步呈现</b><span>画像动效、一句话总结、可编辑的记录</span><i>手机 + 手表</i></div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="sec"><b>02</b>四条 AI 设计原则</h2>
+    <div style="margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px">
+      <div class="pr"><b><span class="ms">info</span>可解释</b><span>每个结论旁都有「步步是怎么判断的？」，展开能看到依据的数据。</span></div>
+      <div class="pr"><b><span class="ms">edit</span>可纠正</b><span>AI 生成的每条记录都能改、能删；用户修改会反过来优化识别。</span></div>
+      <div class="pr"><b><span class="ms">lock</span>最少数据</b><span>能在端侧完成的不上云；健康数据默认不用于训练，需用户主动授权。</span></div>
+      <div class="pr"><b><span class="ms">shield</span>不诊断</b><span>只描述趋势、提示就医时机，不给出疾病结论，不推荐药物。</span></div>
+    </div>
+  </div>
+  <div>
+    <h2 class="sec"><b>03</b>AI 在 3 天旅程里的出场时机</h2>
+    <div style="margin-top:12px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px">
+      <div class="fl" style="gap:6px"><b>第 0 天 · 首次打开</b><span><span style="color:#4E6B4F">AI 做：</span>根据关注目标推荐录入方式</span><span><span style="color:#8B5E1F">刻意不做：</span>不让用户填长问卷</span></div>
+      <div class="fl" style="gap:6px"><b>第 1 天 · 开始记录</b><span><span style="color:#4E6B4F">AI 做：</span>语音 / 拍照解析成记录</span><span><span style="color:#8B5E1F">刻意不做：</span>不自动保存，先让用户确认</span></div>
+      <div class="fl" style="gap:6px"><b>第 2 天 · 发现异常</b><span><span style="color:#4E6B4F">AI 做：</span>把偏高和生活习惯关联起来解释</span><span><span style="color:#8B5E1F">刻意不做：</span>不下结论，不推荐药物</span></div>
+      <div class="fl" style="gap:6px"><b>第 3 天 · 孵化与画像</b><span><span style="color:#4E6B4F">AI 做：</span>写「步步说」和一个最小行动</span><span><span style="color:#8B5E1F">刻意不做：</span>孵化仪式不插入任何 AI 文字</span></div>
+      <div class="fl" style="gap:6px"><b>每天 · 心情与陪伴</b><span><span style="color:#4E6B4F">AI 做：</span>学习合适的提醒时间</span><span><span style="color:#8B5E1F">刻意不做：</span>心情只由用户自己选，不由 AI 推断</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

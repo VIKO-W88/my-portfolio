@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>WatchInteract</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.sec{font-size:15px;font-weight:700;color:#1A1A18;display:flex;align-items:center;gap:8px}
+.sec span{width:22px;height:22px;border-radius:50%;background:#1A1A18;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center}
+.nd{background:#fff;border:1.5px solid #1A1A18;border-radius:10px;padding:6px 9px;font-size:12px;line-height:1.4;text-align:center}
+.nd b{display:block;font-size:10.5px;color:#9A3412}
+.mx{display:grid;grid-template-columns:116px repeat(4,minmax(0,1fr));border-top:2px solid #1A1A18}
+.mx div{padding:6px 7px;border-bottom:1px solid #D4D4CF;font-size:11.5px;line-height:1.45;color:#3A3A35}
+.th{font-weight:700;color:#1A1A18 !important;background:#E9E9E5}
+.lb{font-weight:700;color:#1A1A18 !important}
+.st{background:#1C1C1E;color:#fff;border-radius:12px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.st b{font-size:14px}
+.st span{font-size:11px;color:#C7C7CC;line-height:1.45}
+.sa{font-size:11px;color:#55554F;text-align:center;line-height:1.35}
+.w{width:208px;height:248px;border-radius:44px;background:#000;border:6px solid #3A3A3C;box-sizing:content-box;padding:0;overflow:hidden;position:relative}
+.ws{position:absolute;inset:0;padding:0 10px 12px;color:#fff;display:flex;flex-direction:column;gap:6px}
+.t14{font-size:14px;line-height:1.3;color:#AEAEB2}
+.rw{display:flex;align-items:center;gap:8px;background:#1C1C1E;border-radius:13px;padding:0 10px;height:42px;font-size:15px}
+.wb{height:40px;border-radius:20px;border:none;background:#fff;color:#000;font-weight:600;font-size:15px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;width:100%}
+.cap{font-size:12px;line-height:1.55;color:#3A3A35;width:220px}
+.cap b{display:block;color:#9A3412;font-size:11.5px;letter-spacing:1px}
+.hp{display:inline-block;font-size:10.5px;padding:0 6px;border-radius:8px;background:#DBEAFE;color:#1E3A8A}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:2000px;height:1000px;box-sizing:border-box;padding:32px 40px;background:#F4F4F2;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:14px">
+  <div>
+    <div style="display:inline-flex;background:#1A1A18;color:#fff;border-radius:16px;padding:4px 12px;font-size:13px;font-weight:700">04-A · 手表自身交互（续）· 第 5 步：二级任务与规则</div>
+    <h2 style="margin:6px 0 0;font-size:28px">手表上的步步有自己的导航、输入规则、状态和可独立完成的任务</h2>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.15fr 0.85fr 1fr;gap:24px;flex:1">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="sec"><span>1</span>导航结构（最多 2 层）</div>
+      <div style="display:flex;gap:14px;align-items:center">
+        <div style="display:flex;flex-direction:column;gap:6px;background:#E9E9E5;border-radius:12px;padding:8px">
+          <div style="font-size:11px;font-weight:700;color:#55554F;text-align:center">首页 · 表冠纵向切换</div>
+          <div class="nd"><b>WH1</b>步步</div>
+          <div class="nd"><b>WH2</b>今日养分</div>
+          <div class="nd"><b>WH3</b>3 天 / 本周</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:18px;color:#8E8E93">→</div>
+        <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+          <div class="nd" style="text-align:left"><b>WI1 快速记录</b>来自：WH2 未完成项 / 右上麦克风 / 操作按钮</div>
+          <div class="nd" style="text-align:left"><b>WI2 记录心情</b>来自：当日收齐后 / 长按 WH1 选「心情」</div>
+          <div class="nd" style="text-align:left"><b>WI3 步步互动</b>来自：点按 WH1 的步步，原地发生，不跳页</div>
+          <div class="nd" style="text-align:left"><b>WI4 睡前模式</b>来自：睡前通知 / WH1 在 21:30 后显示入口</div>
+        </div>
+      </div>
+      <div style="font-size:12px;line-height:1.6;color:#3A3A35">返回：左上返回按钮或从屏幕左边缘右滑。再次抬腕时遵循系统「返回时钟」设置；短时间内返回则恢复离开时的页面，否则回到 WH1。</div>
+
+      <div class="sec" style="margin-top:4px"><span>2</span>输入 × 页面 交互矩阵</div>
+      <div class="mx">
+        <div class="th">输入</div><div class="th">WH1 步步</div><div class="th">WH2 养分</div><div class="th">WI1 快速记录</div><div class="th">WI2 心情</div>
+        <div class="lb">转动表冠</div><div>切换到下一页</div><div>上下切页</div><div>滚动常吃列表</div><div>调节心情，过刻度轻震</div>
+        <div class="lb">点按</div><div>步步互动 WI3</div><div>未完成项进入 WI1</div><div>选中常吃项即记录</div><div>确认</div>
+        <div class="lb">长按</div><div>菜单：说话 / 心情</div><div>—</div><div>常吃项：移除</div><div>—</div>
+        <div class="lb">边缘右滑</div><div>—</div><div>—</div><div>返回首页</div><div>返回，不保存</div>
+        <div class="lb">双指互点</div><div>开始语音</div><div>进入首个未完成项</div><div>开始语音</div><div>确认</div>
+        <div class="lb">操作按钮（Ultra）</div><div style="grid-column:span 4">任意页面直接进入 WI1 并开始语音，不看屏幕也能记一餐</div>
+        <div class="lb">放下手腕</div><div style="grid-column:span 4">进入常亮显示：步步闭眼静态线稿，隐藏数字；录音中则继续收音直到停顿</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="sec"><span>3</span>步步状态机（手表端表现）</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div class="st"><b>醒来</b><span>触发：晨间睡眠同步<br>表现：伸懒腰 · <span class="hp">.directionUp</span></span></div>
+        <div class="st"><b>饿了</b><span>触发：饭点后 1 小时未记录<br>表现：肚子咕咕，WH2 饮食项反白</span></div>
+        <div class="st"><b>吃饱</b><span>触发：任一养分记录成功<br>表现：拍肚子 · <span class="hp">.success</span></span></div>
+        <div class="st"><b>长大</b><span>触发：当日三项收齐<br>表现：长出新叶 · 与手机同时</span></div>
+        <div class="st"><b>困了</b><span>触发：睡前时段<br>表现：打哈欠，出现睡前入口</span></div>
+        <div class="st"><b>睡着</b><span>触发：睡眠专注开启<br>表现：静止，不推送不震动</span></div>
+      </div>
+      <div class="sa">醒来 → 饿了 → 吃饱 → 长大 → 困了 → 睡着 → 醒来（一天一个循环）</div>
+      <div style="background:#fff;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.65;color:#3A3A35">
+        <b style="color:#1A1A18">状态规则</b><br>
+        · 状态只由真实数据和时间触发，手表与手机读取同一个状态<br>
+        · 没有「生病」「枯萎」等负面状态，漏记只会停在「饿了」<br>
+        · 血糖等异常不改变手表上的步步，只在手机端呈现
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.65;color:#3A3A35">
+        <b style="color:#1A1A18">独立运行规则</b><br>
+        · 手机不在身边：WI1 常吃快选和心情照常可用，记录存在手表本地，步步先「吃饱」，并显示待同步小点<br>
+        · 语音转写在手表端完成；AI 拆分饮食要等连上手机后补做，期间按「一餐」整体记录<br>
+        · 重新连接后自动补传，按记录时间排序、按事件 ID 去重
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="sec"><span>4</span>手表独立完成的任务</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 20px">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="w"><div class="ws">
+            <div style="display:flex;align-items:center;gap:6px;height:34px;padding:6px 8px 0;flex:none"><span style="flex:none;width:24px;height:24px;border-radius:12px;background:#2C2C2E;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></span><span style="font-size:17px;font-weight:600;flex:1">记一餐</span><span style="font-size:15px;font-weight:600">12:31</span></div>
+            <div style="font-size:12px;color:#FDBA74">手机不在身边，先存在手表上</div>
+            <div class="rw">牛肉面<span class="t14" style="margin-left:auto">常吃</span></div>
+            <div class="rw">包子 + 豆浆</div>
+            <button class="wb" style="margin-top:auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>说一句</button>
+          </div></div>
+          <div class="cap"><b>WI1 快速记录</b>常吃项按时段排序，一点即记录 <span class="hp">.success</span>；没有常吃项时只显示语音。</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="w"><div class="ws" style="align-items:center">
+            <div style="align-self:stretch;display:flex;align-items:center;gap:6px;height:34px;padding:6px 8px 0;flex:none"><span style="flex:none;width:24px;height:24px;border-radius:12px;background:#2C2C2E;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></span><span style="font-size:17px;font-weight:600;flex:1">今天感觉</span><span style="font-size:15px;font-weight:600">21:05</span></div>
+            <svg width="96" height="96" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#000" stroke="#fff" stroke-width="3"/><circle cx="47" cy="80" r="4" fill="#fff"/><circle cx="73" cy="80" r="4" fill="#fff"/><path d="M54 92 h12" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+            <div style="font-size:17px;font-weight:600">还行</div>
+            <svg width="170" height="22" viewBox="0 0 170 22" aria-hidden="true"><path d="M8 16 Q85 0 162 16" fill="none" stroke="#3A3A3C" stroke-width="5" stroke-linecap="round"/><path d="M8 16 Q46 6 85 5" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="85" cy="5" r="5" fill="#fff"/></svg>
+            <div class="t14">转动表冠</div>
+          </div></div>
+          <div class="cap"><b>WI2 记录心情</b>表冠调节，步步表情实时变化，过刻度轻震；与手机 W08 的滑杆是同一数据。</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="w"><div class="ws" style="align-items:center;justify-content:center">
+            <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#000" stroke="#fff" stroke-width="3"/><path d="M44 80 Q47 76 50 80M70 80 Q73 76 76 80" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M52 90 Q60 98 68 90" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M60 46 V26" stroke="#fff" stroke-width="3"/><path d="M60 32 C70 20 84 22 86 30 C76 36 66 36 60 32 Z" fill="#000" stroke="#fff" stroke-width="3"/><path d="M92 40 c0-6 8-6 8 0 c0 6-8 10-8 10 s-8-4-8-10 c0-6 8-6 8 0z" fill="#fff"/></svg>
+            <div class="t14" style="color:#fff">嘿嘿，痒</div>
+          </div></div>
+          <div class="cap"><b>WI3 步步互动</b>点按步步原地回应并轻点触感 <span class="hp">.click</span>；连续点 3 次会打个滚。每天的反应不重复，下次打开手机时步步会提到。</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="w"><div class="ws" style="align-items:center">
+            <svg width="90" height="90" viewBox="0 0 120 120" aria-hidden="true" style="margin-top:6px"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#000" stroke="#fff" stroke-width="3"/><path d="M42 80 h10M68 80 h10" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><path d="M82 34 h10 l-10 12 h10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div style="font-size:16px;font-weight:600;text-align:center">步步准备睡了</div>
+            <button class="wb" style="margin-top:auto">开启睡眠专注</button>
+            <div class="t14">今天睡眠目标 23:30 前</div>
+          </div></div>
+          <div class="cap"><b>WI4 睡前模式</b>一键开启系统睡眠专注；之后步步进入「睡着」，表盘只显示静态步步，直到早上醒来。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>WearSpec</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.sec{font-size:15px;font-weight:700;color:#1A1A18;display:flex;align-items:center;gap:8px}
+.sec span{width:22px;height:22px;border-radius:50%;background:#1A1A18;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center}
+.ty{display:grid;grid-template-columns:120px 76px minmax(0,1fr);border-top:2px solid #1A1A18}
+.ty div{padding:4px 8px;border-bottom:1px solid #D4D4CF;font-size:12px;color:#3A3A35;display:flex;align-items:center;line-height:1.4}
+.th{font-weight:700;color:#1A1A18 !important;background:#E9E9E5}
+.lb{font-weight:700;color:#1A1A18 !important}
+.box{background:#fff;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.65;color:#3A3A35}
+.box b{color:#1A1A18}
+.rd{border-radius:50%;background:#000;border:6px solid #3A3A3C;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-sizing:content-box;position:relative}
+.pill{border-radius:999px;background:#fff;color:#000;font-weight:600;display:flex;align-items:center;justify-content:center}
+code{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:#EFEFEB;padding:1px 4px;border-radius:4px}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1600px;height:1000px;box-sizing:border-box;padding:34px 44px;background:#F4F4F2;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">手表设计规范 · Wear OS（Material 3 for Wear OS）</div>
+      <h2 style="margin:6px 0 0;font-size:28px">圆形屏、百分比边距、从 192dp 设计起：安卓手表的适配规则</h2>
+    </div>
+    <div style="font-size:11.5px;color:#6B6B64;text-align:right;line-height:1.6">依据：Wear OS 设计指南（排版、屏幕尺寸、规范布局）<br>Compose for Wear OS Material 3 字体令牌 · android/wear-os-samples</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1.05fr;gap:22px;flex:1">
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div class="sec"><span>1</span>字体阶梯（sp，字号 / 行高）</div>
+      <div class="ty">
+        <div class="th">样式</div><div class="th">字号</div><div class="th">本方案用途</div>
+        <div class="lb">Display Small</div><div>24 / 26</div><div>孵化完成「步步成形」</div>
+        <div class="lb">Title Large</div><div>18 / 20</div><div>页面标题「步步」</div>
+        <div class="lb">Title Medium</div><div>16 / 18</div><div>卡片标题「午餐」</div>
+        <div class="lb">Label Large</div><div>20 / 22</div><div>主按钮「说给步步听」</div>
+        <div class="lb">Label Medium</div><div>15 / 18</div><div>次按钮「改」「晚点」</div>
+        <div class="lb">Body Large</div><div>16 / 18</div><div>转写文字、说明</div>
+        <div class="lb">Body Medium</div><div>14 / 16</div><div>同步状态、时间</div>
+        <div class="lb">Numeral Small</div><div>30 / 30</div><div>养分进度「2/3」</div>
+        <div class="lb">Arc Medium</div><div>15 / 18</div><div>沿表圈的弧形标题</div>
+      </div>
+      <div class="box">默认字体 Roboto Flex；20sp 及以上的字号不随系统字号放大；行高约 1.1 倍即可；会变化的数字使用等宽数字，避免跳动。</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div class="sec"><span>2</span>屏幕与布局</div>
+      <div class="box">
+        <b>尺寸分档：</b>小圆屏 192–224dp，大圆屏 225dp 以上，断点 225dp<br>
+        <b>先做小屏：</b>从 192dp 模拟器开始设计，再为大屏增加内容<br>
+        <b>百分比边距：</b>所有边距按屏幕百分比定义，避免被圆形边缘裁切<br>
+        <b>非滚动屏</b>（步步主页、确认卡）：分上 / 中 / 下三段，上下段留内边距，中段占满宽度<br>
+        <b>滚动屏</b>（本周记录）：使用随滚动缩放的列表，滚动位置指示器沿表圈显示<br>
+        <b>约束：</b>非滚动屏同时约束横向与纵向，大屏易出问题，需单独验证
+      </div>
+      <div class="sec" style="margin-top:2px"><span>3</span>系统入口与联动</div>
+      <div class="box">
+        <b>功能块（Tiles）：</b>采用带进度环的边缘内容布局，步步居中、进度环绕表圈，对应 watchOS 的智能叠放小组件<br>
+        <b>表盘复杂功能：</b>提供「步步 + 养分进度」数据源，对应 WA1<br>
+        <b>手机手表同步：</b>使用 Data Layer 在手机与手表之间传递事件与步步状态（参考官方 DataLayer 示例）<br>
+        <b>录音：</b>带扬声器 / 麦克风的设备按官方示例处理录音权限
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="sec"><span>4</span>同一屏的圆屏适配（WA2 步步主页）</div>
+      <div style="display:flex;gap:20px;align-items:flex-end;justify-content:center">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div class="rd" style="width:250px;height:250px">
+            <div style="font-size:18px;font-weight:600;margin-bottom:4px">步步</div>
+            <svg width="86" height="86" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#000" stroke="#fff" stroke-width="3"/><circle cx="47" cy="80" r="4" fill="#fff"/><circle cx="73" cy="80" r="4" fill="#fff"/><path d="M60 46 V26" stroke="#fff" stroke-width="3"/><path d="M60 32 C70 20 84 22 86 30 C76 36 66 36 60 32 Z" fill="#000" stroke="#fff" stroke-width="3"/></svg>
+            <div class="pill" style="width:150px;height:44px;font-size:16px;margin-top:8px">说给步步听</div>
+            <svg width="262" height="262" viewBox="0 0 262 262" aria-hidden="true" style="position:absolute;top:-6px;left:-6px"><circle cx="131" cy="131" r="121" fill="none" stroke="#3A3A3C" stroke-width="5"/><circle cx="131" cy="131" r="121" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-dasharray="507 253" transform="rotate(-90 131 131)"/></svg>
+          </div>
+          <div style="font-size:12.5px;font-weight:700">192dp 小屏</div>
+          <div style="font-size:11.5px;color:#55554F;text-align:center;max-width:250px">只保留步步与主按钮，养分进度改为沿表圈的进度环</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div class="rd" style="width:292px;height:292px">
+            <div style="font-size:18px;font-weight:600;margin-bottom:2px">步步</div>
+            <svg width="92" height="92" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#000" stroke="#fff" stroke-width="3"/><circle cx="47" cy="80" r="4" fill="#fff"/><circle cx="73" cy="80" r="4" fill="#fff"/><path d="M60 46 V26" stroke="#fff" stroke-width="3"/><path d="M60 32 C70 20 84 22 86 30 C76 36 66 36 60 32 Z" fill="#000" stroke="#fff" stroke-width="3"/></svg>
+            <div style="display:flex;gap:12px;font-size:13px;margin:4px 0 6px"><span>● 睡眠</span><span style="color:#8E8E93">○ 饮食</span><span>● 运动</span></div>
+            <div class="pill" style="width:180px;height:48px;font-size:17px">说给步步听</div>
+            <svg width="304" height="304" viewBox="0 0 304 304" aria-hidden="true" style="position:absolute;top:-6px;left:-6px"><circle cx="152" cy="152" r="142" fill="none" stroke="#3A3A3C" stroke-width="5"/><circle cx="152" cy="152" r="142" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-dasharray="595 297" transform="rotate(-90 152 152)"/></svg>
+          </div>
+          <div style="font-size:12.5px;font-weight:700">225dp 以上大屏</div>
+          <div style="font-size:11.5px;color:#55554F;text-align:center;max-width:290px">断点之后增加三项养分明细，按钮随屏幕变宽</div>
+        </div>
+      </div>
+      <div class="box"><b>与 watchOS 的差异：</b>方屏把进度放在下半屏，圆屏把进度移到表圈上；主按钮在圆屏收窄为居中胶囊，避免被弧形边缘裁切。触感沿用同一套情感语言，用系统振动效果实现。</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>WatchHome</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.band{display:inline-flex;align-items:center;gap:8px;background:#1A1A18;color:#fff;border-radius:16px;padding:4px 12px;font-size:13px;font-weight:700}
+.col{display:flex;flex-direction:column;gap:12px;align-items:center;width:320px;flex:none}
+.step{align-self:flex-start;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+.step span{width:26px;height:26px;border-radius:50%;background:#C2410C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
+.case{position:relative;width:300px;height:352px;border-radius:78px;background:#3A3A3C;display:flex;align-items:center;justify-content:center}
+.crown{position:absolute;right:-10px;top:96px;width:14px;height:44px;border-radius:5px;background:#48484A}
+.btnside{position:absolute;right:-6px;top:170px;width:8px;height:56px;border-radius:4px;background:#48484A}
+.wrap{width:270px;height:322px;border-radius:62px;overflow:hidden;background:#000}
+.scr{position:relative;width:208px;height:248px;transform:scale(1.298);transform-origin:0 0;box-sizing:border-box;padding:0 10px 12px;color:#fff;display:flex;flex-direction:column;gap:6px;font-family:'Noto Sans SC',sans-serif}
+.tb{display:flex;justify-content:space-between;align-items:center;height:34px;padding:6px 6px 0;flex:none}
+.tbb{width:30px;height:30px;border-radius:15px;background:#2C2C2E;display:flex;align-items:center;justify-content:center}
+.tm{font-size:14px;font-weight:600}
+.t20{font-size:20px;font-weight:600;line-height:1.2}
+.t14{font-size:14px;line-height:1.3;color:#AEAEB2}
+.row{display:flex;align-items:center;gap:8px;background:#1C1C1E;border-radius:14px;padding:0 10px;height:44px}
+.pg{position:absolute;right:3px;top:50%;margin-top:-22px;display:flex;flex-direction:column;gap:4px}
+.pg span{width:5px;height:5px;border-radius:50%;background:#636366}
+.pg .on{background:#fff;height:12px;border-radius:3px}
+.ann{align-self:stretch;display:flex;flex-direction:column;gap:5px}
+.code{font-size:12px;font-weight:700;color:#9A3412;letter-spacing:1px}
+.at{font-size:16px;font-weight:700}
+.ad{font-size:12.5px;line-height:1.6;color:#3A3A35}
+.go{flex:none;width:70px;display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:190px;font-size:11.5px;color:#55554F;text-align:center}
+.go b{font-size:24px;color:#1A1A18;font-weight:400;line-height:1}
+.or{flex:none;width:30px;margin-top:190px;font-size:13px;font-weight:700;color:#8E8E93;text-align:center}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:2400px;height:1000px;box-sizing:border-box;padding:32px 44px;background:#EDEDEA;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:16px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <span class="band">04-A · 手表自身交互 · 不依赖手机</span>
+      <h2 style="margin:10px 0 0;font-size:28px">用户路径：入口 → 首页（表冠纵向三页）→ 二级任务（见右侧「自身交互逻辑」）</h2>
+    </div>
+    <div style="font-size:12px;color:#55554F;text-align:right;line-height:1.6">46mm · 208 × 248 pt，按 1.3 倍显示<br>依据 HIG：减少层级，用数码表冠做纵向导航</div>
+  </div>
+
+  <div style="display:flex;align-items:flex-start;flex:1">
+    <div class="col">
+      <div class="step"><span>1</span>入口 A</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr" style="align-items:center;justify-content:center;gap:10px">
+        <div style="display:grid;grid-template-columns:repeat(3,44px);gap:10px">
+          <span style="width:44px;height:44px;border-radius:50%;background:#2C2C2E"></span><span style="width:44px;height:44px;border-radius:50%;background:#2C2C2E"></span><span style="width:44px;height:44px;border-radius:50%;background:#2C2C2E"></span>
+          <span style="width:44px;height:44px;border-radius:50%;background:#2C2C2E"></span>
+          <span style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #0A84FF"><svg width="30" height="30" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#fff" stroke="#000" stroke-width="6"/><path d="M60 46 V26 M60 32 C70 20 84 22 86 30 C76 36 66 36 60 32 Z" fill="#fff" stroke="#000" stroke-width="6"/></svg></span>
+          <span style="width:44px;height:44px;border-radius:50%;background:#2C2C2E"></span>
+          <span style="width:44px;height:44px;border-radius:50%;background:#2C2C2E"></span><span style="width:44px;height:44px;border-radius:50%;background:#2C2C2E"></span><span style="width:44px;height:44px;border-radius:50%;background:#2C2C2E"></span>
+        </div>
+        <div class="t14" style="color:#fff">健康伙伴</div>
+      </div></div></div>
+      <div class="ann"><div class="code">WH0 · 主屏幕 App 图标</div><div class="at">主动打开</div><div class="ad">点图标进入首页第 1 页。点表盘复杂功能（WA1）效果相同，但直接定位到第 2 页「今日养分」。</div></div>
+    </div>
+
+    <div class="or">或</div>
+
+    <div class="col">
+      <div class="step"><span>1</span>入口 B</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr" style="gap:8px">
+        <div style="font-size:40px;font-weight:300;text-align:center;line-height:1;margin-top:4px">10:09</div>
+        <div style="background:#1C1C1E;border-radius:18px;padding:10px;display:flex;gap:10px;align-items:center">
+          <svg width="44" height="44" viewBox="0 0 46 46" aria-hidden="true" style="flex:none"><circle cx="23" cy="23" r="20" fill="none" stroke="#3A3A3C" stroke-width="4"/><circle cx="23" cy="23" r="20" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="84 126" transform="rotate(-90 23 23)"/><path d="M23 16 C31 16 34 22 34 26 C34 31 29 33 23 33 C17 33 12 31 12 26 C12 22 15 16 23 16 Z" fill="#fff"/></svg>
+          <div><div style="font-size:16px;font-weight:600">健康伙伴</div><div class="t14" style="color:#fff">午饭还没记哦</div></div>
+        </div>
+        <div style="background:#1C1C1E;border-radius:18px;height:52px;opacity:0.5;margin:0 8px"></div>
+      </div></div></div>
+      <div class="ann"><div class="code">WH0b · 智能叠放小组件</div><div class="at">被提醒时打开</div><div class="ad">在表盘上转动表冠打开智能叠放。饭点未记录、睡前时段，小组件排到最上面；点按进入首页，定位到相关的页面。</div></div>
+    </div>
+
+    <div class="go"><b>→</b>点按进入</div>
+
+    <div class="col">
+      <div class="step"><span>2</span>首页 · 第 1 页</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr" style="background:radial-gradient(circle at 50% 45%,#1F2A22 0%,#000 70%)">
+        <div class="tb"><span class="tbb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><span class="tm">10:09</span><span class="tbb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span></div>
+        <div style="display:flex;justify-content:center"><svg width="100" height="100" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#000" stroke="#fff" stroke-width="3"/><circle cx="47" cy="80" r="4" fill="#fff"/><circle cx="73" cy="80" r="4" fill="#fff"/><path d="M54 90 Q60 95 66 90" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M60 46 V26" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M60 32 C70 20 84 22 86 30 C76 36 66 36 60 32 Z" fill="#000" stroke="#fff" stroke-width="3"/></svg></div>
+        <div style="text-align:center"><div style="font-size:17px;font-weight:600">长叶中 · 第 2/3 天</div><div class="t14">今天想多吃点蔬菜</div></div>
+        <div class="pg"><span class="on"></span><span></span><span></span></div>
+      </div></div></div>
+      <div class="ann"><div class="code">WH1 · 步步</div><div class="at">先看它好不好</div><div class="ad">点步步 → 互动 WI3；长按 → 说话 / 心情 WI2；右上麦克风 → 快速记录 WI1；左上 → 本周。</div></div>
+    </div>
+
+    <div class="go"><b>↓</b>转动表冠<br>下一页</div>
+
+    <div class="col">
+      <div class="step"><span>3</span>首页 · 第 2 页</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr">
+        <div class="tb"><span class="tbb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><span class="tm">10:09</span><span class="tbb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span></div>
+        <div class="t20">今日养分 2/3</div>
+        <div class="row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span style="font-size:16px;flex:1">睡眠</span><span class="t14" style="color:#fff">6时40分</span></div>
+        <div class="row" style="background:#fff;color:#000"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18a9 9 0 0 1-18 0z"/></svg><span style="font-size:16px;flex:1;font-weight:600">饮食</span><span style="font-size:14px">去记录 ›</span></div>
+        <div class="row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-8.5z"/></svg><span style="font-size:16px;flex:1">运动</span><span class="t14" style="color:#fff">4,230 步</span></div>
+        <div class="pg"><span></span><span class="on"></span><span></span></div>
+      </div></div></div>
+      <div class="ann"><div class="code">WH2 · 今日养分</div><div class="at">再看还差什么</div><div class="ad">未完成项反白，是本页唯一主操作，点按 → 快速记录 WI1。已完成项只看明细。</div></div>
+    </div>
+
+    <div class="go"><b>↓</b>转动表冠<br>下一页</div>
+
+    <div class="col">
+      <div class="step"><span>4</span>首页 · 第 3 页</div>
+      <div class="case"><span class="crown"></span><span class="btnside"></span><div class="wrap"><div class="scr">
+        <div class="tb"><span class="tbb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><span class="tm">10:09</span><span class="tbb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span></div>
+        <div class="t20">3 天养成</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:2px">
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:24px;height:24px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span><span style="font-size:16px;flex:1">发芽</span><span class="t14">第 1 天</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:24px;height:24px;border-radius:50%;border:3px solid #fff;box-sizing:border-box;background:conic-gradient(#fff 0 66%,transparent 66%)"></span><span style="font-size:16px;flex:1;font-weight:600">长叶中</span><span class="t14" style="color:#fff">今天</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:24px;height:24px;border-radius:50%;border:2px solid #636366;box-sizing:border-box"></span><span style="font-size:16px;flex:1;color:#AEAEB2">成形</span><span class="t14">明天</span></div>
+        </div>
+        <div class="t14" style="margin-top:auto;text-align:center">第 3 天在手机上一起孵化</div>
+        <div class="pg"><span></span><span></span><span class="on"></span></div>
+      </div></div></div>
+      <div class="ann"><div class="code">WH3 · 3 天进度</div><div class="at">最后看还要多久</div><div class="ad">3 天结束后，此页变为「本周」，显示 7 天里步步每天的样子。滚到底后表冠回弹，不循环。</div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

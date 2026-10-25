@@ -939,46 +939,30 @@ ul {
   }
 }
 
-/* Custom cursor — a lagging ring + a tight dot, mouse/trackpad only.
-   Was a flat black-on-white blob (mix-blend-mode: difference against a
-   white/light page always resolves to near-black, no matter the accent
-   color underneath) -- replaced with the site's actual --accent color plus
-   a soft white halo, so it reads as a colored, on-brand cursor and still
-   stays visible over the hero illustration's busy pastel palette. */
-.cursor-dot,
-.cursor-ring {
+/* Custom cursor — an inverting blob, mouse/trackpad only (see main.js).
+   White + mix-blend-mode: difference flips whatever is underneath: dark on
+   the light pages, the complementary colour over coloured type and art. */
+.cursor-blob {
   position: fixed;
   top: 0;
   left: 0;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  background: #fff;
+  mix-blend-mode: difference;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform;
 }
-
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.55);
+.cursor-blob.is-visible {
+  opacity: 1;
 }
-
-.cursor-ring {
-  width: 32px;
-  height: 32px;
-  border: 1.5px solid var(--accent);
-  opacity: 0.6;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease,
-    opacity 0.25s ease, background 0.25s ease;
+.cursor-blob.is-down {
+  opacity: 0.75;
 }
-
-/* Hover no longer grows the ring or fills it with a color wash -- the ring
-   now stays exactly the same size/appearance whether or not the cursor is
-   over a link, per feedback that the grow+fill hover state looked off. The
-   is-hovering class is still added/removed by main.js but no rule reacts
-   to it, so it's a harmless no-op left in place rather than touching the
-   JS as well. */
 
 body.has-custom-cursor,
 body.has-custom-cursor a,
@@ -987,8 +971,7 @@ body.has-custom-cursor button {
 }
 
 @media (hover: none), (pointer: coarse) {
-  .cursor-dot,
-  .cursor-ring {
+  .cursor-blob {
     display: none !important;
   }
   body.has-custom-cursor,
@@ -1036,10 +1019,6 @@ body.has-custom-cursor button {
     filter: none;
   }
   .intro-overlay {
-    display: none;
-  }
-  .cursor-dot,
-  .cursor-ring {
     display: none;
   }
   .mockup-frame,
@@ -3104,4 +3083,12 @@ html.snap-pages #contact {
 .nav-links a::after,
 .nav-links a:hover::after {
   display: none;
+}
+
+/* Odd card out on the 2-column phone grid spans the full row. */
+@media (max-width: 760px) {
+  .feature-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    aspect-ratio: 18 / 8;
+  }
 }

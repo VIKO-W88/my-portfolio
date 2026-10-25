@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>WatchSpec</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.sec{font-size:15px;font-weight:700;color:#1A1A18;display:flex;align-items:center;gap:8px}
+.sec span{width:22px;height:22px;border-radius:50%;background:#1A1A18;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center}
+.pr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-top:2px solid #1A1A18}
+.pr div{padding:7px 9px;border-bottom:1px solid #D4D4CF;font-size:12px;line-height:1.5;color:#3A3A35}
+.th{font-weight:700;color:#1A1A18 !important;background:#E9E9E5}
+.ty{display:grid;grid-template-columns:92px 54px 54px minmax(0,1fr);border-top:2px solid #1A1A18}
+.ty div{padding:5px 8px;border-bottom:1px solid #D4D4CF;font-size:12px;color:#3A3A35;display:flex;align-items:center}
+.lb{font-weight:700;color:#1A1A18 !important}
+.box{background:#fff;border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.65;color:#3A3A35}
+.box b{color:#1A1A18}
+.mini{width:118px;height:140px;border-radius:30px;background:#000;border:5px solid #3A3A3C;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#fff;font-size:11px}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1600px;height:1000px;box-sizing:border-box;padding:34px 44px;background:#F4F4F2;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">手表设计规范 · watchOS（Apple Human Interface Guidelines）</div>
+      <h2 style="margin:6px 0 0;font-size:28px">一瞥可读、单屏完成、表冠导航：步步在手腕上的规则</h2>
+    </div>
+    <div style="font-size:11.5px;color:#6B6B64;text-align:right;line-height:1.6">依据：HIG · Designing for watchOS / Typography / Layout<br>开发核对：SwiftUI-Kit（watchOS 组件、控件、触感示例）</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:22px;flex:1">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="sec"><span>1</span>设计原则 → 本方案的做法</div>
+      <div class="pr">
+        <div class="th">HIG 最佳实践</div><div class="th">健康伙伴手表端</div>
+        <div>支持快速、一瞥可读的单屏交互，一两个手势完成目标操作</div><div>每屏只回答一个问题；WA2 一个主按钮直达语音</div>
+        <div>减少导航层级，用数码表冠做纵向滚动与切换</div><div>App 只有 2 层：步步主页 → 确认卡；表冠上下切换「今日 / 本周」</div>
+        <div>主动预判需求，用设备端数据提供当下相关的内容</div><div>午饭时间未记饮食才出现「说给步步听」；运动结束后才推送</div>
+        <div>用复杂功能在表盘上展示相关的动态数据，点按直达 App</div><div>WA1 圆环进度 + 步步形态，每次抬腕可见</div>
+        <div>用通知传递及时、高价值的信息，不打开 App 也能操作</div><div>运动养分、睡前提醒都可在通知内完成；每天最多 2 条</div>
+        <div>用背景颜色传达辅助信息，用材质表现层级</div><div>背景色随步步状态微调（精神 / 疲惫），不使用警示红</div>
+        <div>App 可独立运行，补充通知与复杂功能</div><div>手机不在身边时可记录，本地缓存后补传</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="sec"><span>2</span>字体与字号</div>
+      <div class="ty">
+        <div class="th">样式</div><div class="th">42mm</div><div class="th">46mm</div><div class="th">用途</div>
+        <div class="lb">Title 3</div><div>19 pt</div><div>20 pt</div><div>页面标题「步步」</div>
+        <div class="lb">Headline</div><div>16 pt</div><div>17 pt</div><div>「吃到运动养分啦」</div>
+        <div class="lb">Body</div><div>16 pt</div><div>17 pt</div><div>转写文字、说明</div>
+        <div class="lb">Caption 1</div><div>15 pt</div><div>16 pt</div><div>卡片副标题</div>
+        <div class="lb">Footnote 1</div><div>13 pt</div><div>14 pt</div><div>同步状态、时间</div>
+      </div>
+      <div class="box">默认正文 16 pt，最小 12 pt；系统字体 SF Compact，复杂功能使用 SF Compact Rounded。42mm 对应 Large 档，46mm 对应 xLarge 档，支持动态字体放大。</div>
+
+      <div class="sec" style="margin-top:4px"><span>3</span>布局与组件</div>
+      <div class="box">
+        <b>画布：</b>42mm 187 × 223 pt · 46mm 208 × 248 pt（以 46mm 出图，42mm 验证）<br>
+        <b>结构：</b>步步在上半屏，信息与操作在下半屏；内容跟随圆角收边<br>
+        <b>按钮：</b>文字按钮优先全宽；一行最多 2 个文字按钮或 3 个图标按钮；并排按钮只用于不滚动的屏<br>
+        <b>点击区：</b>不小于 44 × 44 pt<br>
+        <b>颜色：</b>纯黑背景，高对比白色线稿；不只靠颜色表达含义
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="sec"><span>4</span>输入方式</div>
+      <div class="box">
+        <b>数码表冠：</b>纵向滚动；情绪选择时每过一个刻度轻震<br>
+        <b>标准手势：</b>点按、轻扫、拖动，运动中也能操作<br>
+        <b>操作按钮（Ultra）：</b>不看屏幕即可执行关键操作，本方案映射为「快速语音记一餐」<br>
+        <b>双指互点：</b>触发当前屏主按钮（Series 9 及以上）<br>
+        <b>Siri / 听写：</b>语音录入的系统入口
+      </div>
+
+      <div class="sec" style="margin-top:4px"><span>5</span>系统入口与常亮显示</div>
+      <div class="box"><b>复杂功能</b>（WA1）· <b>智能叠放小组件</b>（按时间段浮现「还差一顿饭」）· <b>通知</b>简短 → 详细两段式（WA3）</div>
+      <div style="display:flex;gap:14px;align-items:center">
+        <div class="mini"><svg width="56" height="56" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="#fff"/><circle cx="47" cy="80" r="4" fill="#000"/><circle cx="73" cy="80" r="4" fill="#000"/><path d="M60 46 V26 M60 32 C70 20 84 22 86 30 C76 36 66 36 60 32 Z" fill="#fff" stroke="#fff" stroke-width="3"/></svg><span>抬腕 · 动态</span></div>
+        <div class="mini" style="opacity:0.85"><svg width="56" height="56" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 46 C86 46 98 66 98 82 C98 100 82 110 60 110 C38 110 22 100 22 82 C22 66 34 46 60 46 Z" fill="none" stroke="#8E8E93" stroke-width="3"/><path d="M42 80 h10M68 80 h10" stroke="#8E8E93" stroke-width="3" stroke-linecap="round"/><path d="M60 46 V26" stroke="#8E8E93" stroke-width="3"/></svg><span style="color:#8E8E93">常亮 · 静态</span></div>
+        <div style="flex:1;font-size:12px;line-height:1.6;color:#3A3A35">放下手腕进入常亮显示：步步改为低亮度静态线稿、闭眼，停止动画，隐藏进度数字，只保留形态。</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

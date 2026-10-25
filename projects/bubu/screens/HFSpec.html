@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>HFSpec</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..600,0..1,0&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;display:inline-block}
+.msf{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+.k{font-family:'Outfit',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5D6A64}
+.sec{font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:300;font-size:24px;margin:0;color:#1B2420;display:flex;align-items:baseline;gap:10px}
+.sec b{font-family:'Outfit',sans-serif;font-weight:200;font-size:30px;color:#8EA299}
+.p{font-size:13px;line-height:1.6;color:#3B4A43}
+.cc{border-radius:20px;padding:14px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;min-height:118px;box-sizing:border-box}
+.cc b{font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:400;font-size:17px}
+.cc code{font-family:'Outfit',sans-serif;font-size:13px;opacity:.85}
+.cc span{font-size:12px;opacity:.85}
+.sw{display:flex;align-items:center;gap:8px;font-size:12px;color:#3B4A43}
+.sw i{width:22px;height:22px;border-radius:7px;flex:none;border:1px solid rgba(0,0,0,.08)}
+.ty{display:grid;grid-template-columns:150px 92px minmax(0,1fr);align-items:center;border-bottom:1px solid #C5CEC9;padding:7px 0}
+.ty .n{font-size:12px;color:#5D6A64}
+.ty .v{font-family:'Outfit',sans-serif;font-size:12px;color:#5D6A64}
+.ig{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.ic{display:flex;flex-direction:column;align-items:center;gap:4px;background:rgba(255,255,255,.55);border-radius:14px;padding:10px 4px 8px}
+.ic .ms{font-size:24px;color:#1B2420}
+.ic span:last-child{font-size:11px;color:#3B4A43;text-align:center;line-height:1.3}
+.ic code{font-family:'Outfit',sans-serif;font-size:10px;color:#5D6A64}
+.scene{position:relative;border-radius:24px;overflow:hidden;background:#9FB0A9}
+.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gl{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.42);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2)}
+.gi{background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.75);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2)}
+.gd{background:rgba(16,24,20,.46);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2)}
+.lab{font-size:11px;color:#5D6A64;margin-top:6px}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1800px;height:1100px;box-sizing:border-box;padding:40px 48px;background:#DCE1DE;font-family:'Noto Sans SC',sans-serif;color:#1B2420;display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:40px">
+
+  <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+    <div class="k">05 · Visual system · 雾林毛玻璃</div>
+    <h2 class="sec"><b>01</b>色彩</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+      <div class="cc" style="background:linear-gradient(160deg,#C9D3CF,#A9B8B2);color:#1B2420"><b>雾鼠尾草</b><code>#A9B8B2</code><span>场景与背景</span></div>
+      <div class="cc" style="background:#1B2420;color:#CFF27E"><b>青柠光</b><code>#CFF27E</code><span style="color:#E6ECE8">唯一高亮</span></div>
+      <div class="cc" style="background:radial-gradient(circle at 70% 30%,#2A3A2E,#141A17 70%);color:#F0F4F1"><b>夜林</b><code>#141A17</code><span>深色 / 手表</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 14px">
+      <div class="sw"><i style="background:#1B2420"></i>墨绿文字 #1B2420 · 浅色玻璃上正文</div>
+      <div class="sw"><i style="background:#F4F7F5"></i>雾白文字 #F4F7F5 · 深色玻璃上正文</div>
+      <div class="sw"><i style="background:#3B4A43"></i>次要文字 #3B4A43</div>
+      <div class="sw"><i style="background:#FFF6EE"></i>步步暖白 #FFF6EE</div>
+      <div class="sw"><i style="background:#F4B3A3"></i>腮红珊瑚 #F4B3A3</div>
+      <div class="sw"><i style="background:#E9C98F"></i>琥珀 #E9C98F · 需要关照</div>
+      <div class="sw"><i style="background:#9DB9E8"></i>雾蓝 #9DB9E8 · 睡眠</div>
+      <div class="sw"><i style="background:#F2C98A"></i>暖桃 #F2C98A · 饮食</div>
+      <div class="sw"><i style="background:#CFF27E"></i>青柠 #CFF27E · 运动 / 完成</div>
+      <div class="sw"><i style="background:#8B5E1F"></i>琥珀深 #8B5E1F · 提醒文字</div>
+    </div>
+    <div class="p">对比度：墨绿文字放在 62% 白色玻璃上约 11:1；雾白文字放在 46% 墨绿玻璃上约 8:1，均高于 4.5:1。不用红色表达健康异常。</div>
+
+    <h2 class="sec" style="margin-top:8px"><b>02</b>毛玻璃材质</h2>
+    <div class="scene" style="height:250px">
+      <img src="../img/home.jpg" alt="晨雾场景">
+      <div style="position:absolute;left:14px;right:14px;top:14px;display:flex;flex-direction:column;gap:10px">
+        <div class="gi" style="border-radius:20px;padding:12px 14px;font-size:15px;color:#1B2420">浅玻璃 · 白 62% · 模糊 20 · 放墨绿正文</div>
+        <div class="gl" style="border-radius:20px;padding:12px 14px;font-size:15px;color:#fff">透玻璃 · 白 22% · 只放大数字和图标</div>
+        <div class="gd" style="border-radius:20px;padding:12px 14px;font-size:15px;color:#F4F7F5">深玻璃 · 墨绿 46% · 夜间与手表正文</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+    <h2 class="sec" style="margin-top:28px"><b>03</b>字体阶梯（iOS pt）</h2>
+    <div class="p">中文 Noto Sans SC；数字与英文 Outfit。细字重只用于 28pt 以上的大数字，正文保持 Regular。</div>
+    <div>
+      <div class="ty"><span class="n">数据大数字</span><span class="v">Outfit 200 · 48</span><span style="font-family:'Outfit';font-weight:200;font-size:48px;line-height:1">6.7<small style="font-size:20px">h</small></span></div>
+      <div class="ty"><span class="n">Large Title</span><span class="v">300 · 34/41</span><span style="font-weight:300;font-size:34px;line-height:41px">早上好，小满</span></div>
+      <div class="ty"><span class="n">Title 2</span><span class="v">400 · 22/28</span><span style="font-size:22px">今天的养分收齐啦</span></div>
+      <div class="ty"><span class="n">Headline</span><span class="v">500 · 17/22</span><span style="font-size:17px;font-weight:500">今日养分 2/3</span></div>
+      <div class="ty"><span class="n">Body</span><span class="v">400 · 17/22</span><span style="font-size:17px">还差一顿饭的养分</span></div>
+      <div class="ty"><span class="n">Subheadline</span><span class="v">400 · 15/20</span><span style="font-size:15px">昨晚比平时晚睡 1 小时</span></div>
+      <div class="ty"><span class="n">Footnote</span><span class="v">400 · 13/18</span><span style="font-size:13px">这不是诊断</span></div>
+      <div class="ty"><span class="n">Caption 1</span><span class="v">400 · 12/16</span><span style="font-size:12px">睡眠 · 7:02 同步</span></div>
+      <div class="ty" style="border:none"><span class="n">Tab 标签</span><span class="v">500 · 10/12</span><span style="font-size:10px;font-weight:500">今日　摘要　伙伴</span></div>
+    </div>
+
+    <h2 class="sec" style="margin-top:6px"><b>04</b>间距与圆角</h2>
+    <div class="p">8pt 栅格；页面边距 16；卡片内边距 14–16；元素间距 8 / 12 / 16 / 24。圆角：标签 9 · 按钮与胶囊 全圆 · 卡片 20 · 弹层 32 · 设备屏 55。最小点击区 44 × 44pt。</div>
+    <div style="display:flex;gap:10px;align-items:flex-end">
+      <div style="width:44px;height:44px;border-radius:22px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#5D6A64">44</div>
+      <div style="width:110px;height:50px;border-radius:25px;background:#1B2420;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px">按钮 50</div>
+      <div style="width:90px;height:64px;border-radius:20px;background:rgba(255,255,255,.62);display:flex;align-items:center;justify-content:center;font-size:12px;color:#5D6A64">卡片 r20</div>
+      <div style="width:90px;height:80px;border-radius:32px 32px 0 0;background:rgba(255,255,255,.62);display:flex;align-items:center;justify-content:center;font-size:12px;color:#5D6A64">弹层 r32</div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+    <h2 class="sec" style="margin-top:28px"><b>05</b>图标 · Material Symbols Rounded</h2>
+    <div class="p">替换线框图中的手绘图标。统一 24px、字重 300、圆角端点，放在 44pt 点击区内；选中态用实心（FILL 1）。iOS 端可一一映射到 SF Symbols。</div>
+    <div class="ig">
+      <div class="ic"><span class="ms msf">home</span><span>今日</span><code>home</code></div>
+      <div class="ic"><span class="ms">insights</span><span>摘要</span><code>insights</code></div>
+      <div class="ic"><span class="ms">forum</span><span>伙伴</span><code>forum</code></div>
+      <div class="ic"><span class="ms">add</span><span>录入</span><code>add</code></div>
+      <div class="ic"><span class="ms">mic</span><span>语音</span><code>mic</code></div>
+      <div class="ic"><span class="ms">photo_camera</span><span>拍照</span><code>photo_camera</code></div>
+      <div class="ic"><span class="ms">bedtime</span><span>睡眠</span><code>bedtime</code></div>
+      <div class="ic"><span class="ms">restaurant</span><span>饮食</span><code>restaurant</code></div>
+      <div class="ic"><span class="ms">directions_walk</span><span>运动</span><code>directions_walk</code></div>
+      <div class="ic"><span class="ms">water_drop</span><span>血糖</span><code>water_drop</code></div>
+      <div class="ic"><span class="ms">bolt</span><span>精力</span><code>bolt</code></div>
+      <div class="ic"><span class="ms">auto_awesome</span><span>AI 发现</span><code>auto_awesome</code></div>
+      <div class="ic"><span class="ms">eco</span><span>养分</span><code>eco</code></div>
+      <div class="ic"><span class="ms">watch</span><span>手表</span><code>watch</code></div>
+      <div class="ic"><span class="ms">sync</span><span>同步</span><code>sync</code></div>
+      <div class="ic"><span class="ms">arrow_back_ios_new</span><span>返回</span><code>arrow_back_ios_new</code></div>
+      <div class="ic"><span class="ms">more_horiz</span><span>更多</span><code>more_horiz</code></div>
+      <div class="ic"><span class="ms">close</span><span>关闭</span><code>close</code></div>
+    </div>
+
+    <h2 class="sec" style="margin-top:6px"><b>06</b>组件</h2>
+    <div class="scene" style="height:300px">
+      <img src="../img/home.jpg" alt="晨雾场景">
+      <div style="position:absolute;left:16px;right:16px;top:16px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button style="height:50px;padding:0 22px;border-radius:25px;border:none;background:#1B2420;color:#fff;font-size:17px;font-weight:500;font-family:inherit;display:flex;align-items:center;gap:6px"><span class="ms" style="font-size:22px">mic</span>说给步步听</button>
+          <button class="gi" style="height:50px;padding:0 20px;border-radius:25px;color:#1B2420;font-size:17px;font-family:inherit">记一餐</button>
+          <button style="height:44px;padding:0 10px;border:none;background:none;color:#1B2420;font-size:15px;font-family:inherit;text-decoration:underline">详情</button>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="gi" style="height:32px;padding:0 12px 0 8px;border-radius:16px;display:flex;align-items:center;gap:4px;font-size:13px"><span class="ms" style="font-size:18px">check</span>睡眠</span>
+          <span class="gl" style="height:32px;padding:0 12px;border-radius:16px;display:flex;align-items:center;font-size:13px;color:#fff">饮食</span>
+          <span style="height:24px;padding:0 10px;border-radius:12px;display:flex;align-items:center;font-size:12px;background:rgba(233,201,143,.85);color:#5A3C0E;align-self:center">需要关照</span>
+          <span style="height:24px;padding:0 10px;border-radius:12px;display:flex;align-items:center;gap:4px;font-size:12px;background:rgba(27,36,32,.75);color:#CFF27E;align-self:center"><span style="width:6px;height:6px;border-radius:3px;background:#CFF27E"></span>已完成</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:18px">
+          <div class="gi" style="flex:1;height:64px;border-radius:32px;display:flex;align-items:center;justify-content:space-around;padding:0 6px">
+            <span style="width:84px;height:52px;border-radius:26px;background:#1B2420;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px"><span class="ms msf" style="font-size:22px">home</span><span style="font-size:10px;font-weight:500">今日</span></span>
+            <span style="width:84px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#1B2420"><span class="ms" style="font-size:22px">insights</span><span style="font-size:10px;font-weight:500">摘要</span></span>
+            <span style="width:84px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#1B2420"><span class="ms" style="font-size:22px">forum</span><span style="font-size:10px;font-weight:500">伙伴</span></span>
+          </div>
+          <span class="gi" style="flex:none;width:64px;height:64px;border-radius:32px;display:flex;align-items:center;justify-content:center;color:#1B2420"><span class="ms" style="font-size:28px">add</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="p">标签栏：悬浮玻璃胶囊高 64，带文字标签，选中项为墨绿胶囊加实心图标；录入是独立圆钮 64，长按直接语音（对应 iOS 26 悬浮标签栏与独立操作按钮的结构）。主按钮高 50，墨绿底白字；次按钮为浅玻璃。</div>
+  </div>
+</div>
+</body>
+</html>

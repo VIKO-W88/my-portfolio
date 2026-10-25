@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>R3-Decisions</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,200..600,0..1,0&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;display:inline-block}
+.k{font-family:'Outfit','Noto Sans SC',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5D6A64}
+.sec{font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:300;font-size:22px;margin:0;color:#1B2420;display:flex;align-items:baseline;gap:10px}
+.sec b{font-family:'Outfit',sans-serif;font-weight:200;font-size:28px;color:#8EA299}
+.num{font-family:'Outfit',sans-serif}
+.dt{display:grid;grid-template-columns:36px 210px minmax(0,1fr) minmax(0,.8fr) 92px;column-gap:16px;padding:32px 0;border-bottom:1px solid #C5CEC9;font-size:13px;line-height:20px;color:#26322C;align-items:start}
+.dt.h{font-size:12px;color:#5D6A64;padding-top:0}
+.dt .n{font-family:'Outfit',sans-serif;font-weight:200;font-size:26px;line-height:26px;color:#8EA299}
+.dt .t{font-size:15px;font-weight:500;line-height:22px;color:#1B2420}
+.dt .pg{font-family:'Outfit',sans-serif;font-size:12px;color:#5D6A64}
+.ts{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:12px;padding:21px 0;border-bottom:1px solid rgba(27,36,32,.1);font-size:13px;line-height:20px}
+.ts b{display:block;font-size:14px;font-weight:500}
+.ts .m{color:#4E6B4F;font-size:13px}
+.st{flex:1;border-radius:16px;padding:12px 14px;background:rgba(255,255,255,.62);display:flex;flex-direction:column;gap:2px;min-width:0}
+.st .d{font-family:'Outfit','Noto Sans SC',sans-serif;font-size:12px;color:#5D6A64}
+.st b{font-size:14px;font-weight:500}
+.st span{font-size:12px;line-height:18px;color:#33413A}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:1800px;height:1000px;box-sizing:border-box;padding:40px 48px;background:#DCE1DE;font-family:'Noto Sans SC',sans-serif;color:#1B2420;display:flex;flex-direction:column;gap:24px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">06 · Rationale · 关键决策与可用性测试</div>
+      <div style="font-weight:300;font-size:30px;line-height:40px;margin-top:6px">每个设计决策都有取舍</div>
+    </div>
+  </div>
+
+  <div style="flex:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;min-height:0">
+    <div>
+      <h2 class="sec"><b>01</b>关键决策</h2>
+      <div style="margin-top:12px">
+        <div class="dt h"><span></span><span>决策</span><span>为什么</span><span>放弃了什么</span><span>对应页面</span></div>
+        <div class="dt"><span class="n">1</span><span class="t">用 IP 养成代替打卡报表</span><span>「喂养步步」把记录变成照顾一个角色；3 天是能完成的承诺，第 3 天孵化给到明确回报。</span><span>第一天就看到完整数据报告</span><span class="pg">W01 · HF01 · HF06</span></div>
+        <div class="dt"><span class="n">2</span><span class="t">语音优先的多模态录入</span><span>一句话记完三餐，录入成本最低；拍照和手动输入作为补充。</span><span>精确的热量和克数，用均衡度替代</span><span class="pg">W03 · W06 · HF03</span></div>
+        <div class="dt"><span class="n">3</span><span class="t">异常用琥珀色和轻提醒，不用红色警报</span><span>连续偏高需要被看见，但不应引发恐慌；给出今晚就能做的一件事。</span><span>强警示的视觉冲击，用分级升级规则兜底安全</span><span class="pg">W09 · HF05</span></div>
+        <div class="dt"><span class="n">4</span><span class="t">画像用拟物动效，数值放第二层</span><span>Z 世代先看状态再看数字；光晕、体态、粒子一眼可懂，也适合分享。</span><span>信息密度更高的雷达图和图表首页</span><span class="pg">HF07 · HF08</span></div>
+        <div class="dt"><span class="n">5</span><span class="t">手表负责采集和感受，手机负责理解和编辑</span><span>手表屏小、随身：适合轻触和触感；手机适合看趋势、改记录。</span><span>手表上的长文本和复杂编辑</span><span class="pg">04-A · 04-B · HW</span></div>
+        <div class="dt"><span class="n">6</span><span class="t">体重默认只看变化</span><span>减少体重焦虑；体重只作为饮食维度的辅助信号。</span><span>首页直接显示体重数字</span><span class="pg">ScaleLink · HF10</span></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+      <div>
+        <h2 class="sec"><b>02</b>可用性测试</h2>
+        <div style="margin-top:12px;display:flex;gap:10px">
+          <div class="st"><span class="d">对象</span><b><span class="num">6–8</span> 名 18–26 岁用户</b><span>有健康管理意愿，但曾放弃过健康 App</span></div>
+          <div class="st"><span class="d">方式</span><b>可点击原型 + 有声思维</b><span>每人约 <span class="num">40</span> 分钟，线上或线下</span></div>
+          <div class="st"><span class="d">量表</span><b>SUS + 焦虑自评</b><span>焦虑用 <span class="num">1–5</span> 分自评</span></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="ts" style="font-size:12px;color:#5D6A64;padding-top:0"><span>任务</span><span>成功标准</span></div>
+          <div class="ts"><div><b>T1 首次打开到完成第一条记录</b>验证欢迎流程和录入方式选择是否清楚</div><span class="m">≤ <span class="num">3</span> 分钟 · 完成率 ≥ <span class="num">90%</span></span></div>
+          <div class="ts"><div><b>T2 用一句话记下三餐</b>验证语音解析结果是否能看懂、会不会改</div><span class="m">一次成功率 ≥ <span class="num">80%</span></span></div>
+          <div class="ts"><div><b>T3 看到血糖偏高提醒后复述含义</b>琥珀轻提醒 vs 红色警报两版 A/B 对比</div><span class="m">理解正确 ≥ <span class="num">90%</span> · 焦虑自评更低</span></div>
+          <div class="ts"><div><b>T4 不看说明读懂健康画像</b>验证光晕 / 体态 / 粒子的映射是否直觉</div><span class="m">三项都说对 ≥ <span class="num">70%</span></span></div>
+          <div class="ts" style="border-bottom:none"><div><b>T5 只用手表记录今天的心情</b>验证表冠交互和手表独立任务</div><span class="m">无需提示完成 ≥ <span class="num">80%</span></span></div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="sec"><b>03</b>衡量指标</h2>
+        <div style="margin-top:12px;display:flex;gap:10px">
+          <div class="st"><span class="d">养成</span><b>第 3 天孵化完成率</b><span>3 天流程是否真的能走完</span></div>
+          <div class="st"><span class="d">留存</span><b>第 7 天仍在记录的比例</b><span>孵化后的动力是否延续</span></div>
+          <div class="st"><span class="d">负担</span><b>单条记录平均耗时</b><span>多模态是否真的减负</span></div>
+          <div class="st"><span class="d">打扰</span><b>通知关闭率</b><span>推送节奏是否合适</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

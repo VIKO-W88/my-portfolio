@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="noindex">
+<title>Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.k{font-size:12px;letter-spacing:2px;color:#6B6B64;font-weight:500}
+.lane{display:flex;gap:16px;align-items:stretch;background:#fff;border:1.5px solid #D4D4CF;border-radius:16px;padding:16px}
+.ll{flex:none;width:130px;display:flex;flex-direction:column;justify-content:center;gap:4px;border-right:1.5px solid #D4D4CF;padding-right:12px}
+.row{display:flex;align-items:center;gap:8px;flex:1}
+.nd{flex:none;background:#fff;border:1.5px solid #222;border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.45;text-align:center;min-width:92px}
+.nd b{display:block;font-size:10.5px;color:#9A3412;font-weight:700}
+.st{flex:none;background:#1A1A18;color:#F4F4F2;border-radius:22px;padding:9px 14px;font-size:12.5px;font-weight:700}
+.dc{flex:none;background:#FFFBEB;border:1.5px dashed #222;border-radius:10px;padding:8px 10px;font-size:12.5px;text-align:center;min-width:96px}
+.ab{flex:none;background:#FEF3C7;border:1.5px solid #B45309;border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.45;text-align:center;min-width:110px}
+.ab b{display:block;font-size:10.5px;color:#78350F}
+.ar{flex:none;font-size:18px;color:#222}
+.br{display:flex;flex-direction:column;gap:8px}
+.bi{display:flex;align-items:center;gap:6px}
+.y{flex:none;font-size:11px;color:#55554F;width:22px;text-align:right}
+.mm{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;background:#DBEAFE;color:#1E3A8A;margin-top:3px}
+</style>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+
+<div style="width:2200px;height:1000px;box-sizing:border-box;padding:40px 48px;background:#F4F4F2;font-family:'Noto Sans SC',sans-serif;color:#1A1A18;display:flex;flex-direction:column;gap:16px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div>
+      <div class="k">任务流程 · 首次打开 → 3 天录入 → 生成健康画像</div>
+      <h2 style="margin:6px 0 0;font-size:28px">一条主线，三处分支：录入方式、漏录恢复、血糖异常</h2>
+    </div>
+    <div style="display:flex;gap:16px;font-size:12px;align-items:center">
+      <span style="display:flex;gap:6px;align-items:center"><span class="st" style="padding:3px 10px;font-size:11px">起止</span></span>
+      <span style="display:flex;gap:6px;align-items:center"><span class="nd" style="padding:3px 8px;min-width:0;font-size:11px">页面 / 动作</span></span>
+      <span style="display:flex;gap:6px;align-items:center"><span class="dc" style="padding:3px 8px;min-width:0;font-size:11px">判断</span></span>
+      <span style="display:flex;gap:6px;align-items:center"><span class="ab" style="padding:3px 8px;min-width:0;font-size:11px">异常引导</span></span>
+      <span class="mm" style="margin:0">多模态</span>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="ll"><div style="font-size:16px;font-weight:700">Day 0</div><div style="font-size:12px;color:#55554F">首次打开<br>目标 ≤ 90 秒</div></div>
+    <div class="row">
+      <div class="st">打开 App</div><span class="ar">→</span>
+      <div class="nd"><b>W01</b>欢迎<br>领取种子</div><span class="ar">→</span>
+      <div class="nd"><b>W02</b>分级授权<br>先给基础项</div><span class="ar">→</span>
+      <div class="nd"><b>W02</b>选关注目标<br>最多 2 个</div><span class="ar">→</span>
+      <div class="nd"><b>W03</b>录入方式选择<br>AI 按设备推荐</div><span class="ar">→</span>
+      <div class="dc">检测到<br>已连接设备？</div><span class="ar">→</span>
+      <div class="br">
+        <div class="bi"><span class="y">是</span><div class="nd"><b>W04</b>设备同步<br><span class="mm">手表震动确认</span></div></div>
+        <div class="bi"><span class="y">否</span><div class="nd"><b>W05</b>趣味问答 6 题<br><span class="mm">左右滑手势</span></div></div>
+        <div class="bi"><span class="y">补充</span><div class="nd"><b>W06</b>语音 / 拍照 / 手动<br><span class="mm">语音一句话</span></div></div>
+      </div><span class="ar">→</span>
+      <div class="nd"><b>W08</b>首次鼓励浮层<br>种子发芽</div><span class="ar">→</span>
+      <div class="nd"><b>W07</b>今日首页<br>Day 1/3</div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="ll"><div style="font-size:16px;font-weight:700">Day 1–3</div><div style="font-size:12px;color:#55554F">每日循环<br>目标 ≤ 3 分钟/天</div></div>
+    <div class="row">
+      <div class="nd"><b>W07</b>今日首页<br>步步状态 + 待录入</div><span class="ar">→</span>
+      <div class="nd">晨间自动同步<br>睡眠 / 步数</div><span class="ar">→</span>
+      <div class="nd"><b>W06</b>白天录入三餐<br>语音 / 拍照</div><span class="ar">→</span>
+      <div class="dc">当日三类<br>数据齐了？</div><span class="ar">→</span>
+      <div class="br">
+        <div class="bi"><span class="y">是</span><div class="nd"><b>W08</b>鼓励浮层<br>步步吸收养分</div><span class="ar">→</span><div class="nd">今日微行动<br>可跳过</div><span class="ar">→</span><div class="st">进入下一天</div></div>
+        <div class="bi"><span class="y">否</span><div class="nd">20:00 步步轻提醒<br>「我有点饿」</div><span class="ar">→</span><div class="dc">次日仍<br>未补录？</div><span class="ar">→</span><div class="nd">进度不清零<br>可补录前 1 天</div></div>
+      </div>
+      <div style="flex:1;font-size:12px;color:#55554F;line-height:1.6;padding-left:12px;border-left:1.5px dashed #D4D4CF;margin-left:8px">漏录不惩罚：步步不会枯萎，只会「等你」。超过 2 天未录入，「3 天」顺延，并用已有数据先生成部分画像。</div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="ll"><div style="font-size:16px;font-weight:700">Day 3</div><div style="font-size:12px;color:#55554F">异常引导<br>+ 画像生成</div></div>
+    <div class="row">
+      <div class="nd">血糖仪同步<br>/ 手动填空腹值</div><span class="ar">→</span>
+      <div class="dc">连续 3 天<br>空腹 ≥ 6.1？</div><span class="ar">→</span>
+      <div class="br">
+        <div class="bi"><span class="y">否</span><div class="nd">正常进入<br>画像生成</div></div>
+        <div class="bi"><span class="y">是</span><div class="ab"><b>L1 感知 · W09</b>步步「有点迷糊」<br>首页暖黄洞察卡</div><span class="ar">→</span><div class="dc">用户<br>点开？</div><span class="ar">→</span><div class="ab"><b>L2 理解 · W09</b>3 天趋势 + 成因关联<br>+ 1 个微行动</div><span class="ar">→</span><div class="dc">任一次 ≥ 7.0<br>或持续 7 天？</div><span class="ar">→</span><div class="ab"><b>L3 行动 · W09</b>建议就医检查<br>附预约入口</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <div class="ll"><div style="font-size:16px;font-weight:700">Day 3 晚</div><div style="font-size:12px;color:#55554F">揭晓时刻</div></div>
+    <div class="row">
+      <div class="nd">完成第 3 天<br>最后一项录入</div><span class="ar">→</span>
+      <div class="nd"><b>W10</b>孵化仪式<br><span class="mm">长按 + 震动渐强</span></div><span class="ar">→</span>
+      <div class="nd"><b>W11</b>健康画像<br>步步成形</div><span class="ar">→</span>
+      <div class="br">
+        <div class="bi"><div class="nd">点任一维度<br>看详情与建议</div></div>
+        <div class="bi"><div class="nd">生成分享卡<br>不含原始数值</div></div>
+      </div><span class="ar">→</span>
+      <div class="st">进入日常陪伴</div>
+      <div style="flex:1;font-size:12px;color:#55554F;line-height:1.6;padding-left:12px;border-left:1.5px dashed #D4D4CF;margin-left:12px">血糖异常不进入分享卡，也不改变步步的「成形」结果，只在画像页以一条可收起的提示存在，避免惩罚感。</div>
+    </div>
+  </div>
+
+  <div style="font-size:12px;color:#55554F">阈值参考：WHO 标准空腹血糖 6.1–6.9 mmol/L 为空腹血糖受损，≥ 7.0 为糖尿病诊断参考值之一。本产品只做提醒，不做诊断，最终阈值需与医学顾问确认。</div>
+</div>
+</body>
+</html>

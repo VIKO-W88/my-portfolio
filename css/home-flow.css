@@ -1,0 +1,302 @@
+/* ==========================================================================
+   Home page browsing layer (after sazzadali-portfolio): one continuous,
+   unsnapped page over a single fixed backdrop:
+   flat near-white backdrop (dark: near-black) with a faint static grid, floating parallax shapes, a
+   scroll progress line, a nav that tucks away on scroll-down, lagging
+   section headings and a pinned horizontal 精选项目 gallery.
+   Loaded after style.css on index.html only; js/home-flow.js drives it.
+   Card styles/interactions are untouched.
+   ========================================================================== */
+
+:root {
+  --flow-base: #fbfbfd;
+  --flow-line: rgba(12, 19, 34, 0.05);
+  --flow-shape: rgba(63, 79, 214, 0.32);
+  --flow-progress: #4a5ff0;
+}
+[data-theme="dark"] {
+  --flow-base: #0b0c0f;
+  --flow-line: rgba(255, 255, 255, 0.05);
+  --flow-shape: rgba(160, 172, 255, 0.4);
+  --flow-progress: #8d9cff;
+}
+
+/* continuous scroll: no page snapping */
+html.flow-home { scroll-snap-type: none !important; scroll-padding-top: var(--nav-h, 69px); }
+html.flow-home body { background: var(--flow-base); }
+
+/* ---- backdrop ---------------------------------------------------------- */
+.flow-bg {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+  background: var(--flow-base);
+  transition: background 0.4s ease;
+}
+/* grid only behind the hero (like dreamystudio), fading out at the edges -- not full-screen */
+html.flow-home .hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(var(--flow-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--flow-line) 1px, transparent 1px);
+  background-size: 88px 88px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 45%, #000 20%, transparent 75%);
+          mask-image: radial-gradient(ellipse 60% 55% at 50% 45%, #000 20%, transparent 75%);
+}
+.flow-shape {
+  position: absolute; left: 0; top: 0; color: var(--flow-shape);
+  will-change: transform; opacity: .9;
+}
+.flow-shape svg { display: block; width: 100%; height: 100%; }
+
+/* ---- progress line ------------------------------------------------------ */
+.flow-progress {
+  position: fixed; left: 0; top: 0; z-index: 120; height: 2px; width: 100%;
+  background: var(--flow-progress); transform-origin: 0 50%; transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* ---- nav: tuck away on scroll-down, back on scroll-up --------------------- */
+html.flow-home .nav { transition: background .3s ease, border-color .3s ease, backdrop-filter .3s ease, transform .45s cubic-bezier(.22,1,.36,1); }
+html.flow-home .nav.flow-tuck { transform: translateY(-100%); }
+
+/* ---- sections sit on the backdrop ----------------------------------------- */
+html.flow-home .hero-bg { background: transparent; }
+html.flow-home .hero,
+html.flow-home #about,
+html.flow-home .projects-page-featured,
+html.flow-home .projects-page-more,
+html.flow-home #contact,
+html.flow-home .footer { background: var(--flow-base); }
+
+html.flow-home #about,
+html.flow-home .projects-page-featured,
+html.flow-home .projects-page-more,
+html.flow-home #contact {
+  --text: #1c1a3f;
+  --text-muted: #555371;
+  --title-color: #1c1a3f;
+  --accent: #3f4fd6;
+  --accent-soft: #6b76e0;
+  --border: rgba(28, 26, 63, 0.12);
+  --bg-alt: rgba(255, 255, 255, 0.62);
+  --card-bg: rgba(255, 255, 255, 0.72);
+}
+html.flow-home[data-theme="dark"] #about,
+html.flow-home[data-theme="dark"] .projects-page-featured,
+html.flow-home[data-theme="dark"] .projects-page-more,
+html.flow-home[data-theme="dark"] #contact {
+  --text: #eceeff;
+  --text-muted: #a3a7c8;
+  --title-color: #eceeff;
+  --accent: #8d9cff;
+  --accent-soft: #6f80ff;
+  --border: rgba(200, 206, 255, 0.14);
+  --bg-alt: rgba(255, 255, 255, 0.05);
+  --card-bg: rgba(255, 255, 255, 0.06);
+}
+html.flow-home #contact .contact-link { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+html.flow-home .footer { border-top-color: var(--border); }
+
+/* lagging headings + reveal */
+html.flow-home .page-eyebrow, html.flow-home .page-title { will-change: transform; }
+.flow-rv { opacity: 0; transform: translateY(48px); }
+.flow-rv.flow-in { opacity: 1; transform: none; transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+
+/* ---- pinned horizontal 精选项目 (desktop) ------------------------------- */
+@media (min-width: 1024px) {
+  html.flow-home .projects-page-featured.flow-pin {
+    position: relative; display: block;
+    width: 100vw; margin-left: calc(50% - 50vw);
+    padding: 0 !important; min-height: 0;
+  }
+  .flow-pin-stage {
+    position: sticky; top: 0; height: 100svh; overflow: hidden;
+    display: flex; flex-direction: column;
+    padding: calc(var(--nav-h, 69px) + clamp(24px, 6svh, 64px)) var(--page-gutter, 7vw) clamp(24px, 7svh, 64px);
+    box-sizing: border-box;
+  }
+  .flow-pin-stage .page-title { margin-bottom: 0; }
+  .flow-pin-stage .feature-row {
+    flex: none; width: var(--flow-row-w) !important; max-width: none;
+    height: clamp(300px, 54svh, 560px);
+    margin: auto 0 !important;
+    will-change: transform;
+  }
+  .flow-pin-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--text-muted); font-size: var(--fs-sm); font-weight: 600; letter-spacing: .12em;
+  }
+  .flow-pin-meta b { color: var(--text); font-weight: 800; }
+  .flow-pin-bar { flex: 1; height: 2px; margin: 0 24px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .flow-pin-bar i { display: block; height: 100%; background: var(--flow-progress); transform-origin: 0 50%; transform: scaleX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-rv { opacity: 1; transform: none; }
+  html.flow-home .nav.flow-tuck { transform: none; }
+}
+
+/* page titles: brighter tints of each page's hue on the dark backdrop */
+html.flow-home[data-theme="dark"] #about .page-title { color: #43dcc3; }
+html.flow-home[data-theme="dark"] .projects-page-featured .page-title { color: #ff6fa8; }
+html.flow-home[data-theme="dark"] .projects-page-more .page-title { color: #72b6ff; }
+html.flow-home[data-theme="dark"] #contact .page-title { color: #ab8dff; }
+html.flow-home[data-theme="dark"] .page-eyebrow { color: var(--text-muted); }
+
+/* grid only behind the first screen (like dreamystudio's hero), not the whole page */
+html.flow-home .hero-bg {
+  inset: -40px;
+  background-image:
+    linear-gradient(var(--flow-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--flow-line) 1px, transparent 1px);
+  background-size: 88px 88px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 45%, #000 20%, transparent 80%);
+          mask-image: radial-gradient(ellipse 70% 65% at 50% 45%, #000 20%, transparent 80%);
+}
+
+/* ==========================================================================
+   Layout for continuous scrolling. The old rules sized every page to one
+   full screen (min-height 100svh + auto margins that pushed content apart),
+   which left huge gaps on big monitors. Now: one centred content column,
+   one vertical rhythm, content sized by width -- same proportions on any
+   screen.
+   ========================================================================== */
+html.flow-home {
+  --flow-col: min(82vw, 1560px);                               /* content column */
+  --flow-x: max(24px, calc((100vw - var(--flow-col)) / 2));     /* side padding  */
+  --flow-y: clamp(80px, 7vw, 140px);                           /* section top/bottom */
+  --flow-title-gap: clamp(28px, 2.6vw, 44px);                  /* title -> content */
+}
+html.flow-home #about,
+html.flow-home .projects-page-featured,
+html.flow-home .projects-page-more,
+html.flow-home #contact {
+  min-height: 100svh !important;
+  padding-left: var(--flow-x) !important; padding-right: var(--flow-x) !important;
+  justify-content: flex-start !important;
+}
+
+html.flow-home .page-title,
+html.flow-home .projects-page .page-title { margin-bottom: var(--flow-title-gap) !important; }
+
+/* 关于我: text and illustration side by side, centred on each other */
+html.flow-home #about .about-layout {
+  flex: none; display: flex; align-items: center; justify-content: space-between;
+  gap: clamp(32px, 5vw, 80px); margin: 0;
+}
+html.flow-home #about .about-copy { flex: 0 1 560px; margin: 0; align-self: center; }
+html.flow-home #about .about-scene {
+  flex: 0 1 640px; width: 100%; max-width: 640px; max-height: none;
+  align-self: center; scale: 1;
+}
+
+/* 精选项目: one row across the full content column at full size (not shrunk);
+   hover/focus opens one card wide and folds the others in like a fan */
+html.flow-home .projects-page-featured .feature-row {
+  width: 100%; margin: 0 !important;
+  height: clamp(340px, 52vh, 560px) !important;
+}
+/* hover-expand gallery: one card is always open -- the first by default,
+   whichever is hovered/focused/tapped otherwise; back to the first on leave */
+@media (min-width: 761px) {
+  html.flow-home .feature-row .feature-card,
+  html.flow-home .feature-row:hover .feature-card,
+  html.flow-home .feature-row .feature-card:hover,
+  html.flow-home .feature-row .feature-card:focus-within { flex-grow: 1; }
+  html.flow-home .feature-row .feature-card.is-open { flex-grow: 3.2; }
+  html.flow-home .feature-row .feature-card.is-open img { transform: scale(1); }
+  html.flow-home .feature-row .feature-card.is-open a::after,
+  html.flow-home .feature-row .feature-card.is-open .feature-meta { opacity: 1; transform: none; }
+  html.flow-home .feature-row .feature-card:not(.is-open) a::after,
+  html.flow-home .feature-row .feature-card:not(.is-open) .feature-meta { opacity: 0; transform: translateY(12px); }
+}
+
+/* 更多项目 */
+html.flow-home .projects-page-more .pc { margin: 0 auto !important; }
+
+/* 联系方式: subtitle right under the title, cards right under that */
+html.flow-home #contact .contact-text { margin: calc(var(--flow-title-gap) * -0.3) 0 28px !important; }
+html.flow-home #contact .contact-links { margin-top: 0 !important; }
+
+/* footer: normal height again (it was sized for the old snap layout) */
+html.flow-home .footer { height: auto; padding: 32px 24px; }
+
+/* tablets / phones: stack */
+@media (max-width: 900px) {
+  html.flow-home #about .about-layout { flex-direction: column; align-items: flex-start; }
+  html.flow-home #about .about-copy { flex: none; max-width: 640px; }
+  html.flow-home #about .about-scene { max-width: 460px; align-self: center; }
+}
+@media (max-width: 760px) {
+  html.flow-home .projects-page-featured .feature-row { height: auto !important; max-height: none; }
+}
+
+/* hero: text and illustration share the same content column, so on wide
+   screens the illustration no longer drifts to the far right edge */
+@media (min-width: 901px) {
+  html.flow-home .hero-text { left: var(--flow-x); }
+  html.flow-home .hero-scene-inner { right: calc(var(--flow-x) - 1.5vw); height: min(92%, 900px); }
+}
+
+/* 更多项目: new portrait covers are 5:7 -- match the card so nothing is cropped */
+html.flow-home .pc-hit { aspect-ratio: 5 / 7; }
+html.flow-home .pc { height: calc(var(--pc-w, 300px) * 7 / 5 + 150px); }
+
+/* ==========================================================================
+   Stacked pages (after FelipeMaximus/Portfolio_GSAP): every module is one
+   screen; it sticks when it fills the viewport and the next module slides
+   up over it, while the covered one sinks back slightly (scale + dim).
+   ========================================================================== */
+html.flow-home .flow-page {
+  position: sticky;
+  top: var(--stick, 0px);
+  min-height: 100svh;
+  box-sizing: border-box;
+  background: var(--flow-base);
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: calc(var(--nav-h, 69px) + clamp(32px, 7vh, 88px)) !important;
+  padding-bottom: clamp(32px, 6vh, 72px) !important;
+  transform-origin: 50% 0;
+  transform: scale(calc(1 - var(--cover, 0) * 0.06));
+  will-change: transform;
+}
+html.flow-home .flow-page::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: #0b0c14; opacity: calc(var(--cover, 0) * 0.16); z-index: 50;
+}
+html.flow-home .flow-page.flow-next {
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -24px 60px -24px rgba(12, 19, 34, 0.22);
+}
+html.flow-home .hero.flow-page { padding: 0 !important; }
+html.flow-home .footer { position: relative; z-index: 60; background: var(--flow-base); }
+@media (prefers-reduced-motion: reduce) {
+  html.flow-home .flow-page { transform: none; }
+  html.flow-home .flow-page::after { display: none; }
+}
+
+html.flow-home #contact .contact-cards { margin: 0 !important; }
+html.flow-home .projects-page-featured .feature-row, html.flow-home .projects-page-more .pc { flex: none; }
+
+/* dwell: a transparent spacer after each page, so a page rests fully in view
+   for a while before the next one starts sliding over it */
+.flow-dwell { height: 45vh; pointer-events: none; }
+
+/* 精选项目: cards butt together -- no gaps; the row is one rounded strip */
+html.flow-home .projects-page-featured .feature-row { gap: 0; border-radius: var(--radius); overflow: hidden; }
+html.flow-home .projects-page-featured .feature-card { border-radius: 0; }
+
+/* Page composition: title pinned to the shared top line; the page's main
+   module (cards / carousel / text+illustration / contact cards) is centred in
+   the space left below it, so the gap above and below the module is equal
+   instead of everything hugging the title and leaving the bottom empty. */
+html.flow-home #about .about-layout,
+html.flow-home .projects-page-featured .feature-row,
+html.flow-home .projects-page-more .pc,
+html.flow-home #contact .contact-cards {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+html.flow-home .projects-page-featured .feature-row { height: clamp(360px, 56vh, 640px) !important; }
+@media (max-width: 760px) {
+  html.flow-home .projects-page-featured .feature-row { height: auto !important; }
+}

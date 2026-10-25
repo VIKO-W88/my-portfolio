@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=104">
+<link rel="stylesheet" href="css/home-flow.css?v=22">
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
@@ -227,18 +228,18 @@
     </div>
   </section>
 
-  <section id="projects" class="section">
+  <!-- 精选项目 / 更多项目 are now two top-level pages (stacked-page layout, js/home-flow.js) -->
     <!-- 精选项目 -- its own full-screen "page". Four cards in one row
          (layout/interaction after driftime.com): hover or keyboard focus
          widens the card, dims the image and fades in the name + tags.
          Pure CSS (.feature-row in style.css); 2x2 grid on phones. -->
-    <div class="projects-page projects-page-featured">
+  <section id="projects" class="projects-page projects-page-featured">
       <p class="page-eyebrow">02 — Selected work · 作品集</p>
       <h2 class="page-title">精选项目</h2>
       <ul class="feature-row">
         <li class="feature-card">
           <a href="projects/baidu-map.html">
-            <img src="assets/covers/cover-baidu-map.webp?v=2" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
+            <img src="assets/covers/cover-baidu-map.webp?v=3" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
             <span class="feature-meta">
               <span class="feature-name">百度地图 · 地点 AI 摘要</span>
               <span class="feature-tags"><span>AI 交互</span><span>移动端</span></span>
@@ -247,7 +248,7 @@
         </li>
         <li class="feature-card">
           <a href="projects/evacumate.html">
-            <img src="assets/covers/cover-evacumate.webp?v=2" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
+            <img src="assets/covers/cover-evacumate.webp?v=3" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
             <span class="feature-meta">
               <span class="feature-name">EvacuMate</span>
               <span class="feature-tags"><span>手表端应用</span><span>团队项目</span></span>
@@ -256,7 +257,7 @@
         </li>
         <li class="feature-card">
           <a href="projects/familyflow.html">
-            <img src="assets/covers/cover-familyflow.webp?v=2" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
+            <img src="assets/covers/cover-familyflow.webp?v=3" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
             <span class="feature-meta">
               <span class="feature-name">FamilyFlow</span>
               <span class="feature-tags"><span>家庭协作 App</span><span>UX/UI</span></span>
@@ -265,7 +266,7 @@
         </li>
         <li class="feature-card">
           <a href="projects/ezstock-app/index.html" target="_blank" rel="noopener">
-            <img src="assets/covers/cover-ezstock.webp?v=2" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
+            <img src="assets/covers/cover-ezstock.webp?v=3" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
             <span class="feature-meta">
               <span class="feature-name">EZ Stock</span>
               <span class="feature-tags"><span>库存管理 Web App</span><span>3D</span></span>
@@ -274,7 +275,7 @@
         </li>
         <li class="feature-card">
           <a href="projects/bubu.html">
-            <img src="assets/covers/cover-bubu.webp?v=2" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
+            <img src="assets/covers/cover-bubu.webp?v=3" width="1448" height="1086" alt="" loading="lazy" decoding="async" style="object-position:left center;">
             <span class="feature-meta">
               <span class="feature-name">健康伙伴 Bubu</span>
               <span class="feature-tags"><span>AI 健康 App</span><span>手机 + 手表</span></span>
@@ -282,9 +283,9 @@
           </a>
         </li>
       </ul>
-    </div>
+  </section>
 
-    <div class="projects-page projects-page-more">
+  <section class="projects-page projects-page-more">
     <p class="page-eyebrow">03 — More work</p>
     <h2 class="page-title">更多项目</h2>
     <!-- "更多项目" -- perspective carousel, a vanilla-JS port of VengeanceUI's
@@ -301,7 +302,7 @@
         <li class="pc-slide" data-href="projects/mengyou.html">
           <div class="pc-card">
             <button type="button" class="pc-hit" aria-label="文创设计">
-              <img src="assets/covers/cover-mengyou.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
+              <img src="assets/covers/cover-mengyou.webp?v=2" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
             <a class="pc-label" href="projects/mengyou.html" tabindex="-1">文创设计</a>
           </div>
@@ -309,7 +310,7 @@
         <li class="pc-slide" data-href="projects/soibon.html">
           <div class="pc-card">
             <button type="button" class="pc-hit" aria-label="信息可视化、System Design">
-              <img src="assets/covers/cover-infovis.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
+              <img src="assets/covers/cover-infovis.webp?v=2" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
             <a class="pc-label" href="projects/soibon.html" tabindex="-1">信息可视化、System Design</a>
           </div>
@@ -317,7 +318,7 @@
         <li class="pc-slide" data-href="projects/p5-sketch.html">
           <div class="pc-card">
             <button type="button" class="pc-hit" aria-label="JavaScript 创意编程">
-              <img src="assets/covers/cover-p5-sketch.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
+              <img src="assets/covers/cover-p5-sketch.webp?v=2" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
             <a class="pc-label" href="projects/p5-sketch.html" tabindex="-1">JavaScript 创意编程</a>
           </div>
@@ -325,7 +326,7 @@
         <li class="pc-slide" data-href="projects/court-game.html">
           <div class="pc-card">
             <button type="button" class="pc-hit" aria-label="Python 编程">
-              <img src="assets/covers/cover-python.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
+              <img src="assets/covers/cover-python.webp?v=2" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
             <a class="pc-label" href="projects/court-game.html" tabindex="-1">Python 编程</a>
           </div>
@@ -333,7 +334,7 @@
         <li class="pc-slide" data-href="projects/matlab-audio.html">
           <div class="pc-card">
             <button type="button" class="pc-hit" aria-label="MATLAB · 数字信号处理">
-              <img src="assets/covers/cover-matlab-audio.webp" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
+              <img src="assets/covers/cover-matlab-audio.webp?v=2" alt="" loading="lazy" decoding="async" draggable="false" style="object-position:center;">
             </button>
             <a class="pc-label" href="projects/matlab-audio.html" tabindex="-1">MATLAB · 数字信号处理</a>
           </div>
@@ -356,8 +357,8 @@
         </button>
       </div>
     </div>
-    </div>
   </section>
+
 
   <section id="contact" class="section contact">
     <p class="page-eyebrow">04 — Contact</p>
@@ -430,5 +431,6 @@
 <script src="js/contact.js?v=2"></script>
 <script src="js/perspective-carousel.js?v=4"></script>
 <script src="js/click-spark.js?v=1"></script>
+<script src="js/home-flow.js?v=9"></script>
 </body>
 </html>
